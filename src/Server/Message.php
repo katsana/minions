@@ -31,7 +31,7 @@ class Message
      *
      * @return string
      */
-    public function contents(): string
+    public function body(): string
     {
         return 'Hello world';
     }
@@ -44,7 +44,7 @@ class Message
     public function asResponse(): Response
     {
         return new Response(
-            $this->status(), $this->headers(), $this->contents()
+            $this->status(), $this->headers(), $this->body()
         );
     }
 }

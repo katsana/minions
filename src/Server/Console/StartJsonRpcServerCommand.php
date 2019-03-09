@@ -32,9 +32,7 @@ class StartJsonRpcServerCommand extends Command
             //$message = $this->laravel->make('minions.service-resolver')->handle($request);
             $message = new \Minions\Server\Message();
 
-            return new Response(
-                $message->status(), $message->headers(), $message->body()
-            );
+            return $message->asResponse();
         });
 
         $socket = new HttpServer($port, $loop);
