@@ -22,7 +22,9 @@ interface Handler
     /**
      * Determines if this request is actually authenticated
      *
-     * @param array $request
+     * @param string $method JSON-RPC method name
+     * @param array $arguments JSON-RPC arguments array (positional or associative)
+     *
      * @return bool
      */
     public function authenticate(string $method, array $arguments): bool;

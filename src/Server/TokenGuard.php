@@ -42,8 +42,8 @@ class TokenGuard implements Auth\Contracts\Handler
     /**
      * Determines if this handler is capable of authorizing this request.
      *
-     * @param string $method JSON-RPC method name
-     * @param array $arguments JSON-RPC arguments array (positional or associative)
+     * @param string $method
+     * @param array $arguments
      *
      * @return bool
      */
@@ -55,7 +55,9 @@ class TokenGuard implements Auth\Contracts\Handler
     /**
      * Determines if this request is actually authenticated
      *
-     * @param array $request
+     * @param string $method
+     * @param array $arguments
+     *
      * @return bool
      */
     public function authenticate(string $method, array $arguments): bool
