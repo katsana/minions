@@ -2,9 +2,9 @@
 
 namespace Minions\Server\Console;
 
-use React\Http\Response;
 use Illuminate\Console\Command;
 use React\Http\Server as HttpServer;
+use React\Socket\Server as SocketServer;
 use React\EventLoop\Factory as EventLoop;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -35,7 +35,7 @@ class StartJsonRpcServerCommand extends Command
             return $message->asResponse();
         });
 
-        $socket = new HttpServer($port, $loop);
+        $socket = new SocketServer($port, $loop);
         $server->listen($socket);
 
         echo "Server running at http://127.0.0.1:{$port}\n";
