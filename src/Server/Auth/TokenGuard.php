@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Server;
+namespace Minions\Server\Auth;
 
 use Illuminate\Http\Request;
 

@@ -15,12 +15,14 @@
     },
     "require": {
         "php": ">=7.1",
-        "datto/json-rpc-http": "~4.0.0",
-        "graze/guzzle-jsonrpc": "~3.0.0",
+        "datto/json-rpc-http": "^4.0",
         "illuminate/auth": "^5.7",
+        "illuminate/console": "^5.7",
         "illuminate/http": "^5.7"
     },
     "require-dev": {
+        "amphp/http-server": "^1.0",
+        "graze/guzzle-jsonrpc": "^3.0",
         "mockery/mockery": "^1.0"
     },
     "scripts": {
