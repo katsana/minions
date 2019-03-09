@@ -2,7 +2,11 @@
 
 namespace Minions\Server\Console;
 
+use React\Http\Response;
 use Illuminate\Console\Command;
+use React\Http\Server as HttpServer;
+use React\EventLoop\Factory as EventLoop;
+use Psr\Http\Message\ServerRequestInterface;
 
 class StartJsonRpcServerCommand extends Command
 {
@@ -11,9 +15,7 @@ class StartJsonRpcServerCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'minions:serve
-        {--host=0.0.0.0}
-        {--port=8001}';
+    protected $signature = 'minions:serve {--port=8080}';
 
     /**
      * Execute the console command.
@@ -22,26 +24,24 @@ class StartJsonRpcServerCommand extends Command
      */
     public function handle()
     {
-        Amp\Loop::run(function () {
-            $sockets = [
-                Socket\listen("{$this->option('host')}:{$this->option('port')}"),
-                Socket\listen("[::]:{$this->option('port')}"),
-            ];
+        $port = $this->option('port');
 
-            $server = new Server($sockets, new CallableRequestHandler(function (Request $request) {
-                return new Response(Status::OK, [
-                    "content-type" => "text/plain; charset=utf-8"
-                ], "Hello, World!");
-            }), new NullLogger);
+        $loop = Factory::create();
 
-            yield $server->start();
+        $server = new HttpServer(function (ServerRequestInterface $request) {
+            //$message = $this->laravel->make('minions.service-resolver')->handle($request);
+            $message = new \Minions\Server\Message();
 
-            // Stop the server gracefully when SIGINT is received.
-            // This is technically optional, but it is best to call Server::stop().
-            Amp\Loop::onSignal(SIGINT, function (string $watcherId) use ($server) {
-                Amp\Loop::cancel($watcherId);
-                yield $server->stop();
-            });
+            return new Response(
+                $message->status(), $message->headers(), $message->body()
+            );
         });
+
+        $socket = new HttpServer($port, $loop);
+        $server->listen($socket);
+
+        echo "Server running at http://127.0.0.1:{$port}\n";
+
+        $loop->run();
     }
 }

@@ -21,9 +21,9 @@
         "illuminate/http": "^5.7"
     },
     "require-dev": {
-        "amphp/http-server": "^1.0",
         "graze/guzzle-jsonrpc": "^3.0",
-        "mockery/mockery": "^1.0"
+        "mockery/mockery": "^1.0",
+        "react/http": "^0.8.4"
     },
     "scripts": {
         "test": [
