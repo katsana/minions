@@ -2,6 +2,7 @@
 
 namespace Minions\Client;
 
+use Carbon\Carbon;
 use Graze\GuzzleHttp\JsonRpc\Client;
 
 class Notification
@@ -72,5 +73,21 @@ class Notification
     public function asRequest(Client $client)
     {
         return $client->notification($this->method(), $this->parameters());
+    }
+
+    /**
+     * Message signature.
+     *
+     * @param string $secret
+     *
+     * @return string
+     */
+    public function signature(string $secret): string
+    {
+        $timestamp = (string) Carbon::now()->timestamp;
+        $payload = "{$timestamp}.{$content}";
+        $signature = \hash_hmac('sha256', $payload, $secret);
+
+        return "t={$timestamp},v1={$signature}";
     }
 }

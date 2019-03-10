@@ -11,10 +11,10 @@ use Exception;
  *
  * @author Chad Kosie <ckosie@datto.com>
  */
-class InvalidToken extends Exception implements JsonRpcException
+class InvalidSignature extends Exception implements JsonRpcException
 {
     public function __construct()
     {
-        parent::__construct('Invalid token.', -32652);
+        parent::__construct('Invalid Signature.', -32652);
     }
 }

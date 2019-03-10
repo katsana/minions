@@ -15,6 +15,6 @@ class MisingToken extends Exception implements JsonRpcException
 {
     public function __construct()
     {
-        parent::__construct('Missing auth.', -32651);
+        parent::__construct('Missing token.', -32651);
     }
 }

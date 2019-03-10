@@ -5,7 +5,6 @@ namespace Minions\Client;
 use Closure;
 use Graze\GuzzleHttp\JsonRpc\Client;
 use InvalidArgumentException;
-use Minions\Client\Notification;
 
 class Minion
 {
@@ -42,6 +41,7 @@ class Minion
             'headers' => [
                 'X-Request-ID' => $this->config['id'],
                 'Authorization' => "Token {$config['token']}",
+                'HTTP_X_SIGNATURE' => $message->signature($config['signature']),
             ],
         ]);
 
