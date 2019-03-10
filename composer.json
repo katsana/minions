@@ -34,6 +34,16 @@
     "config": {
         "sort-packages": true
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Minions\\MinionsServiceProvider"
+            ],
+            "aliases": {
+                "Minion": "Minions\\Minion"
+            }
+        }
+    },
     "prefer-stable": true,
     "minimum-stability": "dev"
 }
