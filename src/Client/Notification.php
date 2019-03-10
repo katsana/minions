@@ -40,7 +40,7 @@ class Notification
      */
     public function version(): string
     {
-        return '2.0';
+        return Client::SPEC;
     }
 
     /**
@@ -76,6 +76,20 @@ class Notification
     }
 
     /**
+     * Convert to JSON.
+     *
+     * @return string
+     */
+    public function toJson(): string
+    {
+        return \json_encode(\array_filter([
+            'jsonrpc' => $this->version(),
+            'method' => $this->method(),
+            'params' => $this->parameters(),
+        ]));
+    }
+
+    /**
      * Message signature.
      *
      * @param string $secret
@@ -85,7 +99,7 @@ class Notification
     public function signature(string $secret): string
     {
         $timestamp = (string) Carbon::now()->timestamp;
-        $payload = "{$timestamp}.{$content}";
+        $payload = "{$timestamp}.{$this->toJson()}";
         $signature = \hash_hmac('sha256', $payload, $secret);
 
         return "t={$timestamp},v1={$signature}";

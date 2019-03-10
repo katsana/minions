@@ -2,16 +2,9 @@
 
 namespace Minions\Exceptions;
 
-use Datto\JsonRpc\Exception as JsonRpcException;
-use Exception;
+use Datto\JsonRpc\Exceptions\Exception as JsonRpcException;
 
-/**
- * Exception representing missing authentication credentials.
- * The error code corresponds to the JSON-RPC AuthX extension.
- *
- * @author Chad Kosie <ckosie@datto.com>
- */
-class MisingSignature extends Exception implements JsonRpcException
+class MisingSignature extends JsonRpcException
 {
     public function __construct()
     {

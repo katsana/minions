@@ -1,6 +1,6 @@
 <?php
 
-namespace Server;
+namespace Minions\Server;
 
 use Illuminate\Support\Str;
 use Minions\Exceptions\InvalidSignature;

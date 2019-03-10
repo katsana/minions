@@ -48,4 +48,19 @@ class Message extends Notification
     {
         return $client->request($this->id(), $this->method(), $this->parameters());
     }
+
+    /**
+     * Convert to JSON.
+     *
+     * @return string
+     */
+    public function toJson(): string
+    {
+        return \json_encode(\array_filter([
+            'jsonrpc' => $this->version(),
+            'method' => $this->method(),
+            'params' => $this->parameters(),
+            'id' => $this->id(),
+        ]));
+    }
 }
