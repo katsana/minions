@@ -49,8 +49,6 @@ class Evaluator implements DattoEvaluator
     {
         $this->request = $request;
 
-        info('handling request');
-
         return new Server($this);
     }
 
@@ -62,13 +60,9 @@ class Evaluator implements DattoEvaluator
      */
     public function evaluate($method, $arguments)
     {
-        info("evaluating {$method}");
-
         if (! array_key_exists($method, $this->services)) {
             throw new MethodException();
         }
-
-        info('evaluating request');
 
         try {
             return $this->container->make($this->services[$method])->__invoke($arguments);

@@ -95,8 +95,6 @@ class Request
 
             $reply = $server->reply($body);
 
-            info("Received response as {$reply}");
-
             return new Reply($reply);
         };
     }
