@@ -9,7 +9,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Psr\Http\Message\ServerRequestInterface;
 
-class Evaluator
+class Evaluator implements DattoEvaluator
 {
     /**
      * The application implementation.
@@ -43,36 +43,37 @@ class Evaluator
      *
      * @param ServerRequestInterface $request
      *
-     * @return
+     * @return \Datto\JsonRpc\Server
      */
-    public function handle(ServerRequestInterface $request)
+    public function handle(ServerRequestInterface $request): Server
     {
         $this->request = $request;
 
-        return new Server($this->providesServiceEvaluator());
+        info('handling request');
+
+        return new Server($this);
     }
 
-    protected function providesServiceEvaluator()
+    /**
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return mixed
+     */
+    public function evaluate($method, $arguments)
     {
-        return new class() implements DattoEvaluator {
-            /**
-             * @param string $method
-             * @param array  $arguments
-             *
-             * @return mixed
-             */
-            public function evaluate($method, $arguments)
-            {
-                if (! array_key_exists($method, $this->services)) {
-                    throw new MethodException();
-                }
+        info("evaluating {$method}");
 
-                try {
-                    return $this->container->make($this->services[$method])->__invoke($arguments);
-                } catch (BindingResolutionException $e) {
-                    throw new MethodException();
-                }
-            }
-        };
+        if (! array_key_exists($method, $this->services)) {
+            throw new MethodException();
+        }
+
+        info('evaluating request');
+
+        try {
+            return $this->container->make($this->services[$method])->__invoke($arguments);
+        } catch (BindingResolutionException $e) {
+            throw new MethodException();
+        }
     }
 }

@@ -9,17 +9,18 @@ class Reply
     /**
      * The body content.
      *
-     * @var string
+     * @var string|null
      */
     protected $body;
 
     /**
      * Construct a new reply.
      *
-     * @param string $body [description]
+     * @param string|null $body
      */
-    public function __construct(string $body)
+    public function __construct(?string $body)
     {
+        $this->body = $body;
     }
 
     /**
@@ -45,9 +46,9 @@ class Reply
     /**
      * Message contents.
      *
-     * @return string
+     * @return string|null
      */
-    public function body(): string
+    public function body(): ?string
     {
         return $this->body;
     }

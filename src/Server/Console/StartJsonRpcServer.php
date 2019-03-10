@@ -2,11 +2,14 @@
 
 namespace Minions\Server\Console;
 
+use Error;
+use Exception;
 use Illuminate\Console\Command;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\Factory as EventLoop;
 use React\Http\Server as HttpServer;
 use React\Socket\Server as SocketServer;
+use Throwable;
 
 class StartJsonRpcServer extends Command
 {
@@ -29,13 +32,18 @@ class StartJsonRpcServer extends Command
         $loop = EventLoop::create();
 
         $server = new HttpServer(function (ServerRequestInterface $request) {
-            return $this->laravel->make('minions.request')
-                        ->handle($request)
-                        ->asResponse();
+            try {
+                return $this->laravel->make('minions.request')->handle($request)->asResponse();
+            } catch (Exception | Throwable | Error $e) {
+                $this->error($e->getMessage());
+            }
         });
 
-        $socket = new SocketServer($port, $loop);
-        $server->listen($socket);
+        $server->on('error', function ($e) {
+            $this->error($e->getMessage());
+        });
+
+        $server->listen(new SocketServer($port, $loop));
 
         echo "Server running at http://127.0.0.1:{$port}\n";
 

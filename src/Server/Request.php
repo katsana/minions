@@ -52,7 +52,7 @@ class Request
         $config = $this->projectConfiguration($project);
 
         try {
-            (new Pipeline($this->container))->send($request)
+            return (new Pipeline($this->container))->send($request)
                     ->through([
                         Middleware\VerifyToken::class,
                         Middleware\VerifySignature::class,
@@ -91,7 +91,13 @@ class Request
         return function ($request) {
             $server = $this->container->make('minions.evaluator')->handle($request);
 
-            return new Reply($server->reply($request->getBody()));
+            $body = (string) $request->getBody();
+
+            $reply = $server->reply($body);
+
+            info("Received response as {$reply}");
+
+            return new Reply($reply);
         };
     }
 
