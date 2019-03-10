@@ -2,65 +2,18 @@
 
 namespace Minions;
 
-use Closure;
-use Graze\GuzzleHttp\JsonRpc\Client;
-use InvalidArgumentException;
-use Minions\Client\Notification;
+use Illuminate\Support\Facades\Facade;
 
-class Minion
+class Minion extends Facade
 {
     /**
-     * Configuration.
+     * Get the registered name of the component.
      *
-     * @var array
+     * @return string
      */
-    protected $config = [];
-
-    /**
-     * Construct a new Minion.
-     *
-     * @param array $config
-     */
-    public function __construct(array $config)
+    protected static function getFacadeAccessor()
     {
-        $this->config = $config;
+        return 'minions.client';
     }
 
-    /**
-     * Broadcast message.
-     *
-     * @param string                       $project
-     * @param \Minions\Client\Notification $message
-     *
-     * @return void
-     */
-    public function broadcast(string $project, Notification $message, Closure $then): void
-    {
-        $config = $this->projectConfiguration($project);
-
-        $client = Client::factory($config['endpoint'], [
-            'headers' => [
-                'X-Request-ID' => $this->config['id'],
-                'Authorization' => "Token {$config['token']}",
-            ],
-        ]);
-
-        $client->sendAsync($message->asRequest($client))->then($then);
-    }
-
-    /**
-     * Get configuration for a project.
-     *
-     * @param string|null $project
-     *
-     * @return array
-     */
-    protected function projectConfiguration(?string $project): array
-    {
-        if (is_null($project) || ! array_key_exists($project, $this->config['projects'])) {
-            throw new InvalidArgumentException("Unable to find project [{$project}].");
-        }
-
-        return $this->config['projects'][$project];
-    }
 }
