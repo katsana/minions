@@ -83,7 +83,7 @@ class Request
     /**
      * Handle Exception.
      *
-     * @param \Datto\JsonRpc\Exception $exception
+     * @param \Datto\JsonRpc\Exceptions\Exception $exception
      *
      * @return \Minions\Server\Reply
      */
