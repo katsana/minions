@@ -4,6 +4,7 @@ namespace Minions\Server\Console;
 
 use Illuminate\Console\Command;
 use Psr\Http\Message\ServerRequestInterface;
+use React\EventLoop\Factory as EventLoop;
 use React\Http\Server as HttpServer;
 use React\Socket\Server as SocketServer;
 
@@ -25,13 +26,12 @@ class StartJsonRpcServer extends Command
     {
         $port = $this->option('port');
 
-        $loop = Factory::create();
+        $loop = EventLoop::create();
 
         $server = new HttpServer(function (ServerRequestInterface $request) {
-            //$message = $this->laravel->make('minions.service-resolver')->handle($request);
-            $reply = new \Minions\Server\Reply();
-
-            return $reply->asResponse();
+            return $this->laravel->make('minions.request')
+                        ->handle($request)
+                        ->asResponse();
         });
 
         $socket = new SocketServer($port, $loop);

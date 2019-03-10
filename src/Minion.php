@@ -3,6 +3,7 @@
 namespace Minions;
 
 use Closure;
+use Graze\GuzzleHttp\JsonRpc\Client;
 use InvalidArgumentException;
 use Minions\Client\Notification;
 
@@ -57,7 +58,7 @@ class Minion
     protected function projectConfiguration(?string $project): array
     {
         if (is_null($project) || ! array_key_exists($project, $this->config['projects'])) {
-            return new InvalidArgumentException("Unable to find project [{$project}].");
+            throw new InvalidArgumentException("Unable to find project [{$project}].");
         }
 
         return $this->config['projects'][$project];

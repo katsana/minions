@@ -3,10 +3,8 @@
 namespace Minions\Client;
 
 use Graze\GuzzleHttp\JsonRpc\Client;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
 
-class Notification implements Arrayable, Jsonable
+class Notification
 {
     /**
      * Method name.
