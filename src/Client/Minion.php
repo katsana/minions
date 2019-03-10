@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions;
+namespace Minions\Client;
 
 use Closure;
 use Graze\GuzzleHttp\JsonRpc\Client;
