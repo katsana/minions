@@ -68,7 +68,7 @@ class Evaluator implements DattoEvaluator
                 }
 
                 try {
-                    return $this->container->make($this->services[$method])->__invoke($method, $arguments);
+                    return $this->container->make($this->services[$method])->__invoke($arguments);
                 } catch (BindingResolutionException $e) {
                     throw new MethodException();
                 }
