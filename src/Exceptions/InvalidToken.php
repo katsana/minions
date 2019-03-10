@@ -1,20 +1,20 @@
 <?php
 
-namespace Katsana\Minions\Exceptions;
+namespace Minions\Exceptions;
 
 use Datto\JsonRpc\Exception as JsonRpcException;
 use Exception;
 
 /**
- * Exception representing missing authentication credentials.
+ * Exception representing an invalid authentication/authorization attempt.
  * The error code corresponds to the JSON-RPC AuthX extension.
  *
  * @author Chad Kosie <ckosie@datto.com>
  */
-class MissingAuthentication extends Exception implements JsonRpcException
+class InvalidToken extends Exception implements JsonRpcException
 {
     public function __construct()
     {
-        parent::__construct('Missing auth.', -32651);
+        parent::__construct('Invalid auth.', -32652);
     }
 }
