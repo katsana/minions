@@ -70,7 +70,7 @@ return [
      */
 
     'services' => [
-        // 'add-user' => App\Jobs\Rpc\AddUserService::class,
+        // 'add-user' => App\JsonRpc\AddUserService::class,
     ],
 ];
 ```
