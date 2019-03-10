@@ -4,7 +4,7 @@ namespace Minions\Exceptions;
 
 use Datto\JsonRpc\Exceptions\Exception as JsonRpcException;
 
-class MisingSignature extends JsonRpcException
+class MissingSignature extends JsonRpcException
 {
     public function __construct()
     {

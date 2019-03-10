@@ -8,6 +8,6 @@ class InvalidToken extends JsonRpcException
 {
     public function __construct()
     {
-        parent::__construct('Invalid token.', -32652);
+        parent::__construct('Invalid Token.', -32652);
     }
 }
