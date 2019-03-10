@@ -1,5 +1,6 @@
 {
     "name": "katsana/minions",
+    "description": "Json-RPC Communication for Laravel",
     "type": "library",
     "license": "BSD-3-Clause",
     "authors": [
