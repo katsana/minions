@@ -44,13 +44,11 @@ class Evaluator implements DattoEvaluator
      *
      * @return \Minions\Server\Reply
      */
-    public function handle(ServerRequestInterface $request): Reply
+    public function handle(Message $message): Reply
     {
         $server = new Server($this);
 
-        $body = (string) $request->getBody();
-
-        return new Reply($server->reply($body));
+        return new Reply($server->reply($message->body()));
     }
 
     /**

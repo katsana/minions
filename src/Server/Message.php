@@ -7,7 +7,7 @@ use Minions\Exceptions\InvalidSignature;
 use Minions\Exceptions\InvalidToken;
 use Psr\Http\Message\ServerRequestInterface;
 
-class Project
+class Message
 {
     /**
      * Project ID.
@@ -31,6 +31,13 @@ class Project
     protected $request;
 
     /**
+     * The cached request body.
+     *
+     * @var string
+     */
+    protected $body;
+
+    /**
      * Construct a new project request.
      *
      * @param string                                   $id
@@ -42,6 +49,7 @@ class Project
         $this->id = $id;
         $this->config = $config;
         $this->request = $request;
+        $this->body = (string) $request->getBody();
     }
 
     /**
@@ -52,6 +60,16 @@ class Project
     public function request(): ServerRequestInterface
     {
         return $this->request;
+    }
+
+    /**
+     * Get the request body.
+     *
+     * @return string
+     */
+    public function body(): string
+    {
+        return $this->body;
     }
 
     /**
@@ -91,9 +109,9 @@ class Project
             $signature = \explode('=', $header[1])[1];
             $body = (string) $this->request->getBody();
 
-            $expected = \hash_hmac('sha256', "{$timestamp}.{$body}", $this->config['signature']);
+            $expected = \hash_hmac('sha256', "{$timestamp}.{$this->body()}", $this->config['signature']);
 
-            if (! \hash_equals($expected, $this->config['signature'])) {
+            if (! \hash_equals($expected, $signature)) {
                 throw new InvalidSignature();
             }
         }

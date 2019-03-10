@@ -2,9 +2,8 @@
 
 namespace Minions\Server;
 
-use Closure;
 use Datto\JsonRpc\Evaluator;
-use Datto\JsonRpc\Exception as JsonRpcException;
+use Datto\JsonRpc\Exceptions\Exception as JsonRpcException;
 use Datto\JsonRpc\Server;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Pipeline\Pipeline;
@@ -53,11 +52,13 @@ class Request
 
         try {
             return (new Pipeline($this->container))
-                    ->send(new Project($project, $config, $request))
+                    ->send(new Message($project, $config, $request))
                     ->through([
                         Middleware\VerifyToken::class,
                         Middleware\VerifySignature::class,
-                    ])->then($this->dispatch($project, $config));
+                    ])->then(function (Message $message) {
+                        return $this->container->make('minions.evaluator')->handle($message);
+                    });
         } catch (JsonRpcException $exception) {
             return $this->handleException($exception);
         }
@@ -77,21 +78,6 @@ class Request
         }
 
         return $this->config['projects'][$project];
-    }
-
-    /**
-     * Dispatch service.
-     *
-     * @param string $project
-     * @param array  $config
-     *
-     * @return \Closure
-     */
-    protected function dispatch(string $project, array $config): Closure
-    {
-        return function (Project $project) {
-            return $this->container->make('minions.evaluator')->handle($project->request());
-        };
     }
 
     /**
@@ -116,7 +102,7 @@ class Request
 
         return new Reply(json_encode([
             'jsonrpc' => Server::VERSION,
-            'id' => $id,
+            'id' => null,
             'error' => $error,
         ]));
     }
