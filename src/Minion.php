@@ -9,6 +9,13 @@ use Minions\Client\Notification;
 class Minion
 {
     /**
+     * Configuration.
+     *
+     * @var array
+     */
+    protected $config = [];
+
+    /**
      * Construct a new Minion.
      *
      * @param array $config
@@ -44,13 +51,13 @@ class Minion
     /**
      * Get configuration for a project.
      *
-     * @param string $project
+     * @param string|null $project
      *
      * @return array
      */
-    protected function projectConfiguration(string $project): array
+    protected function projectConfiguration(?string $project): array
     {
-        if (! array_key_exists($project, $this->config['projects'])) {
+        if (is_null($project) || ! array_key_exists($project, $this->config['projects'])) {
             return new InvalidArgumentException("Unable to find project [{$project}].");
         }
 

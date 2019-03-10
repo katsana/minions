@@ -7,6 +7,22 @@ use React\Http\Response;
 class Reply
 {
     /**
+     * The body content.
+     *
+     * @var string
+     */
+    protected $body;
+
+    /**
+     * Construct a new reply.
+     *
+     * @param string $body [description]
+     */
+    public function __construct(string $body)
+    {
+    }
+
+    /**
      * Message status.
      *
      * @return int
@@ -23,7 +39,7 @@ class Reply
      */
     public function headers(): array
     {
-        return ['Content-Type' => 'text/plain'];
+        return ['Content-Type' => 'application/json'];
     }
 
     /**
@@ -33,7 +49,7 @@ class Reply
      */
     public function body(): string
     {
-        return 'Hello world';
+        return $this->body;
     }
 
     /**

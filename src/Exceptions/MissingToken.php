@@ -11,7 +11,7 @@ use Exception;
  *
  * @author Chad Kosie <ckosie@datto.com>
  */
-class InvalidAuthentication extends Exception implements JsonRpcException
+class MissingToken extends Exception implements JsonRpcException
 {
     public function __construct()
     {

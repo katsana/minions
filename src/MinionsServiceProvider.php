@@ -17,10 +17,6 @@ class MinionsServiceProvider extends ServiceProvider
         $this->app->singleton('minions', function (Application $app) {
             return new Minion($app->make('config')->get('minions'));
         });
-
-        $this->app->singleton('minions.server', function (Application $app) {
-            //
-        });
     }
 
     /**
@@ -33,9 +29,5 @@ class MinionsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/minions.php' => \base_path('config/minions.php'),
         ], 'config');
-
-        $this->commands([
-            Server\Console\StartJsonRpcServer::class,
-        ]);
     }
 }
