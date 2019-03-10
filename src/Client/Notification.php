@@ -3,7 +3,7 @@
 namespace Minions\Client;
 
 use Carbon\Carbon;
-use Graze\GuzzleHttp\JsonRpc\Client;
+use Graze\GuzzleHttp\JsonRpc\ClientInterface;
 
 class Notification
 {
@@ -40,7 +40,7 @@ class Notification
      */
     public function version(): string
     {
-        return Client::SPEC;
+        return ClientInterface::SPEC;
     }
 
     /**
@@ -66,11 +66,11 @@ class Notification
     /**
      * Convert to request.
      *
-     * @param \Graze\GuzzleHttp\JsonRpc\Client $client
+     * @param \Graze\GuzzleHttp\JsonRpc\ClientInterface $client
      *
      * @return object
      */
-    public function asRequest(Client $client)
+    public function asRequest(ClientInterface $client)
     {
         return $client->notification($this->method(), $this->parameters());
     }

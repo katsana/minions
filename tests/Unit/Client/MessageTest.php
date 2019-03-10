@@ -55,4 +55,16 @@ class MessageTest extends TestCase
             't=1546300802,v1=cb346293fa89b95ae84ba87a2e11d515c14c61425ac045dff68fde598823c490', $message->signature('secret')
         );
     }
+
+    /** @test */
+    public function it_can_be_transform_to_request()
+    {
+        $client = m::mock('Graze\GuzzleHttp\JsonRpc\ClientInterface');
+
+        $client->shouldReceive('request')->with(4, 'math/add', [1, 2])->andReturnSelf();
+
+        $message = new Message('math/add', [1, 2], 4);
+
+        $this->assertEquals($client, $message->asRequest($client));
+    }
 }

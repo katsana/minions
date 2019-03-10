@@ -2,7 +2,7 @@
 
 namespace Minions\Client;
 
-use Graze\GuzzleHttp\JsonRpc\Client;
+use Graze\GuzzleHttp\JsonRpc\ClientInterface;
 
 class Message extends Notification
 {
@@ -40,11 +40,11 @@ class Message extends Notification
     /**
      * Convert to request.
      *
-     * @param \Graze\GuzzleHttp\JsonRpc\Client $client
+     * @param \Graze\GuzzleHttp\JsonRpc\ClientInterface $client
      *
      * @return object
      */
-    public function asRequest(Client $client)
+    public function asRequest(ClientInterface $client)
     {
         return $client->request($this->id(), $this->method(), $this->parameters());
     }
