@@ -26,12 +26,11 @@ class Evaluator implements DattoEvaluator
     protected $services = [];
 
     /**
-     * The request implementation.
+     * Construct a new Evaluator.
      *
-     * @var \Psr\Http\Message\ServerRequestInterface
+     * @param \Illuminate\Contracts\Container\Container $container
+     * @param array                                     $services
      */
-    protected $request;
-
     public function __construct(Container $container, array $services)
     {
         $this->container = $container;
@@ -43,13 +42,15 @@ class Evaluator implements DattoEvaluator
      *
      * @param ServerRequestInterface $request
      *
-     * @return \Datto\JsonRpc\Server
+     * @return \Minions\Server\Reply
      */
-    public function handle(ServerRequestInterface $request): Server
+    public function handle(ServerRequestInterface $request): Reply
     {
-        $this->request = $request;
+        $server = new Server($this);
 
-        return new Server($this);
+        $body = (string) $request->getBody();
+
+        return new Reply($server->reply($body));
     }
 
     /**

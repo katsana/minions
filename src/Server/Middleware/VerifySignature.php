@@ -3,12 +3,22 @@
 namespace Minions\Server\Middleware;
 
 use Closure;
-use Psr\Http\Message\ServerRequestInterface;
+use Minions\Server\Project;
 
 class VerifySignature
 {
-    public function handle(ServerRequestInterface $request, Closure $next)
+    /**
+     * Handle middleware.
+     *
+     * @param \Minions\Server\Project $project
+     * @param \Closure                $next
+     *
+     * @return mixed
+     */
+    public function handle(Project $project, Closure $next)
     {
-        return $next($request);
+        $project->validateRequestSignature();
+
+        return $next($project);
     }
 }

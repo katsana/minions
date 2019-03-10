@@ -52,7 +52,8 @@ class Request
         $config = $this->projectConfiguration($project);
 
         try {
-            return (new Pipeline($this->container))->send($request)
+            return (new Pipeline($this->container))
+                    ->send(new Project($project, $config, $request))
                     ->through([
                         Middleware\VerifyToken::class,
                         Middleware\VerifySignature::class,
@@ -88,14 +89,8 @@ class Request
      */
     protected function dispatch(string $project, array $config): Closure
     {
-        return function ($request) {
-            $server = $this->container->make('minions.evaluator')->handle($request);
-
-            $body = (string) $request->getBody();
-
-            $reply = $server->reply($body);
-
-            return new Reply($reply);
+        return function (Project $project) {
+            return $this->container->make('minions.evaluator')->handle($project->request());
         };
     }
 

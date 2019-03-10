@@ -15,5 +15,4 @@ class Minion extends Facade
     {
         return 'minions.client';
     }
-
 }
