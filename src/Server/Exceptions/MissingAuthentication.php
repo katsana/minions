@@ -2,8 +2,8 @@
 
 namespace Katsana\Minions\Exceptions;
 
-use Exception;
 use Datto\JsonRpc\Exception as JsonRpcException;
+use Exception;
 
 /**
  * Exception representing missing authentication credentials.

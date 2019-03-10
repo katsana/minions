@@ -2,8 +2,8 @@
 
 namespace App\JsonRpc\Exceptions;
 
-use Exception;
 use Datto\JsonRpc\Exception as JsonRpcException;
+use Exception;
 
 /**
  * Exception representing an invalid authentication/authorization attempt.

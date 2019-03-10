@@ -23,7 +23,7 @@ class Evaluator implements EvaluatorContract
     /**
      * Creates an evaluator instance using the given Authenticator.
      *
-     * @param \JsonRpc\Evaluator $evaluator
+     * @param \JsonRpc\Evaluator                 $evaluator
      * @param \Minions\Server\Auth\Authenticator $authenticator
      */
     public function __construct(Evaluator $evaluator, Authenticator $authenticator)
@@ -36,13 +36,13 @@ class Evaluator implements EvaluatorContract
      * Authenticate request and (if successful) map method name to callable
      * and run it with the given arguments.
      *
-     * @param string $method Method name
-     * @param array $arguments Positional or associative argument array
-     *
-     * @return mixed Return value of the callable
+     * @param string $method    Method name
+     * @param array  $arguments Positional or associative argument array
      *
      * @throws \Minions\Server\Exceptions\MissingAuthentication If the no credentials are given
      * @throws \Minions\Server\Exceptions\InvalidAuthentication If the given credentials are invalid
+     *
+     * @return mixed Return value of the callable
      */
     public function evaluate($method, $arguments)
     {

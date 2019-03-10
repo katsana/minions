@@ -31,7 +31,7 @@ class TokenGuard implements Auth\Contracts\Handler
      * Construct Token based Guard for Json-RPC.
      *
      * @param \Illuminate\Auth\AuthManager $auth
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request     $request
      */
     public function __construct(AuthManager $auth, Request $request)
     {
@@ -43,7 +43,7 @@ class TokenGuard implements Auth\Contracts\Handler
      * Determines if this handler is capable of authorizing this request.
      *
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return bool
      */
@@ -53,10 +53,10 @@ class TokenGuard implements Auth\Contracts\Handler
     }
 
     /**
-     * Determines if this request is actually authenticated
+     * Determines if this request is actually authenticated.
      *
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return bool
      */

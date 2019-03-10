@@ -50,13 +50,13 @@ class Authenticator
      * Attempt to authorize a request. This will iterate over all authentication handlers that can handle this type of
      * request. It will stop after it has found one that can authenticate the request.
      *
-     * @param string $method JSON-RPC method name
-     * @param array $arguments JSON-RPC arguments array (positional or associative)
-     *
-     * @return void
+     * @param string $method    JSON-RPC method name
+     * @param array  $arguments JSON-RPC arguments array (positional or associative)
      *
      * @throws MissingAuth If the no credentials are given
      * @throws InvalidAuth If the given credentials are invalid
+     *
+     * @return void
      */
     public function authenticate(string $method, array $arguments): void
     {
@@ -81,8 +81,8 @@ class Authenticator
      * Filters the handlers array down to only the handlers that can handle
      * the given request.
      *
-     * @param string $method JSON-RPC method name
-     * @param array $arguments JSON-RPC arguments array (positional or associative)
+     * @param string $method    JSON-RPC method name
+     * @param array  $arguments JSON-RPC arguments array (positional or associative)
      *
      * @return \Minions\Server\Auth\Contracts\Handler[] Filtered list of handlers
      */

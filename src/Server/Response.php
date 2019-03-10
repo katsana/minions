@@ -4,7 +4,7 @@ namespace Minions\Server;
 
 use React\Http\Response;
 
-class Message
+class Reply
 {
     /**
      * Message status.
