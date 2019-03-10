@@ -19,14 +19,14 @@ before_script:
   - if [[ $setup = 'basic' ]]; then travis_retry composer install --prefer-dist --no-interaction --no-suggest; fi
   - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --no-suggest --prefer-stable; fi
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --no-suggest --prefer-lowest --prefer-stable; fi
-  - if [[ $setup = 'coveralls' ]]; then travis_retry composer require "satooshi/php-coveralls=~1.0" --prefer-dist --no-interaction --no-suggest --dev; fi
+  - if [[ $setup = 'coveralls' ]]; then travis_retry composer require "satooshi/php-coveralls=^2.1" --prefer-dist --no-interaction --no-suggest --dev; fi
 
 script:
   - if [[ $coverage = 'yes' ]]; then vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml; fi
   - if [[ $coverage = 'no' ]]; then vendor/bin/phpunit -c phpunit.xml.dist; fi
 
 after_script:
-  - if [[ $setup = 'coveralls' ]]; then php vendor/bin/coveralls -v; fi
+  - if [[ $setup = 'coveralls' ]]; then php vendor/bin/php-coveralls -v; fi
 
 matrix:
   include:
