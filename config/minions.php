@@ -26,7 +26,7 @@ return [
     'projects' => [
         'platform' => [
             'endpoint' => null,
-            'access_token' => null,
+            'token' => null,
             'signature' => null,
         ],
     ],
