@@ -2,11 +2,13 @@
 
 namespace Minions\Server;
 
+use Closure;
 use Datto\JsonRpc\Evaluator;
 use Datto\JsonRpc\Exception as JsonRpcException;
 use Datto\JsonRpc\Server;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Pipeline\Pipeline;
+use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Request
@@ -70,7 +72,7 @@ class Request
     protected function projectConfiguration(?string $project): array
     {
         if (is_null($project) || ! array_key_exists($project, $this->config['projects'])) {
-            return new InvalidArgumentException("Unable to find project [{$project}].");
+            throw new InvalidArgumentException("Unable to find project [{$project}].");
         }
 
         return $this->config['projects'][$project];

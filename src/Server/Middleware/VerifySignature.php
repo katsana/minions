@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Server;
+namespace Minions\Server\Middleware;
 
 use Closure;
 use Psr\Http\Message\ServerRequestInterface;

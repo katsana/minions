@@ -2,6 +2,7 @@
 
 namespace Minions\Server;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class MinionsServiceProvider extends ServiceProvider

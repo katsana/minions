@@ -9,7 +9,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Psr\Http\Message\ServerRequestInterface;
 
-class Evaluator implements DattoEvaluator
+class Evaluator
 {
     /**
      * The application implementation.
@@ -32,7 +32,7 @@ class Evaluator implements DattoEvaluator
      */
     protected $request;
 
-    public function __construct(Container $conteiner, array $services)
+    public function __construct(Container $container, array $services)
     {
         $this->container = $container;
         $this->services = $services;
