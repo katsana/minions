@@ -30,7 +30,7 @@ return [
      |
      | Define the project ID of this application so any request by this app
      | will include the project id information allowing the server to
-     | identify the request sources.
+     | identify the source of a request.
      */
 
     'id' => null,
