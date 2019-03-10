@@ -44,8 +44,7 @@ class Minion
             ],
         ]);
 
-        $promise = $client->sendAsync($message->asRequest($client));
-        $promise->then($then);
+        $client->sendAsync($message->asRequest($client))->then($then);
     }
 
     /**
