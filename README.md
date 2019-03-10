@@ -67,3 +67,20 @@ return [
     ],
 ];
 ```
+
+### Installation for Client
+
+To use Minions as client, you need to install the following via Composer:
+
+```
+composer require "graze/guzzle-jsonrpc=^3.0"
+```
+
+
+### Installation for Server
+
+To use Minions as client, you need to install the following via Composer:
+
+```
+composer require "react/http=^0.8.4"
+```
