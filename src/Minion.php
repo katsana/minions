@@ -31,8 +31,10 @@ class Minion
         $config = $this->projectConfiguration($project);
 
         $client = Client::factory($config['endpoint'], [
-            'X-Request-ID' => $this->config['id'],
-            'Authorization' => "Token {$config['token']}",
+            'headers' => [
+                'X-Request-ID' => $this->config['id'],
+                'Authorization' => "Token {$config['token']}",
+            ],
         ]);
 
         $promise = $client->sendAsync($message->asRequest($client));
