@@ -2,8 +2,8 @@
 
 namespace Minions\Server\Console\Middleware;
 
-use Minions\Server\Reply;
 use Psr\Http\Message\ServerRequestInterface;
+use React\Http\Response;
 
 class StatusPage
 {
@@ -18,7 +18,7 @@ class StatusPage
     public function __invoke(ServerRequestInterface $request, callable $next)
     {
         if ($request->getMethod() === 'GET' && $request->getUri()->getPath() === '/') {
-            return (new Reply('OK'))->asResponse();
+            return new Response(200, ['Content-Type' => 'text/plain'], 'OK');
         }
 
         return $next($request);
