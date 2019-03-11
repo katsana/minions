@@ -24,12 +24,12 @@ return [
 
     'server' => [
         'port' => env('MINION_SERVER_PORT', 8085),
-        'secure' => false,
+        'secure' => env('MINION_SERVER_SECURE', false),
         'options' => [
-            'tls' => [
-                'local_cert' => env('MINION_SERVER_TLS_CERT'),
+            'tls' => array_filter([
+                'local_cert' => env('MINION_SERVER_TLS_CERT', null),
                 // 'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_SERVER
-            ],
+            ]),
         ],
     ],
 
@@ -48,6 +48,7 @@ return [
             'endpoint' => null,
             'token' => null,
             'signature' => null,
+            'options' => [],
         ],
     ],
 

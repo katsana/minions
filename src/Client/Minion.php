@@ -37,13 +37,19 @@ class Minion
     {
         $config = $this->projectConfiguration($project);
 
-        $client = Client::factory($config['endpoint'], [
+        $options = [];
+
+        if (\is_array($config['options']) && ! empty($config['options'])) {
+            $options = $config['options'];
+        }
+
+        $client = Client::factory($config['endpoint'], \array_merge($options, [
             'headers' => [
                 'X-Request-ID' => $this->config['id'],
                 'Authorization' => "Token {$config['token']}",
                 'HTTP_X_SIGNATURE' => $message->signature($config['signature']),
             ],
-        ]);
+        ]));
 
         $response = $client->send($message->asRequest($client));
 
@@ -59,7 +65,7 @@ class Minion
      */
     protected function projectConfiguration(?string $project): array
     {
-        if (is_null($project) || ! array_key_exists($project, $this->config['projects'])) {
+        if (\is_null($project) || ! \array_key_exists($project, $this->config['projects'])) {
             throw new InvalidArgumentException("Unable to find project [{$project}].");
         }
 
