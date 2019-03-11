@@ -8,6 +8,7 @@ use Datto\JsonRpc\Server;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Psr\Http\Message\ServerRequestInterface;
+use ReflectionException;
 
 class Evaluator implements DattoEvaluator
 {
@@ -65,7 +66,7 @@ class Evaluator implements DattoEvaluator
 
         try {
             $handler = $this->container->make($this->services[$method]);
-        } catch (BindingResolutionException $e) {
+        } catch (BindingResolutionException | ReflectionException $e) {
             throw new MethodException();
         }
 
