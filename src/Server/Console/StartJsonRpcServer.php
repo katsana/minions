@@ -18,7 +18,7 @@ class StartJsonRpcServer extends Command
      *
      * @var string
      */
-    protected $signature = 'minions:serve {--port=8080}';
+    protected $signature = 'minions:serve';
 
     /**
      * Execute the console command.
@@ -27,7 +27,12 @@ class StartJsonRpcServer extends Command
      */
     public function handle()
     {
-        $port = $this->option('port');
+        $config = $this->laravel->get('config')->get('minions.server', [
+            'port' => 8085,
+            'secure' => false,
+        ]);
+
+        $port = $config['port'];
 
         $loop = EventLoop::create();
 
@@ -43,9 +48,15 @@ class StartJsonRpcServer extends Command
             $this->error($e->getMessage());
         });
 
-        $server->listen(new SocketServer($port, $loop));
+        if ($config['secure'] === true) {
+            $server->listen(new SocketServer("tls://127.0.0.1:{$config['port']}", $loop, $config['options']));
 
-        echo "Server running at http://127.0.0.1:{$port}\n";
+            echo "Server running at https://127.0.0.1:{$config['port']}\n";
+        } else {
+            $server->listen(new SocketServer("127.0.0.1:{$config['port']}", $loop));
+
+            echo "Server running at http://127.0.0.1:{$config['port']}\n";
+        }
 
         $loop->run();
     }
