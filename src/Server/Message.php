@@ -5,6 +5,8 @@ namespace Minions\Server;
 use Illuminate\Support\Str;
 use Minions\Exceptions\InvalidSignature;
 use Minions\Exceptions\InvalidToken;
+use Minions\Exceptions\MissingSignature;
+use Minions\Exceptions\MissingToken;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Message
