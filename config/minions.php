@@ -23,6 +23,7 @@ return [
      */
 
     'server' => [
+        'host' => env('MINION_SERVER_HOST', '127.0.0.1'),
         'port' => env('MINION_SERVER_PORT', 8085),
         'secure' => env('MINION_SERVER_SECURE', false),
         'options' => [
