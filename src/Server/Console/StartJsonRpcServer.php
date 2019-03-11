@@ -73,7 +73,7 @@ class StartJsonRpcServer extends Command
      */
     protected function bootSecuredServer(HttpServer $server, LoopInterface $loop, string $hostname, array $options): void
     {
-        $server->listen(new SocketServer("tls://{$host}:{$port}", $loop, $config['options']));
+        $server->listen(new SocketServer("tls://{$hostname}", $loop, $options));
 
         echo "Server running at https://{$hostname}\n";
     }
