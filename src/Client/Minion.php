@@ -39,7 +39,7 @@ class Minion
 
         $options = [];
 
-        if (\is_array($config['options']) && ! empty($config['options'])) {
+        if (\is_array($config['options'] ?? null) && ! empty($config['options'])) {
             $options = $config['options'];
         }
 
