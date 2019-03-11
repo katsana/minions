@@ -8,6 +8,6 @@ class ProjectNotFound extends JsonRpcException
 {
     public function __construct(?string $project)
     {
-        parent::__construct("Unable to find project: {$project}", -32600);
+        parent::__construct('Unable to find project: '.($project ?? 'NULL'), -32600);
     }
 }
