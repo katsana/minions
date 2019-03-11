@@ -4,10 +4,10 @@ namespace Minions\Server\Console;
 
 use Error;
 use Exception;
-use React\EventLoop\LoopInterface;
 use Illuminate\Console\Command;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\Factory as EventLoop;
+use React\EventLoop\LoopInterface;
 use React\Http\Server as HttpServer;
 use React\Socket\Server as SocketServer;
 use Throwable;
@@ -33,13 +33,13 @@ class StartJsonRpcServer extends Command
             'secure' => false,
         ]);
 
-        $host = $config['host'] ? '0.0.0.0';
+        $host = $config['host'] ?? '0.0.0.0';
         $port = $config['port'];
 
         $loop = EventLoop::create();
 
         $server = new HttpServer(function (ServerRequestInterface $request) {
-            echo \date('Y-m-d H:i:s') . ' ' . $request->getMethod() . ' ' . $request->getUri() . PHP_EOL;
+            echo \date('Y-m-d H:i:s').' '.$request->getMethod().' '.$request->getUri().PHP_EOL;
 
             try {
                 return $this->laravel->make('minions.request')->handle($request)->asResponse();
@@ -64,10 +64,11 @@ class StartJsonRpcServer extends Command
     /**
      * Boot HTTPS Server.
      *
-     * @param  \React\Http\Server    $server
-     * @param  \React\EventLoop\LoopInterface $loop
-     * @param  string        $hostname
-     * @param  array         $options
+     * @param \React\Http\Server             $server
+     * @param \React\EventLoop\LoopInterface $loop
+     * @param string                         $hostname
+     * @param array                          $options
+     *
      * @return void
      */
     protected function bootSecuredServer(HttpServer $server, LoopInterface $loop, string $hostname, array $options): void
@@ -80,9 +81,10 @@ class StartJsonRpcServer extends Command
     /**
      * Boot HTTPS Server.
      *
-     * @param  \React\Http\Server    $server
-     * @param  \React\EventLoop\LoopInterface $loop
-     * @param  string        $hostname
+     * @param \React\Http\Server             $server
+     * @param \React\EventLoop\LoopInterface $loop
+     * @param string                         $hostname
+     *
      * @return void
      */
     protected function bootUnsecuredServer(HttpServer $server, LoopInterface $loop, string $hostname): void
