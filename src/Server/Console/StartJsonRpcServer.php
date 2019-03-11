@@ -49,13 +49,13 @@ class StartJsonRpcServer extends Command
         });
 
         if ($config['secure'] === true) {
-            $server->listen(new SocketServer("tls://127.0.0.1:{$config['port']}", $loop, $config['options']));
+            $server->listen(new SocketServer("tls://0.0.0.0:{$config['port']}", $loop, $config['options']));
 
-            echo "Server running at https://127.0.0.1:{$config['port']}\n";
+            echo "Server running at https://0.0.0.0:{$config['port']}\n";
         } else {
-            $server->listen(new SocketServer("127.0.0.1:{$config['port']}", $loop));
+            $server->listen(new SocketServer("0.0.0.0:{$config['port']}", $loop));
 
-            echo "Server running at http://127.0.0.1:{$config['port']}\n";
+            echo "Server running at http://0.0.0.0:{$config['port']}\n";
         }
 
         $loop->run();
