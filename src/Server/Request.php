@@ -48,9 +48,10 @@ class Request
     public function handle(ServerRequestInterface $request)
     {
         $project = $request->getHeader('X-Request-ID')[0] ?? null;
-        $config = $this->projectConfiguration($project);
 
         try {
+            $config = $this->projectConfiguration($project);
+
             return (new Pipeline($this->container))
                     ->send(new Message($project, $config, $request))
                     ->through([
