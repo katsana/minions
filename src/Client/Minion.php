@@ -2,11 +2,10 @@
 
 namespace Minions\Client;
 
-use Closure;
-use React\Promise\Deferred;
-use InvalidArgumentException;
 use Graze\GuzzleHttp\JsonRpc\Client;
 use Graze\GuzzleHttp\JsonRpc\Exception\RequestException;
+use InvalidArgumentException;
+use React\Promise\Deferred;
 
 class Minion
 {
