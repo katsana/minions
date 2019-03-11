@@ -81,13 +81,15 @@ class Message
      */
     public function validateRequestToken(): bool
     {
-        if (! $this->request->hasHeader('Authorization')) {
+        $projectToken = $this->config['token'] ?? null;
+
+        if (! $this->request->hasHeader('Authorization') || empty($projectToken)) {
             throw new MissingToken();
         } else {
             $header = $this->request->getHeader('Authorization')[0];
 
             if (Str::startsWith($header, 'Token ')) {
-                if (! \hash_equals(Str::substr($header, 6), $this->config['token'])) {
+                if (! \hash_equals(Str::substr($header, 6), $projectToken)) {
                     throw new InvalidToken();
                 }
             }
@@ -103,7 +105,9 @@ class Message
      */
     public function validateRequestSignature(): bool
     {
-        if (! $this->request->hasHeader('HTTP_X_SIGNATURE')) {
+        $projectSignature = $this->config['signature'] ?? null;
+
+        if (! $this->request->hasHeader('HTTP_X_SIGNATURE') || empty($projectSignature)) {
             throw new MissingSignature();
         } else {
             $header = \explode(',', $this->request->getHeader('HTTP_X_SIGNATURE')[0]);
@@ -112,7 +116,7 @@ class Message
 
             $body = \json_encode(\json_decode($this->body(), true));
 
-            $expected = \hash_hmac('sha256', "{$timestamp}.{$body}", $this->config['signature']);
+            $expected = \hash_hmac('sha256', "{$timestamp}.{$body}", $projectSignature);
 
             if (! \hash_equals($expected, $signature)) {
                 throw new InvalidSignature();

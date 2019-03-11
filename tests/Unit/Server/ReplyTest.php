@@ -10,17 +10,17 @@ class ReplyTest extends TestCase
     /** @test */
     public function it_can_be_initiated()
     {
-        $reply = new Reply('hello world');
+        $reply = new Reply('{"jsonrpc":"2.0","id":1,"result":3}');
 
         $this->assertSame(200, $reply->status());
         $this->assertSame(['Content-Type' => 'application/json'], $reply->headers());
-        $this->assertSame('hello world', $reply->body());
+        $this->assertSame('{"jsonrpc":"2.0","id":1,"result":3}', $reply->body());
     }
 
     /** @test */
     public function it_can_be_converted_to_psr7_response()
     {
-        $reply = new Reply('hello world');
+        $reply = new Reply('{"jsonrpc":"2.0","id":1,"result":3}');
         $response = $reply->asResponse();
 
         $this->assertInstanceOf('React\Http\Response', $response);

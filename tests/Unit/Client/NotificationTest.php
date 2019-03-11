@@ -43,7 +43,7 @@ class NotificationTest extends TestCase
     {
         Carbon::setTestNow(Carbon::createFromTimestamp(1546300800));
         $message = new Notification('math/add', [1, 2]);
-
+        // '{"jsonrpc":"2.0","method":"math/add","params":[1,2]}'
         $this->assertSame(
             't=1546300800,v1=3c1faf9b318b33b609f612e5e36cd5117fae4f4caf38c6141782b392ed3343d2', $message->signature('secret')
         );
