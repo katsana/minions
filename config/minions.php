@@ -13,8 +13,17 @@ return [
 
     'id' => null,
 
+    /*
+     |--------------------------------------------------------------------------
+     | Server Configuration
+     |--------------------------------------------------------------------------
+     |
+     | Define the server configuration including port number, SSL support etc.
+     |
+     */
+
     'server' => [
-        'port' => 8085,
+        'port' => env('MINION_SERVER_PORT', 8085),
         'secure' => false,
         'options' => [
             'tls' => [
