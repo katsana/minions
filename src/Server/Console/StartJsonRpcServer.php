@@ -28,13 +28,11 @@ class StartJsonRpcServer extends Command
      */
     public function handle()
     {
-        $config = $this->laravel->get('config')->get('minions.server', [
-            'port' => 8085,
-            'secure' => false,
-        ]);
+        $config = \array_merge([
+            'host' => '0.0.0.0', 'port' => 8085, 'secure' => false,
+        ], $this->laravel->get('config')->get('minions.server', []));
 
-        $host = $config['host'] ?? '0.0.0.0';
-        $port = $config['port'];
+        $hostname = "{$config['host']}:{$config['port']}";
 
         $loop = EventLoop::create();
 
@@ -53,9 +51,9 @@ class StartJsonRpcServer extends Command
         });
 
         if ($config['secure'] === true) {
-            $this->bootSecuredServer($server, $loop, "{$host}:{$port}", $config['options'] ?? []);
+            $this->bootSecuredServer($server, $loop, $hostname, $config['options'] ?? []);
         } else {
-            $this->bootUnsecuredServer($server, $loop, "{$host}:{$port}");
+            $this->bootUnsecuredServer($server, $loop, $hostname);
         }
 
         $loop->run();
@@ -89,7 +87,7 @@ class StartJsonRpcServer extends Command
      */
     protected function bootUnsecuredServer(HttpServer $server, LoopInterface $loop, string $hostname): void
     {
-        $server->listen(new SocketServer("{$hostname}", $loop));
+        $server->listen(new SocketServer($hostname, $loop));
 
         echo "Server running at http://{$hostname}\n";
     }
