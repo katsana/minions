@@ -107,9 +107,10 @@ class Message
             $header = \explode(',', $this->request->getHeader('HTTP_X_SIGNATURE')[0]);
             $timestamp = \explode('=', $header[0])[1];
             $signature = \explode('=', $header[1])[1];
-            $body = (string) $this->request->getBody();
 
-            $expected = \hash_hmac('sha256', "{$timestamp}.{$this->body()}", $this->config['signature']);
+            $body = \json_encode(\json_decode($this->body(), true));
+
+            $expected = \hash_hmac('sha256', "{$timestamp}.{$body}", $this->config['signature']);
 
             if (! \hash_equals($expected, $signature)) {
                 throw new InvalidSignature();
