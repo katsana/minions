@@ -36,15 +36,17 @@ class StartJsonRpcServer extends Command
 
         $loop = EventLoop::create();
 
-        $server = new HttpServer(function (ServerRequestInterface $request) {
-            echo \date('Y-m-d H:i:s').' '.$request->getMethod().' '.$request->getUri().PHP_EOL;
-
-            try {
-                return $this->laravel->make('minions.request')->handle($request)->asResponse();
-            } catch (Exception | Throwable | Error $e) {
-                $this->error($e->getMessage());
-            }
-        });
+        $server = new HttpServer([
+            new Middleware\LogRequest(),
+            new Middleware\StatusPage(),
+            function (ServerRequestInterface $request) {
+                try {
+                    return $this->laravel->make('minions.request')->handle($request)->asResponse();
+                } catch (Exception | Throwable | Error $e) {
+                    $this->error($e->getMessage());
+                }
+            },
+        ]);
 
         $server->on('error', function ($e) {
             $this->error($e->getMessage());
