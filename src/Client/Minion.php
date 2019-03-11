@@ -3,8 +3,10 @@
 namespace Minions\Client;
 
 use Closure;
-use Graze\GuzzleHttp\JsonRpc\Client;
+use React\Promise\Deferred;
 use InvalidArgumentException;
+use Graze\GuzzleHttp\JsonRpc\Client;
+use Graze\GuzzleHttp\JsonRpc\Exception\RequestException;
 
 class Minion
 {
@@ -31,10 +33,11 @@ class Minion
      * @param string                       $project
      * @param \Minions\Client\Notification $message
      *
-     * @return void
+     * @return \React\Promise\Promise
      */
-    public function broadcast(string $project, Notification $message, Closure $then): void
+    public function broadcast(string $project, Notification $message)
     {
+        $deferred = Deferred();
         $config = $this->projectConfiguration($project);
 
         $options = [];
@@ -44,6 +47,7 @@ class Minion
         }
 
         $client = Client::factory($config['endpoint'], \array_merge($options, [
+            'rpc_error' => true,
             'headers' => [
                 'X-Request-ID' => $this->config['id'],
                 'Authorization' => "Token {$config['token']}",
@@ -51,9 +55,15 @@ class Minion
             ],
         ]));
 
-        $response = $client->send($message->asRequest($client));
+        try {
+            $response = $client->send($message->asRequest($client));
+        } catch (RequestException $e) {
+            $deferred->reject($e);
+        }
 
-        $then($response);
+        $deferred->resolve($response);
+
+        return $deferred->promise();
     }
 
     /**
