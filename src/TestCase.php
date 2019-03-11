@@ -9,7 +9,7 @@ abstract class TestCase extends Testing
     /**
      * Get package aliases.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */
@@ -23,7 +23,7 @@ abstract class TestCase extends Testing
     /**
      * Get package providers.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
      *
      * @return array
      */

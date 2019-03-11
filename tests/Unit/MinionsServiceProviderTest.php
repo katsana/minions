@@ -2,8 +2,8 @@
 
 namespace Minions\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Minions\MinionsServiceProvider;
+use PHPUnit\Framework\TestCase;
 
 class MinionsServiceProviderTest extends TestCase
 {

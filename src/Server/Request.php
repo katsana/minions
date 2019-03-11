@@ -7,7 +7,7 @@ use Datto\JsonRpc\Exceptions\Exception as JsonRpcException;
 use Datto\JsonRpc\Server;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Pipeline\Pipeline;
-use InvalidArgumentException;
+use Minions\Exceptions\ProjectNotFound;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Request
@@ -74,7 +74,7 @@ class Request
     protected function projectConfiguration(?string $project): array
     {
         if (is_null($project) || ! array_key_exists($project, $this->config['projects'])) {
-            throw new InvalidArgumentException("Unable to find project [{$project}].");
+            throw new ProjectNotFound($project);
         }
 
         return $this->config['projects'][$project];
