@@ -13,13 +13,6 @@ class MinionsServiceProviderTest extends TestCase
         $provider = new MinionsServiceProvider(null);
 
         $this->assertTrue($provider->isDeferred());
-    }
-
-    /** @test */
-    public function it_only_loaded_when_minions_service_provider_has_been_loaded()
-    {
-        $provider = new MinionsServiceProvider(null);
-
-        $this->assertSame(['Minions\MinionsServiceProvider'], $provider->when());
+        $this->assertSame(['minions.evaluator', 'minions.request'], $provider->provides());
     }
 }

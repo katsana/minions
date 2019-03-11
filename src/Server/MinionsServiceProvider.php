@@ -49,10 +49,8 @@ class MinionsServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function when()
+    public function provides()
     {
-        return [
-            'Minions\MinionsServiceProvider',
-        ];
+        return ['minions.evaluator', 'minions.request'];
     }
 }

@@ -2,10 +2,9 @@
 
 namespace Minions\Tests\Feature;
 
-use Minions\Minion;
-use Minions\Tests\TestCase;
+use Minions\Tests\ServerTestCase;
 
-class MinionTest extends TestCase
+class MinionsServiceProviderTest extends ServerTestCase
 {
     /**
      * Define environment setup.
@@ -22,10 +21,8 @@ class MinionTest extends TestCase
     }
 
     /** @test */
-    public function it_can_resolve_the_facade()
+    public function it_register_the_services()
     {
-        $minion = Minion::getFacadeRoot();
-
-        $this->assertInstanceOf('Minions\Client\Minion', $minion);
+        $this->assertInstanceOf('Minions\Client\Minion', $this->app['minions.client']);
     }
 }

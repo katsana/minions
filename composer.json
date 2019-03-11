@@ -16,7 +16,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Minions\\Tests\\": "src/"
+            "Minions\\Tests\\": "tests/"
         }
     },
     "require": {
