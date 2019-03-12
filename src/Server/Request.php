@@ -74,7 +74,7 @@ class Request
      */
     protected function projectConfiguration(?string $project): array
     {
-        if (is_null($project) || ! array_key_exists($project, $this->config['projects'])) {
+        if (\is_null($project) || ! \array_key_exists($project, $this->config['projects'])) {
             throw new ProjectNotFound($project);
         }
 
@@ -101,7 +101,7 @@ class Request
             $error['data'] = $data;
         }
 
-        return new Reply(json_encode([
+        return new Reply(\json_encode([
             'jsonrpc' => Server::VERSION,
             'id' => null,
             'error' => $error,

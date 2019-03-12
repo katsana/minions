@@ -60,7 +60,7 @@ class Evaluator implements DattoEvaluator
      */
     public function evaluate($method, $arguments)
     {
-        if (! array_key_exists($method, $this->services)) {
+        if (! \array_key_exists($method, $this->services)) {
             throw new MethodException();
         }
 
