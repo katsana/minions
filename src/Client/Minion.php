@@ -6,6 +6,7 @@ use Graze\GuzzleHttp\JsonRpc\Client;
 use Graze\GuzzleHttp\JsonRpc\Exception\RequestException;
 use InvalidArgumentException;
 use React\Promise\Deferred;
+use Throwable;
 
 class Minion
 {
@@ -36,7 +37,7 @@ class Minion
      */
     public function broadcast(string $project, Notification $message)
     {
-        $deferred = Deferred();
+        $deferred = new Deferred();
         $config = $this->projectConfiguration($project);
 
         $options = [];
@@ -56,11 +57,13 @@ class Minion
 
         try {
             $response = $client->send($message->asRequest($client));
+
+            $deferred->resolve($response);
         } catch (RequestException $e) {
             $deferred->reject($e);
+        } catch (Throwable $e) {
+            $deferred->reject($e);
         }
-
-        $deferred->resolve($response);
 
         return $deferred->promise();
     }
