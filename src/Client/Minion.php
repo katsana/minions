@@ -3,7 +3,6 @@
 namespace Minions\Client;
 
 use Graze\GuzzleHttp\JsonRpc\Client;
-use Graze\GuzzleHttp\JsonRpc\Exception\RequestException;
 use InvalidArgumentException;
 use Minions\Exceptions\ServerNotAvailable;
 use React\Promise\Deferred;
@@ -60,10 +59,10 @@ class Minion
             $response = $client->send($message->asRequest($client));
 
             $deferred->resolve($response);
-        } catch (RequestException $e) {
-            $deferred->reject($e);
-        } catch (Throwable $e) {
+        } catch (InvalidArgumentException $e) {
             $deferred->reject(new ServerNotAvailable($config['endpoint']));
+        } catch (Throwable $e) {
+            $deferred->reject($e);
         }
 
         return $deferred->promise();
