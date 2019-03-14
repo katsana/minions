@@ -5,9 +5,12 @@ namespace Minions\Server\Console;
 use Illuminate\Console\Command;
 use Minions\Server\Connector;
 use React\EventLoop\Factory as EventLoop;
+use Illuminate\Database\DetectsLostConnections;
 
 class StartJsonRpcServer extends Command
 {
+    use DetectsLostConnections;
+
     /**
      * The name and signature of the console command.
      *
@@ -26,12 +29,21 @@ class StartJsonRpcServer extends Command
             'host' => '0.0.0.0', 'port' => 8085, 'secure' => false,
         ], $this->laravel->get('config')->get('minions.server', []));
 
-        $loop = EventLoop::create();
+        $eventLoop = EventLoop::create();
 
-        $server = new Connector("{$config['host']}:{$config['port']}", $loop);
+        $connector = new Connector("{$config['host']}:{$config['port']}", $eventLoop);
 
-        $server->handle($this->laravel->make('minions.router'), $config);
+        $server = $connector->handle($this->laravel->make('minions.router'), $config);
 
-        $loop->run();
+        $server->on('error', function ($e) use ($eventLoop) {
+            $this->error($e->getMessage());
+
+            if ($this->causedByLostConnection($e)) {
+                $eventLoop->stop();
+                exit(0);
+            }
+        });
+
+        $eventLoop->run();
     }
 }

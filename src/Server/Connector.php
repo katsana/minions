@@ -61,17 +61,9 @@ class Connector
             new Middleware\Http\LogRequest($this->writableStream),
             new Middleware\Http\StatusPage(),
             function (ServerRequestInterface $request) use ($router) {
-                try {
-                    return $router->handle($request)->asResponse();
-                } catch (Exception | Throwable | Error $e) {
-                    $this->writableStream->write($e->getMessage());
-                }
+                return $router->handle($request)->asResponse();
             },
         ]);
-
-        $server->on('error', function ($e) {
-            $this->writableStream->write($e->getMessage());
-        });
 
         if ($config['secure'] === true) {
             $this->bootSecuredServer($server, $loop, $hostname, $config['options'] ?? []);
