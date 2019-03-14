@@ -2,9 +2,7 @@
 
 namespace Minions\Exceptions;
 
-use Datto\JsonRpc\Exceptions\Exception as JsonRpcException;
-
-class ProjectNotFound extends JsonRpcException
+class ProjectNotFound extends Exception
 {
     public function __construct(?string $project)
     {
