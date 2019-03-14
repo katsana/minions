@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Server\Console\Middleware;
+namespace Minions\Server\Middleware\Http;
 
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Response;

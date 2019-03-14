@@ -1,8 +1,8 @@
 <?php
 
-namespace Minions\Tests\Unit\Console\Middleware;
+namespace Minions\Tests\Unit\Middleware\Http;
 
-use Minions\Server\Console\Middleware\StatusPage;
+use Minions\Server\Middleware\Http\StatusPage;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 
