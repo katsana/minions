@@ -3,9 +3,9 @@
 namespace Minions\Server\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Database\DetectsLostConnections;
 use Minions\Server\Connector;
 use React\EventLoop\Factory as EventLoop;
-use Illuminate\Database\DetectsLostConnections;
 
 class StartJsonRpcServer extends Command
 {

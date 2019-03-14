@@ -2,14 +2,11 @@
 
 namespace Minions\Server;
 
-use Error;
-use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\LoopInterface;
 use React\Http\Server as HttpServer;
 use React\Socket\Server as SocketServer;
 use React\Stream\WritableResourceStream;
-use Throwable;
 
 class Connector
 {
@@ -66,9 +63,9 @@ class Connector
         ]);
 
         if ($config['secure'] === true) {
-            $this->bootSecuredServer($server, $loop, $hostname, $config['options'] ?? []);
+            $this->bootSecuredServer($server, $hostname, $config['options'] ?? []);
         } else {
-            $this->bootUnsecuredServer($server, $loop, $hostname);
+            $this->bootUnsecuredServer($server, $hostname);
         }
 
         return $server;
@@ -77,16 +74,15 @@ class Connector
     /**
      * Boot HTTPS Server.
      *
-     * @param \React\Http\Server             $server
-     * @param \React\EventLoop\LoopInterface $loop
-     * @param string                         $hostname
-     * @param array                          $options
+     * @param \React\Http\Server $server
+     * @param string             $hostname
+     * @param array              $options
      *
      * @return void
      */
-    protected function bootSecuredServer(HttpServer $server, LoopInterface $loop, string $hostname, array $options): void
+    protected function bootSecuredServer(HttpServer $server, string $hostname, array $options): void
     {
-        $server->listen(new SocketServer("tls://{$hostname}", $loop, $options));
+        $server->listen(new SocketServer("tls://{$hostname}", $this->eventLoop, $options));
 
         $this->writableStream->write("Server running at https://{$hostname}\n");
     }
@@ -94,15 +90,14 @@ class Connector
     /**
      * Boot HTTPS Server.
      *
-     * @param \React\Http\Server             $server
-     * @param \React\EventLoop\LoopInterface $loop
-     * @param string                         $hostname
+     * @param \React\Http\Server $server
+     * @param string             $hostname
      *
      * @return void
      */
-    protected function bootUnsecuredServer(HttpServer $server, LoopInterface $loop, string $hostname): void
+    protected function bootUnsecuredServer(HttpServer $server, string $hostname): void
     {
-        $server->listen(new SocketServer($hostname, $loop));
+        $server->listen(new SocketServer($hostname, $this->eventLoop));
 
         $this->writableStream->write("Server running at http://{$hostname}\n");
     }
