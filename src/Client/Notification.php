@@ -5,7 +5,7 @@ namespace Minions\Client;
 use Carbon\Carbon;
 use Graze\GuzzleHttp\JsonRpc\ClientInterface;
 
-class Notification
+class Notification implements MessageInterface
 {
     /**
      * Method name.

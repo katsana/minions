@@ -13,10 +13,11 @@ class ExceptionHandler
      * Handle exception occured during request and check if we can transform it
      * to JSON-RPC response.
      *
-     * @param  \Throwable $exception
-     * @return \Minions\Server\Reply
+     * @param \Throwable $exception
      *
      * @throws \Throwable
+     *
+     * @return \Minions\Server\Reply
      */
     public function handle($exception): Reply
     {

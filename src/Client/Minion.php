@@ -30,12 +30,12 @@ class Minion
     /**
      * Broadcast message.
      *
-     * @param string                       $project
-     * @param \Minions\Client\Notification $message
+     * @param string                           $project
+     * @param \Minions\Client\MessageInterface $message
      *
      * @return \React\Promise\Promise
      */
-    public function broadcast(string $project, Notification $message)
+    public function broadcast(string $project, MessageInterface $message)
     {
         $deferred = new Deferred();
         $config = $this->projectConfiguration($project);
