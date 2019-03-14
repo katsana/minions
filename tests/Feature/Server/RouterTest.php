@@ -5,7 +5,7 @@ namespace Minions\Tests\Feature\Server;
 use Minions\Tests\ServerTestCase;
 use Mockery as m;
 
-class RequestTest extends ServerTestCase
+class RouterTest extends ServerTestCase
 {
     /** @test */
     public function it_can_dispatch_the_request()
@@ -34,7 +34,7 @@ class RequestTest extends ServerTestCase
             ])
             ->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2],"id":3}');
 
-        $reply = $this->app['minions.request']->handle($request);
+        $reply = $this->app['minions.router']->handle($request);
 
         $this->assertInstanceOf('Minions\Server\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"result":3}', $reply->body());
@@ -67,7 +67,7 @@ class RequestTest extends ServerTestCase
             ])
             ->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2],"id":3}');
 
-        $reply = $this->app['minions.request']->handle($request);
+        $reply = $this->app['minions.router']->handle($request);
 
         $this->assertInstanceOf('Minions\Server\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Method not found"}}', $reply->body());
@@ -100,7 +100,7 @@ class RequestTest extends ServerTestCase
             ])
             ->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2],"id":3}');
 
-        $reply = $this->app['minions.request']->handle($request);
+        $reply = $this->app['minions.router']->handle($request);
 
         $this->assertInstanceOf('Minions\Server\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Method not found"}}', $reply->body());
@@ -115,7 +115,7 @@ class RequestTest extends ServerTestCase
 
         $request->shouldReceive('getHeader')->once()->with('X-Request-ID')->andReturn(['hello']);
 
-        $reply = $this->app['minions.request']->handle($request);
+        $reply = $this->app['minions.router']->handle($request);
 
         $this->assertInstanceOf('Minions\Server\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":null,"error":{"code":-32600,"message":"Unable to find project: hello"}}', $reply->body());

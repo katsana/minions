@@ -30,7 +30,7 @@ class StartJsonRpcServer extends Command
 
         $server = new Connector("{$config['host']}:{$config['port']}", $loop);
 
-        $server->handle($this->laravel->make('minions.request'), $config);
+        $server->handle($this->laravel->make('minions.router'), $config);
 
         $loop->run();
     }

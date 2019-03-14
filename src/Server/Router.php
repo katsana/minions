@@ -9,7 +9,7 @@ use Minions\Exceptions\ProjectNotFound;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
-class Request
+class Router
 {
     /**
      * The application implementation.

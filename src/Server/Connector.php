@@ -50,12 +50,12 @@ class Connector
     /**
      * Create HTTP Server.
      *
-     * @param \Minions\Server\Request $router
-     * @param array                   $config
+     * @param \Minions\Server\Router $router
+     * @param array                  $config
      *
      * @return \React\Http\Server
      */
-    public function handle(Request $router, array $config): HttpServer
+    public function handle(Router $router, array $config): HttpServer
     {
         $server = new HttpServer([
             new Middleware\Http\LogRequest($this->writableStream),

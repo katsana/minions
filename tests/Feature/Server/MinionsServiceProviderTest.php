@@ -24,6 +24,6 @@ class MinionsServiceProviderTest extends ServerTestCase
     public function it_register_the_services()
     {
         $this->assertInstanceOf('Minions\Server\Evaluator', $this->app['minions.evaluator']);
-        $this->assertInstanceOf('Minions\Server\Request', $this->app['minions.request']);
+        $this->assertInstanceOf('Minions\Server\Router', $this->app['minions.router']);
     }
 }

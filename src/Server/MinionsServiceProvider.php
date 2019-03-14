@@ -27,8 +27,8 @@ class MinionsServiceProvider extends ServiceProvider
             return new Evaluator($app, $app->make('config')->get('minions.services'));
         });
 
-        $this->app->singleton('minions.request', function (Application $app) {
-            return new Request($app, $app->make('config')->get('minions'));
+        $this->app->singleton('minions.router', function (Application $app) {
+            return new Router($app, $app->make('config')->get('minions'));
         });
     }
 
