@@ -9,6 +9,15 @@ use Illuminate\Validation\ValidationException;
 
 class ExceptionHandler
 {
+    /**
+     * Handle exception occured during request and check if we can transform it
+     * to JSON-RPC response.
+     *
+     * @param  \Throwable $exception
+     * @return \Minions\Server\Reply
+     *
+     * @throws \Throwable
+     */
     public function handle($exception): Reply
     {
         if ($exception instanceof ModelNotFoundException) {
