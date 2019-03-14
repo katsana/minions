@@ -3,13 +3,11 @@
 namespace Minions\Server;
 
 use Datto\JsonRpc\Evaluator;
-use Datto\JsonRpc\Exceptions\Exception as JsonRpcException;
-use Datto\JsonRpc\Server;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Pipeline\Pipeline;
-use Illuminate\Validation\ValidationException;
 use Minions\Exceptions\ProjectNotFound;
 use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 
 class Request
 {
@@ -61,10 +59,8 @@ class Request
                     ])->then(function (Message $message) {
                         return $this->container->make('minions.evaluator')->handle($message);
                     });
-        } catch (ValidationException $exception) {
-            return $this->handleValidationException($exception);
-        } catch (JsonRpcException $exception) {
-            return $this->handleJsonRpcException($exception);
+        } catch (Throwable $exception) {
+            return (new ExceptionHandler())->handle($exception);
         }
     }
 
@@ -82,59 +78,5 @@ class Request
         }
 
         return $this->config['projects'][$project];
-    }
-
-    /**
-     * Handle Json-RPC Exception.
-     *
-     * @param \Datto\JsonRpc\Exceptions\Exception $exception
-     *
-     * @return \Minions\Server\Reply
-     */
-    protected function handleJsonRpcException(JsonRpcException $exception): Reply
-    {
-        $error = [
-            'code' => $exception->getCode(),
-            'message' => $exception->getMessage(),
-        ];
-
-        $data = $exception->getData();
-
-        if ($data !== null) {
-            $error['data'] = $data;
-        }
-
-        return new Reply(\json_encode([
-            'jsonrpc' => Server::VERSION,
-            'id' => null,
-            'error' => $error,
-        ]));
-    }
-
-    /**
-     * Handle Exception.
-     *
-     * @param \Illuminate\Validation\ValidationException $exception
-     *
-     * @return \Minions\Server\Reply
-     */
-    protected function handleValidationException(ValidationException $exception): Reply
-    {
-        $error = [
-            'code' => -32602,
-            'message' => $exception->getMessage(),
-        ];
-
-        $data = $exception->errors();
-
-        if ($data !== null) {
-            $error['data'] = $data;
-        }
-
-        return new Reply(\json_encode([
-            'jsonrpc' => Server::VERSION,
-            'id' => null,
-            'error' => $error,
-        ]));
     }
 }
