@@ -46,7 +46,7 @@ class Minion
             $options = $config['options'];
         }
 
-        $client = Client::factory($config['endpoint'], \array_merge($options, [
+        $client = $this->createClient($config['endpoint'], \array_merge($options, [
             'rpc_error' => true,
             'headers' => [
                 'X-Request-ID' => $this->config['id'],
@@ -66,6 +66,19 @@ class Minion
         }
 
         return $deferred->promise();
+    }
+
+    /**
+     * Create a new client using factory.
+     *
+     * @param string $endpoint
+     * @param array  $options
+     *
+     * @return \Graze\GuzzleHttp\JsonRpc\Client
+     */
+    public function createClient(string $endpoint, array $options): Client
+    {
+        return Client::factory($endpoint, $options);
     }
 
     /**
