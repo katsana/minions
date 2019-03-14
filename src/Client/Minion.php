@@ -3,10 +3,10 @@
 namespace Minions\Client;
 
 use Graze\GuzzleHttp\JsonRpc\Client;
-use InvalidArgumentException;
+use Minions\Exceptions\ClientHasError;
+use Minions\Exceptions\ServerHasError;
 use Minions\Exceptions\ServerNotAvailable;
 use React\Promise\Deferred;
-use Throwable;
 
 class Minion
 {
@@ -59,9 +59,17 @@ class Minion
             $response = $client->send($message->asRequest($client));
 
             $deferred->resolve($response);
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $deferred->reject(new ServerNotAvailable($config['endpoint']));
-        } catch (Throwable $e) {
+        } catch (\Graze\GuzzleHttp\JsonRpc\Exception\ClientException $e) {
+            $deferred->reject(new ClientHasError(
+                $e->getMessage(), $e->getRequest(), $e->getResponse(), $e->getPrevious()
+            ));
+        } catch (\Graze\GuzzleHttp\JsonRpc\Exception\ServerException $e) {
+            $deferred->reject(new ServerHasError(
+                $e->getMessage(), $e->getRequest(), $e->getResponse(), $e->getPrevious()
+            ));
+        } catch (\Throwable $e) {
             $deferred->reject($e);
         }
 
