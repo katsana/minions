@@ -35,6 +35,16 @@ class Minion
     }
 
     /**
+     * Execute the loop.
+     *
+     * @return void
+     */
+    public function run(): void
+    {
+        $this->eventLoop->run();
+    }
+
+    /**
      * Broadcast message.
      *
      * @param string                           $project

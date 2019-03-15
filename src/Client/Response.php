@@ -2,6 +2,8 @@
 
 namespace Minions\Client;
 
+use Minions\Exceptions\ClientHasError;
+use Minions\Exceptions\ServerHasError;
 use Psr\Http\Message\ResponseInterface as ResponseContract;
 
 class Response implements ResponseInterface
@@ -30,7 +32,7 @@ class Response implements ResponseInterface
         $this->original = $response;
 
         if (\in_array($response->getStatusCode(), [200, 201, 204])) {
-            $this->content = json_decode($response, true);
+            $this->content = json_decode((string) $response->getBody(), true);
         }
     }
 
@@ -39,13 +41,13 @@ class Response implements ResponseInterface
      *
      * @return $this
      */
-    public function validate()
+    public function validate(MessageInterface $message)
     {
         if (! \is_null($errorCode = $this->getRpcErrorCode())) {
             if (\in_array($errorCode, [-32600, -32601, -32602, -32700])) {
-                new ClientHasError("[$errorCode] {$this->getRpcErrorMessage()}", $errorCode, $this);
+                throw new ClientHasError($this->getRpcErrorMessage(), $errorCode, $this, $message->method());
             } else {
-                new ServerHasError("[$errorCode] {$this->getRpcErrorMessage()}", $errorCode, $this);
+                throw new ServerHasError($this->getRpcErrorMessage(), $errorCode, $this, $message->method());
             }
         }
 

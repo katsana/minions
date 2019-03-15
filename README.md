@@ -102,7 +102,7 @@ return [
 To use Minions as client, you need to install the following via Composer:
 
 ```
-composer require "graze/guzzle-jsonrpc=^3.0"
+composer require "clue/buzz-react=^2.5"
 ```
 
 
