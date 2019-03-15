@@ -30,7 +30,7 @@ class Reply
      */
     public function status(): int
     {
-        return 200;
+        return \is_null($this->body) ? 204 : 200;
     }
 
     /**
