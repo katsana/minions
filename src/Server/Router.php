@@ -3,6 +3,7 @@
 namespace Minions\Server;
 
 use Datto\JsonRpc\Evaluator;
+use ErrorException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Pipeline\Pipeline;
 use Minions\Exceptions\ProjectNotFound;
@@ -59,7 +60,7 @@ class Router
                     ])->then(function (Message $message) {
                         return $this->container->make('minions.evaluator')->handle($message);
                     });
-        } catch (Throwable $exception) {
+        } catch (ErrorException | Throwable $exception) {
             return (new ExceptionHandler())->handle($exception);
         }
     }

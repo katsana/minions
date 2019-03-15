@@ -29,14 +29,16 @@ class StartJsonRpcServer extends Command
             'host' => '0.0.0.0', 'port' => 8085, 'secure' => false,
         ], $this->laravel->get('config')->get('minions.server', []));
 
+        $monolog = $this->laravel->make('log');
         $eventLoop = EventLoop::create();
 
         $connector = new Connector("{$config['host']}:{$config['port']}", $eventLoop);
 
         $server = $connector->handle($this->laravel->make('minions.router'), $config);
 
-        $server->on('error', function ($e) use ($eventLoop) {
+        $server->on('error', function ($e) use ($eventLoop, $monolog) {
             $this->error($e->getMessage());
+            $monolog->error((string) $e);
 
             if ($this->causedByLostConnection($e)) {
                 $eventLoop->stop();
