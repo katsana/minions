@@ -29,7 +29,7 @@ class ExceptionHandler
             return $this->handleJsonRpcException($exception);
         }
 
-        throw $exception;
+        return $this->handleGenericException($exception);
     }
 
     /**
@@ -110,6 +110,25 @@ class ExceptionHandler
             'jsonrpc' => Server::VERSION,
             'id' => null,
             'error' => $error,
+        ]));
+    }
+
+    /**
+     * Handle generic Exception.
+     *
+     * @param \Throwable|\Error $exception
+     *
+     * @return \Minions\Server\Reply
+     */
+    protected function handleGenericException($exception): Reply
+    {
+        return new Reply(\json_encode([
+            'jsonrpc' => Server::VERSION,
+            'id' => null,
+            'error' => [
+                'code' => -32603,
+                'message' => get_class($exception)." - ".$exception->getMessage(),
+            ],
         ]));
     }
 }
