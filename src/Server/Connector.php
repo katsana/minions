@@ -82,7 +82,7 @@ class Connector
     {
         $server->listen(new SocketServer("tls://{$this->hostname}", $this->eventLoop, $options));
 
-        $this->writableStream->write("Server running at https://{$hostname}\n");
+        $this->writableStream->write("Server running at https://{$this->hostname}\n");
     }
 
     /**
@@ -96,6 +96,6 @@ class Connector
     {
         $server->listen(new SocketServer($this->hostname, $this->eventLoop));
 
-        $this->writableStream->write("Server running at http://{$hostname}\n");
+        $this->writableStream->write("Server running at http://{$this->hostname}\n");
     }
 }
