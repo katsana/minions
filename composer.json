@@ -1,6 +1,6 @@
 {
     "name": "katsana/minions",
-    "description": "Json-RPC Communication for Laravel",
+    "description": "JSON-RPC Communication for Laravel",
     "type": "library",
     "license": "BSD-3-Clause",
     "authors": [
@@ -35,6 +35,10 @@
         "orchestra/testbench": "~3.7.0 || ~3.8.0",
         "phpunit/phpunit": "^7.5 || ^8.0",
         "react/http": "^0.8.4"
+    },
+    "suggest": {
+        "clue/buzz-react": "Allow to use Minions as JSON-RPC Client (^2.5).",
+        "react/http": "Allow to use Minions as JSON-RPC Server (^0.8.4)."
     },
     "scripts": {
         "test": [
