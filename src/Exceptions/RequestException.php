@@ -34,6 +34,7 @@ class RequestException extends RuntimeException
         parent::__construct($message, $code);
 
         $this->response = $response;
+        $this->requestMethod = $requestMethod;
     }
 
     /**

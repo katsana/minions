@@ -62,6 +62,7 @@ class Minion
             $options = $config['options'];
         }
 
+        $endpoint = $config['endpoint'];
         $browser = $this->createBrowser($options);
 
         $headers = [
@@ -71,7 +72,7 @@ class Minion
             'HTTP_X_SIGNATURE' => $message->signature($config['signature']),
         ];
 
-        return $browser->post($config['endpoint'], $headers, $message->toJson())
+        return $browser->post($endpoint, $headers, $message->toJson())
                 ->then(function (ResponseContract $response) use ($message) {
                     return (new Response($response))->validate($message);
                 });
