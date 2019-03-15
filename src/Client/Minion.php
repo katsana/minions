@@ -76,7 +76,7 @@ class Minion
      */
     public function createBrowser(array $options): Browser
     {
-        return (new Browser($loop))
+        return (new Browser($this->eventLoop))
                     ->withOptions([
                         'timeout' => $options['timeout'] ?? null,
                         'followRedirects' => false,
