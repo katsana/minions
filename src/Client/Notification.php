@@ -3,6 +3,7 @@
 namespace Minions\Client;
 
 use Carbon\Carbon;
+use Datto\JsonRpc\Client;
 
 class Notification implements MessageInterface
 {
@@ -49,7 +50,7 @@ class Notification implements MessageInterface
      */
     public function version(): string
     {
-        return '2.0';
+        return Client::VERSION;
     }
 
     /**

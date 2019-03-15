@@ -127,7 +127,7 @@ class ExceptionHandler
             'id' => null,
             'error' => [
                 'code' => -32603,
-                'message' => get_class($exception)." - ".$exception->getMessage(),
+                'message' => \get_class($exception).' - '.$exception->getMessage(),
             ],
         ]));
     }
