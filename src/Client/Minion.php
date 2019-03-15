@@ -2,11 +2,10 @@
 
 namespace Minions\Client;
 
-use Graze\GuzzleHttp\JsonRpc\Client;
-use Minions\Exceptions\ClientHasError;
-use Minions\Exceptions\ServerHasError;
-use Minions\Exceptions\ServerNotAvailable;
-use React\Promise\Deferred;
+use Clue\React\Buzz\Browser;
+use InvalidArgumentException;
+use Psr\Http\Message\ResponseInterface as ResponseContract;
+use React\EventLoop\Factory;
 
 class Minion
 {
@@ -18,6 +17,13 @@ class Minion
     protected $config = [];
 
     /**
+     * The event-loop implementation.
+     *
+     * @var \React\EventLoop\Factory
+     */
+    protected $eventLoop;
+
+    /**
      * Construct a new Minion.
      *
      * @param array $config
@@ -25,6 +31,7 @@ class Minion
     public function __construct(array $config)
     {
         $this->config = $config;
+        $this->eventLoop = Factory::create();
     }
 
     /**
@@ -46,47 +53,37 @@ class Minion
             $options = $config['options'];
         }
 
-        $client = $this->createClient($config['endpoint'], \array_merge($options, [
-            'rpc_error' => true,
-            'headers' => [
-                'X-Request-ID' => $this->config['id'],
-                'Authorization' => "Token {$config['token']}",
-                'HTTP_X_SIGNATURE' => $message->signature($config['signature']),
-            ],
-        ]));
+        $browser = $this->createBrowser($options);
 
-        try {
-            $response = $client->send($message->asRequest($client));
+        $headers = [
+            'Content-Type' => 'application/json',
+            'X-Request-ID' => $this->config['id'],
+            'Authorization' => "Token {$config['token']}",
+            'HTTP_X_SIGNATURE' => $message->signature($config['signature']),
+        ];
 
-            $deferred->resolve($response);
-        } catch (\InvalidArgumentException $e) {
-            $deferred->reject(new ServerNotAvailable($config['endpoint']));
-        } catch (\Graze\GuzzleHttp\JsonRpc\Exception\ClientException $e) {
-            $deferred->reject(new ClientHasError(
-                $e->getMessage(), $e->getRequest(), $e->getResponse(), $e->getPrevious()
-            ));
-        } catch (\Graze\GuzzleHttp\JsonRpc\Exception\ServerException $e) {
-            $deferred->reject(new ServerHasError(
-                $e->getMessage(), $e->getRequest(), $e->getResponse(), $e->getPrevious()
-            ));
-        } catch (\Throwable $e) {
-            $deferred->reject($e);
-        }
-
-        return $deferred->promise();
+        return $browser->post($config['endpoint'], $headers, $message->toJson())
+                ->then(function (ResponseContract $response) use ($message) {
+                    return (new Response($response))->validate($message);
+                });
     }
 
     /**
      * Create a new client using factory.
      *
-     * @param string $endpoint
-     * @param array  $options
+     * @param array $options
      *
-     * @return \Graze\GuzzleHttp\JsonRpc\Client
+     * @return \Clue\React\Buzz\Browser
      */
-    public function createClient(string $endpoint, array $options): Client
+    public function createBrowser(array $options): Browser
     {
-        return Client::factory($endpoint, $options);
+        return (new Browser($loop))
+                    ->withOptions([
+                        'timeout' => $options['timeout'] ?? null,
+                        'followRedirects' => false,
+                        'obeySuccessCode' => true,
+                        'streaming' => false,
+                    ]);
     }
 
     /**

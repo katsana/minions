@@ -54,16 +54,4 @@ class NotificationTest extends TestCase
             't=1546300802,v1=fb0c53f47a4664d5f45ea0ac32d5c8f6af20d82e1546aa6caae0f7e341c4e998', $message->signature('secret')
         );
     }
-
-    /** @test */
-    public function it_can_be_transform_to_request()
-    {
-        $client = m::mock('Graze\GuzzleHttp\JsonRpc\ClientInterface');
-
-        $client->shouldReceive('notification')->with('math/add', [1, 2])->andReturnSelf();
-
-        $message = new Notification('math/add', [1, 2]);
-
-        $this->assertEquals($client, $message->asRequest($client));
-    }
 }

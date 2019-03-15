@@ -3,7 +3,6 @@
 namespace Minions\Client;
 
 use Carbon\Carbon;
-use Graze\GuzzleHttp\JsonRpc\ClientInterface;
 
 class Notification implements MessageInterface
 {
@@ -34,13 +33,23 @@ class Notification implements MessageInterface
     }
 
     /**
+     * Message ID.
+     *
+     * @return null
+     */
+    public function id()
+    {
+        return null;
+    }
+
+    /**
      * Json-RPC version.
      *
      * @return string
      */
     public function version(): string
     {
-        return ClientInterface::SPEC;
+        return '2.0';
     }
 
     /**
@@ -61,18 +70,6 @@ class Notification implements MessageInterface
     public function parameters(): array
     {
         return $this->parameters;
-    }
-
-    /**
-     * Convert to request.
-     *
-     * @param \Graze\GuzzleHttp\JsonRpc\ClientInterface $client
-     *
-     * @return object
-     */
-    public function asRequest(ClientInterface $client)
-    {
-        return $client->notification($this->method(), $this->parameters());
     }
 
     /**

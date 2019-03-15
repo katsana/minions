@@ -2,9 +2,7 @@
 
 namespace Minions\Exceptions;
 
-use Graze\GuzzleHttp\JsonRpc\Exception\ServerException;
-
-class ServerHasError extends ServerException
+class ServerHasError extends RequestException
 {
     //
 }
