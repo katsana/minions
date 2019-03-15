@@ -63,9 +63,9 @@ class Connector
         ]);
 
         if ($config['secure'] === true) {
-            $this->bootSecuredServer($server, $hostname, $config['options'] ?? []);
+            $this->bootSecuredServer($server, $config['options'] ?? []);
         } else {
-            $this->bootUnsecuredServer($server, $hostname);
+            $this->bootUnsecuredServer($server);
         }
 
         return $server;
@@ -75,14 +75,12 @@ class Connector
      * Boot HTTPS Server.
      *
      * @param \React\Http\Server $server
-     * @param string             $hostname
-     * @param array              $options
      *
      * @return void
      */
-    protected function bootSecuredServer(HttpServer $server, string $hostname, array $options): void
+    protected function bootSecuredServer(HttpServer $server, array $options): void
     {
-        $server->listen(new SocketServer("tls://{$hostname}", $this->eventLoop, $options));
+        $server->listen(new SocketServer("tls://{$this->hostname}", $this->eventLoop, $options));
 
         $this->writableStream->write("Server running at https://{$hostname}\n");
     }
@@ -91,13 +89,12 @@ class Connector
      * Boot HTTPS Server.
      *
      * @param \React\Http\Server $server
-     * @param string             $hostname
      *
      * @return void
      */
-    protected function bootUnsecuredServer(HttpServer $server, string $hostname): void
+    protected function bootUnsecuredServer(HttpServer $server): void
     {
-        $server->listen(new SocketServer($hostname, $this->eventLoop));
+        $server->listen(new SocketServer($this->hostname, $this->eventLoop));
 
         $this->writableStream->write("Server running at http://{$hostname}\n");
     }
