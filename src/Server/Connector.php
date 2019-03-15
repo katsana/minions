@@ -35,9 +35,9 @@ class Connector
      * Construct a new HTTP Server connector.
      *
      * @param string                         $hostname
-     * @param \React\EventLoop\LoopInterface $loop
+     * @param \React\EventLoop\LoopInterface $eventLoop
      */
-    public function __construct(string $hostname, LoopInterface $loop)
+    public function __construct(string $hostname, LoopInterface $eventLoop)
     {
         $this->hostname = $hostname;
         $this->eventLoop = $eventLoop;
