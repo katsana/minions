@@ -44,7 +44,6 @@ class Minion
      */
     public function broadcast(string $project, MessageInterface $message)
     {
-        $deferred = new Deferred();
         $config = $this->projectConfiguration($project);
 
         $options = [];
