@@ -35,4 +35,20 @@ class StatusPageTest extends TestCase
         $this->assertSame(['Content-Type' => ['text/plain']], $response->getHeaders());
         $this->assertSame('OK', (string) $response->getBody());
     }
+
+    /** @test */
+    public function it_can_pass_through_middleware()
+    {
+        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
+
+        $request->shouldReceive('getMethod')->once()->andReturn('POST');
+
+        $middleware = new StatusPage();
+
+        $response = $middleware($request, function ($request) {
+            return 'foo';
+        });
+
+        $this->assertSame('foo', $response);
+    }
 }
