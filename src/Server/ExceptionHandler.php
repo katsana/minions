@@ -15,8 +15,6 @@ class ExceptionHandler
      *
      * @param \Throwable $exception
      *
-     * @throws \Throwable
-     *
      * @return \Minions\Server\Reply
      */
     public function handle($exception): Reply
@@ -46,9 +44,7 @@ class ExceptionHandler
             'message' => $exception->getMessage(),
         ];
 
-        $data = $exception->getData();
-
-        if ($data !== null) {
+        if (! \is_null($data = $exception->getData())) {
             $error['data'] = $data;
         }
 
@@ -73,9 +69,7 @@ class ExceptionHandler
             'message' => $exception->getMessage(),
         ];
 
-        $data = $exception->getIds();
-
-        if ($data !== null) {
+        if (! \is_null($data = $exception->getIds())) {
             $error['data'] = $data;
         }
 
@@ -100,9 +94,7 @@ class ExceptionHandler
             'message' => $exception->getMessage(),
         ];
 
-        $data = $exception->errors();
-
-        if ($data !== null) {
+        if (! \is_null($data = $exception->errors())) {
             $error['data'] = $data;
         }
 
