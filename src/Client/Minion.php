@@ -53,7 +53,7 @@ class Minion
             $config = $this->projectConfiguration($project);
 
             $this->projects[$project] = new Project(
-                $project, $config, $this->createBrowser($config['options'] ?? [])
+                $this->config['id'], $config, $this->createBrowser($config ?? [])
             );
         }
 

@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface as ResponseContract;
 class Project
 {
     /**
-     * Project name.
+     * Application ID for the client.
      *
      * @var string
      */
