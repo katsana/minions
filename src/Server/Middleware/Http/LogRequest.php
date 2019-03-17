@@ -3,23 +3,23 @@
 namespace Minions\Server\Middleware\Http;
 
 use Psr\Http\Message\ServerRequestInterface;
-use React\Stream\WritableResourceStream;
+use React\Stream\WritableStreamInterface;
 
 class LogRequest
 {
     /**
      * The writable stream.
      *
-     * @var \React\Stream\WritableResourceStream
+     * @var \React\Stream\WritableStreamInterface
      */
     protected $writableStream;
 
     /**
      * Construct log request middleware.
      *
-     * @param \React\Stream\WritableResourceStream $writableStream
+     * @param \React\Stream\WritableStreamInterface $writableStream
      */
-    public function __construct(WritableResourceStream $writableStream)
+    public function __construct(WritableStreamInterface $writableStream)
     {
         $this->writableStream = $writableStream;
     }
