@@ -4,7 +4,6 @@ namespace Minions\Client;
 
 use Clue\React\Buzz\Browser;
 use InvalidArgumentException;
-use Psr\Http\Message\ResponseInterface as ResponseContract;
 use React\EventLoop\Factory;
 
 class Minion
@@ -24,6 +23,13 @@ class Minion
     protected $eventLoop;
 
     /**
+     * List of resolved projects.
+     *
+     * @var array
+     */
+    protected $projects = [];
+
+    /**
      * Construct a new Minion.
      *
      * @param array $config
@@ -32,6 +38,39 @@ class Minion
     {
         $this->config = $config;
         $this->eventLoop = Factory::create();
+    }
+
+    /**
+     * Create project instance.
+     *
+     * @param string $project
+     *
+     * @return \Minions\Client\Project
+     */
+    public function project(string $project): Project
+    {
+        if (! isset($this->projects[$project])) {
+            $config = $this->projectConfiguration($project);
+
+            $this->projects[$project] = new Project(
+                $project, $config, $this->createBrowser($config['options'] ?? [])
+            );
+        }
+
+        return $this->projects[$project];
+    }
+
+    /**
+     * Broadcast message.
+     *
+     * @param string                           $project
+     * @param \Minions\Client\MessageInterface $message
+     *
+     * @return \React\Promise\PromiseInterface
+     */
+    public function broadcast(string $project, MessageInterface $message)
+    {
+        return $this->project($project)->broadcast($message);
     }
 
     /**
@@ -45,51 +84,18 @@ class Minion
     }
 
     /**
-     * Broadcast message.
-     *
-     * @param string                           $project
-     * @param \Minions\Client\MessageInterface $message
-     *
-     * @return \React\Promise\Promise
-     */
-    public function broadcast(string $project, MessageInterface $message)
-    {
-        $config = $this->projectConfiguration($project);
-
-        $options = [];
-
-        if (\is_array($config['options'] ?? null) && ! empty($config['options'])) {
-            $options = $config['options'];
-        }
-
-        $endpoint = $config['endpoint'];
-        $browser = $this->createBrowser($options);
-
-        $headers = [
-            'Content-Type' => 'application/json',
-            'X-Request-ID' => $this->config['id'],
-            'Authorization' => "Token {$config['token']}",
-            'HTTP_X_SIGNATURE' => $message->signature($config['signature']),
-        ];
-
-        return $browser->post($endpoint, $headers, $message->toJson())
-                ->then(function (ResponseContract $response) use ($message) {
-                    return (new Response($response))->validate($message);
-                });
-    }
-
-    /**
      * Create a new client using factory.
      *
-     * @param array $options
+     * @param array $config
      *
      * @return \Clue\React\Buzz\Browser
      */
-    public function createBrowser(array $options): Browser
+    protected function createBrowser(array $config): Browser
     {
         return (new Browser($this->eventLoop))
+                    ->withBase($config['endpoint'])
                     ->withOptions([
-                        'timeout' => $options['timeout'] ?? null,
+                        'timeout' => $config['options']['timeout'] ?? null,
                         'followRedirects' => false,
                         'obeySuccessCode' => true,
                         'streaming' => false,
@@ -99,11 +105,11 @@ class Minion
     /**
      * Get configuration for a project.
      *
-     * @param string|null $project
+     * @param string $project
      *
      * @return array
      */
-    protected function projectConfiguration(?string $project): array
+    protected function projectConfiguration(string $project): array
     {
         if (\is_null($project) || ! \array_key_exists($project, $this->config['projects'])) {
             throw new InvalidArgumentException("Unable to find project [{$project}].");
