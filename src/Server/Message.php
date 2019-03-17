@@ -122,7 +122,7 @@ class Message
 
             $expected = \hash_hmac('sha256', "{$timestamp}.{$body}", $projectSignature);
 
-            if (! \hash_equals($expected, $signature) || Carbon::now()->gte($expiry)) {
+            if (! \hash_equals($expected, $signature) || Carbon::now()->greaterThan($expiry)) {
                 throw new InvalidSignature();
             }
         }
