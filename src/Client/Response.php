@@ -20,7 +20,9 @@ class Response implements ResponseInterface
      *
      * @var array|null
      */
-    protected $content = [];
+    protected $content = [
+        'jsonrpc' => '2.0',
+    ];
 
     /**
      * Construct response from PSR-7 Response.
@@ -31,7 +33,7 @@ class Response implements ResponseInterface
     {
         $this->original = $response;
 
-        if (\in_array($response->getStatusCode(), [200, 201, 204])) {
+        if (\in_array($response->getStatusCode(), [200, 201])) {
             $this->content = json_decode((string) $response->getBody(), true);
         }
     }

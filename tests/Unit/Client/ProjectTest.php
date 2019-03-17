@@ -36,7 +36,7 @@ class ProjectTest extends TestCase
         $browser->shouldReceive('then')->andReturnUsing(function ($r) use ($message) {
             $response = m::mock(ResponseContract::class);
             $response->shouldReceive('getStatusCode')->andReturn(204)
-                ->shouldReceive('getBody')->andReturn('{"jsonrpc":"2.0","result":3}');
+                ->shouldReceive('getBody')->andReturn('{"jsonrpc":"2.0","id":1,"result":3}');
 
             return (new Response($response))->validate($message);
         });
