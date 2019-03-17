@@ -3,6 +3,7 @@
 namespace Minions\Client;
 
 use Clue\React\Buzz\Browser;
+use Psr\Http\Message\ResponseInterface as ResponseContract;
 
 class Project
 {
