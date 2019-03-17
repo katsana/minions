@@ -24,6 +24,7 @@ class NotificationTest extends TestCase
         $message = new Notification('math/add', [1, 2]);
 
         $this->assertSame('2.0', $message->version());
+        $this->assertNull($message->id());
         $this->assertSame('math/add', $message->method());
         $this->assertSame([1, 2], $message->parameters());
     }
