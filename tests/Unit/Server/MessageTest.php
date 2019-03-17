@@ -2,6 +2,7 @@
 
 namespace Minions\Tests\Unit\Server;
 
+use Carbon\Carbon;
 use Minions\Server\Message;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
@@ -13,6 +14,7 @@ class MessageTest extends TestCase
      */
     protected function tearDown(): void
     {
+        Carbon::setTestNow(null);
         m::close();
     }
 
@@ -92,6 +94,8 @@ class MessageTest extends TestCase
     /** @test */
     public function it_can_validate_request_signature()
     {
+        Carbon::setTestNow(Carbon::createFromTimestamp(1546300800));
+
         $request = m::mock('Psr\Http\Message\ServerRequestInterface');
 
         $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
@@ -151,5 +155,25 @@ class MessageTest extends TestCase
         $message = new Message('foobar', [], $request);
 
         $message->validateRequestSignature();
+    }
+
+    /** @test */
+    public function it_cant_validate_request_signature_when_timestamp_has_expired()
+    {
+        $this->expectException('Minions\Exceptions\InvalidSignature');
+
+        Carbon::setTestNow(Carbon::createFromTimestamp(1546301300));
+
+        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
+
+        $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
+            ->shouldReceive('hasHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn([
+                't=1546300800,v1=3c1faf9b318b33b609f612e5e36cd5117fae4f4caf38c6141782b392ed3343d2',
+            ]);
+
+        $message = new Message('foobar', ['signature' => 'secret'], $request);
+
+        $this->assertTrue($message->validateRequestSignature());
     }
 }

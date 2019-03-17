@@ -2,6 +2,7 @@
 
 namespace Minions\Server;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Minions\Exceptions\InvalidSignature;
 use Minions\Exceptions\InvalidToken;
@@ -114,11 +115,14 @@ class Message
             $timestamp = \explode('=', $header[0])[1];
             $signature = \explode('=', $header[1])[1];
 
+            $expiry = Carbon::createFromTimestamp($timestamp)
+                            ->addSeconds($config['signature_expired_in'] ?? 300);
+
             $body = \json_encode(\json_decode($this->body(), true));
 
             $expected = \hash_hmac('sha256', "{$timestamp}.{$body}", $projectSignature);
 
-            if (! \hash_equals($expected, $signature)) {
+            if (! \hash_equals($expected, $signature) || Carbon::now()->gte($expiry)) {
                 throw new InvalidSignature();
             }
         }

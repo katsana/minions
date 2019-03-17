@@ -2,6 +2,7 @@
 
 namespace Minions\Tests\Feature\Server;
 
+use Carbon\Carbon;
 use Minions\Tests\ServerTestCase;
 use Mockery as m;
 
@@ -10,6 +11,8 @@ class RouterTest extends ServerTestCase
     /** @test */
     public function it_can_dispatch_the_request()
     {
+        Carbon::setTestNow(Carbon::createFromTimestamp(1546300800));
+
         config(['minions' => [
             'id' => 'foobar',
             'projects' => [
@@ -43,6 +46,8 @@ class RouterTest extends ServerTestCase
     /** @test */
     public function it_cant_dispatch_the_request_when_service_cant_be_evaluated()
     {
+        Carbon::setTestNow(Carbon::createFromTimestamp(1546300800));
+
         config(['minions' => [
             'id' => 'foobar',
             'projects' => [
@@ -76,6 +81,8 @@ class RouterTest extends ServerTestCase
     /** @test */
     public function it_cant_dispatch_the_request_when_service_cant_be_resolved()
     {
+        Carbon::setTestNow(Carbon::createFromTimestamp(1546300800));
+
         config(['minions' => [
             'id' => 'foobar',
             'projects' => [
