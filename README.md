@@ -1,4 +1,4 @@
-Json-RPC Communication for Laravel
+JSON-RPC Communication for Laravel
 ===================
 
 [![Build Status](https://travis-ci.org/katsana/minions.svg?branch=master)](https://travis-ci.org/katsana/minions)
