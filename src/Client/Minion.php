@@ -5,6 +5,7 @@ namespace Minions\Client;
 use Clue\React\Buzz\Browser;
 use InvalidArgumentException;
 use React\EventLoop\Factory;
+use React\EventLoop\LoopInterface;
 
 class Minion
 {
@@ -18,7 +19,7 @@ class Minion
     /**
      * The event-loop implementation.
      *
-     * @var \React\EventLoop\Factory
+     * @var \React\EventLoop\LoopInterface
      */
     protected $eventLoop;
 
@@ -37,7 +38,6 @@ class Minion
     public function __construct(array $config)
     {
         $this->config = $config;
-        $this->eventLoop = Factory::create();
     }
 
     /**
@@ -74,13 +74,41 @@ class Minion
     }
 
     /**
+     * Get Event Loop implementation.
+     *
+     * @return \React\EventLoop\LoopInterface
+     */
+    public function getEventLoop(): LoopInterface
+    {
+        if (! $this->eventLoop instanceof LoopInterface) {
+            $this->eventLoop = Factory::create();
+        }
+
+        return $this->eventLoop;
+    }
+
+    /**
+     * Set Event Loop implementation.
+     *
+     * @param \React\EventLoop\LoopInterface $eventLoop
+     *
+     * @return $this
+     */
+    public function setEventLoop(LoopInterface $eventLoop)
+    {
+        $this->eventLoop = $eventLoop;
+
+        return $this;
+    }
+
+    /**
      * Execute the loop.
      *
      * @return void
      */
     public function run(): void
     {
-        $this->eventLoop->run();
+        $this->getEventLoop()->run();
     }
 
     /**
@@ -92,7 +120,7 @@ class Minion
      */
     protected function createBrowser(array $config): Browser
     {
-        return (new Browser($this->eventLoop))
+        return (new Browser($this->getEventLoop()))
                     ->withBase($config['endpoint'])
                     ->withOptions([
                         'timeout' => $config['options']['timeout'] ?? null,
