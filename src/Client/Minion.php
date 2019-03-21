@@ -41,6 +41,44 @@ class Minion
     }
 
     /**
+     * Get Event Loop implementation.
+     *
+     * @return \React\EventLoop\LoopInterface
+     */
+    final public function getEventLoop(): LoopInterface
+    {
+        if (! $this->eventLoop instanceof LoopInterface) {
+            $this->eventLoop = Factory::create();
+        }
+
+        return $this->eventLoop;
+    }
+
+    /**
+     * Set Event Loop implementation.
+     *
+     * @param \React\EventLoop\LoopInterface $eventLoop
+     *
+     * @return $this
+     */
+    final public function setEventLoop(LoopInterface $eventLoop): self
+    {
+        $this->eventLoop = $eventLoop;
+
+        return $this;
+    }
+
+    /**
+     * Execute the loop.
+     *
+     * @return void
+     */
+    final public function run(): void
+    {
+        $this->getEventLoop()->run();
+    }
+
+    /**
      * Create project instance.
      *
      * @param string $project
@@ -71,44 +109,6 @@ class Minion
     public function broadcast(string $project, MessageInterface $message)
     {
         return $this->project($project)->broadcast($message);
-    }
-
-    /**
-     * Get Event Loop implementation.
-     *
-     * @return \React\EventLoop\LoopInterface
-     */
-    public function getEventLoop(): LoopInterface
-    {
-        if (! $this->eventLoop instanceof LoopInterface) {
-            $this->eventLoop = Factory::create();
-        }
-
-        return $this->eventLoop;
-    }
-
-    /**
-     * Set Event Loop implementation.
-     *
-     * @param \React\EventLoop\LoopInterface $eventLoop
-     *
-     * @return $this
-     */
-    public function setEventLoop(LoopInterface $eventLoop)
-    {
-        $this->eventLoop = $eventLoop;
-
-        return $this;
-    }
-
-    /**
-     * Execute the loop.
-     *
-     * @return void
-     */
-    public function run(): void
-    {
-        $this->getEventLoop()->run();
     }
 
     /**
