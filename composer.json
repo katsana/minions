@@ -44,7 +44,7 @@
     },
     "scripts": {
         "test": [
-            "./vendor/bin/phpunit -c ./"
+            "./vendor/bin/phpunit -c ."
         ]
     },
     "config": {
