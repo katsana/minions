@@ -58,7 +58,7 @@ class Router
                         Middleware\VerifyToken::class,
                         Middleware\VerifySignature::class,
                     ])->then(function (Message $message) {
-                        return $this->container->make('minions.evaluator')->handle($message);
+                        return $this->container->make('minions.controller')->handle($message);
                     });
         } catch (ErrorException | Throwable $exception) {
             return (new ExceptionHandler())->handle($exception);

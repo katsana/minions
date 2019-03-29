@@ -10,7 +10,7 @@ use Illuminate\Contracts\Container\Container;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionException;
 
-class Evaluator implements DattoEvaluator
+class Controller implements DattoEvaluator
 {
     /**
      * The application implementation.
