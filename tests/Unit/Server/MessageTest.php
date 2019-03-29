@@ -29,6 +29,7 @@ class MessageTest extends TestCase
 
         $this->assertSame($request, $message->request());
         $this->assertSame('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}', $message->body());
+        $this->assertSame('foobar', $message->id());
     }
 
     /** @test */
