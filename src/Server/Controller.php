@@ -2,15 +2,10 @@
 
 namespace Minions\Server;
 
-use Datto\JsonRpc\Evaluator as DattoEvaluator;
-use Datto\JsonRpc\Exceptions\MethodException;
 use Datto\JsonRpc\Server;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
-use Psr\Http\Message\ServerRequestInterface;
-use ReflectionException;
 
-class Controller implements DattoEvaluator
+class Controller
 {
     /**
      * The application implementation.
@@ -41,35 +36,16 @@ class Controller implements DattoEvaluator
     /**
      * Handle the request.
      *
-     * @param ServerRequestInterface $request
+     * @param \Minions\Server\Message $message
      *
      * @return \Minions\Server\Reply
      */
     public function handle(Message $message): Reply
     {
-        $server = new Server($this);
+        $server = new Server(
+            new Evaluator($this->container, $this->services, $message)
+        );
 
         return new Reply($server->reply($message->body()));
-    }
-
-    /**
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return mixed
-     */
-    public function evaluate($method, $arguments)
-    {
-        if (! \array_key_exists($method, $this->services)) {
-            throw new MethodException();
-        }
-
-        try {
-            $handler = $this->container->make($this->services[$method]);
-        } catch (BindingResolutionException | ReflectionException $e) {
-            throw new MethodException();
-        }
-
-        return $handler($arguments);
     }
 }

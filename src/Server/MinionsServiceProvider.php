@@ -2,9 +2,9 @@
 
 namespace Minions\Server;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
 
 class MinionsServiceProvider extends ServiceProvider implements DeferrableProvider
 {

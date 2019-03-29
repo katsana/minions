@@ -66,6 +66,16 @@ class Message
     }
 
     /**
+     * Get the project id.
+     *
+     * @return string
+     */
+    public function id(): string
+    {
+        return $this->id;
+    }
+
+    /**
      * Get the request body.
      *
      * @return string
