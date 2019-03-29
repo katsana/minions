@@ -22,19 +22,19 @@
     "require": {
         "php": ">=7.2",
         "datto/json-rpc": "^5.0",
-        "illuminate/console": "~5.7.0 || ~5.8.0",
-        "illuminate/contracts": "~5.7.0 || ~5.8.0",
-        "illuminate/database": "~5.7.0 || ~5.8.0",
-        "illuminate/pipeline": "~5.7.0 || ~5.8.0",
-        "illuminate/support": "~5.7.0 || ~5.8.0",
-        "illuminate/validation": "~5.7.0 || ~5.8.0",
+        "illuminate/console": "~5.8",
+        "illuminate/contracts": "~5.8",
+        "illuminate/database": "~5.8",
+        "illuminate/pipeline": "~5.8",
+        "illuminate/support": "~5.8",
+        "illuminate/validation": "~5.8",
         "react/event-loop": "^1.1",
         "react/promise": "^2.5"
     },
     "require-dev": {
         "clue/buzz-react": "^2.5",
         "mockery/mockery": "^1.0",
-        "orchestra/testbench": "~3.7.0 || ~3.8.0",
+        "orchestra/testbench": "~3.8",
         "phpunit/phpunit": "^7.5 || ^8.0",
         "react/http": "^0.8.4"
     },

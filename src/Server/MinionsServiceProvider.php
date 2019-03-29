@@ -2,20 +2,12 @@
 
 namespace Minions\Server;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
-class MinionsServiceProvider extends ServiceProvider
+class MinionsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @deprecated Implement the \Illuminate\Contracts\Support\DeferrableProvider interface instead. Will be removed in Laravel 5.9.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
     /**
      * Register the application services.
      *
