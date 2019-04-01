@@ -2,8 +2,8 @@
 
 namespace Minions\Server;
 
-use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Laravie\Codex\Security\TimeLimitSignature\Verify;
 use Minions\Exceptions\InvalidSignature;
 use Minions\Exceptions\InvalidToken;
 use Minions\Exceptions\MissingSignature;
@@ -116,23 +116,15 @@ class Message
      */
     public function validateRequestSignature(): bool
     {
-        $projectSignature = $this->config['signature'] ?? null;
+        $secret = $this->config['signature'] ?? null;
+        $body = \json_encode(\json_decode($this->body(), true));
 
-        if (! $this->request->hasHeader('HTTP_X_SIGNATURE') || empty($projectSignature)) {
+        if (! $this->request->hasHeader('HTTP_X_SIGNATURE') || empty($secret)) {
             throw new MissingSignature();
         } else {
-            $header = \explode(',', $this->request->getHeader('HTTP_X_SIGNATURE')[0]);
-            $timestamp = \explode('=', $header[0])[1];
-            $signature = \explode('=', $header[1])[1];
+            $signature = new Verify($secret, 'sha256', $config['signature_expired_in'] ?? 300);
 
-            $expiry = Carbon::createFromTimestamp($timestamp)
-                            ->addSeconds($config['signature_expired_in'] ?? 300);
-
-            $body = \json_encode(\json_decode($this->body(), true));
-
-            $expected = \hash_hmac('sha256', "{$timestamp}.{$body}", $projectSignature);
-
-            if (! \hash_equals($expected, $signature) || Carbon::now()->greaterThan($expiry)) {
+            if (! $signature($body, $this->request->getHeader('HTTP_X_SIGNATURE')[0])) {
                 throw new InvalidSignature();
             }
         }

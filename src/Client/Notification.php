@@ -4,6 +4,7 @@ namespace Minions\Client;
 
 use Carbon\Carbon;
 use Datto\JsonRpc\Client;
+use Laravie\Codex\Security\TimeLimitSignature\Create;
 
 class Notification implements MessageInterface
 {
@@ -96,10 +97,8 @@ class Notification implements MessageInterface
      */
     public function signature(string $secret): string
     {
-        $timestamp = (string) Carbon::now()->timestamp;
-        $payload = "{$timestamp}.{$this->toJson()}";
-        $signature = \hash_hmac('sha256', $payload, $secret);
+        $signature = new Create($secret, 'sha256');
 
-        return "t={$timestamp},v1={$signature}";
+        return $signature($this->toJson(), Carbon::now()->timestamp);
     }
 }

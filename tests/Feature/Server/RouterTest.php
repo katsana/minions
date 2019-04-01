@@ -218,7 +218,6 @@ class RouterTest extends ServerTestCase
         $this->assertSame('{"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Method not found"}}', $reply->body());
     }
 
-
     /** @test */
     public function it_cant_dispatch_the_request_when_service_cant_be_resolved()
     {
