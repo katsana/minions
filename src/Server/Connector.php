@@ -72,9 +72,10 @@ class Connector
     }
 
     /**
-     * Boot HTTPS Server.
+     * Boot HTTPS Socket Server.
      *
      * @param \React\Http\Server $server
+     * @param array              $options
      *
      * @return void
      */
@@ -86,7 +87,7 @@ class Connector
     }
 
     /**
-     * Boot HTTPS Server.
+     * Boot HTTP Socket Server.
      *
      * @param \React\Http\Server $server
      *
