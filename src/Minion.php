@@ -4,6 +4,9 @@ namespace Minions;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @see \Minions\Client\Minion
+ */
 class Minion extends Facade
 {
     /**
