@@ -6,10 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Database\DetectsLostConnections;
 use Laravie\Stream\Log\Console as Logger;
 use Minions\Server\Connector;
-use React\EventLoop\Factory as EventLoop;
 use React\EventLoop\LoopInterface;
-use React\Stream\WritableResourceStream;
-use React\Stream\WritableStreamInterface;
 
 class StartJsonRpcServer extends Command
 {

@@ -36,7 +36,7 @@ class Connector
      *
      * @param string                         $hostname
      * @param \React\EventLoop\LoopInterface $eventLoop
-     * @param \Laravie\Stream\Logger    $logger
+     * @param \Laravie\Stream\Logger         $logger
      */
     public function __construct(string $hostname, LoopInterface $eventLoop, Logger $logger)
     {
