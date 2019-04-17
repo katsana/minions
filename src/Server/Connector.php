@@ -2,11 +2,11 @@
 
 namespace Minions\Server;
 
+use Laravie\Stream\Log\Console as Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\LoopInterface;
 use React\Http\Server as HttpServer;
 use React\Socket\Server as SocketServer;
-use React\Stream\WritableResourceStream;
 
 class Connector
 {
@@ -25,23 +25,24 @@ class Connector
     protected $eventLoop;
 
     /**
-     * The writable stream.
+     * The console logger.
      *
-     * @var \React\Stream\WritableResourceStream
+     * @var \Laravie\Stream\Log\Console
      */
-    protected $writableStream;
+    protected $logger;
 
     /**
      * Construct a new HTTP Server connector.
      *
      * @param string                         $hostname
      * @param \React\EventLoop\LoopInterface $eventLoop
+     * @param \Laravie\Stream\Log\Console    $logger
      */
-    public function __construct(string $hostname, LoopInterface $eventLoop)
+    public function __construct(string $hostname, LoopInterface $eventLoop, Logger $logger)
     {
         $this->hostname = $hostname;
         $this->eventLoop = $eventLoop;
-        $this->writableStream = new WritableResourceStream(STDOUT, $eventLoop);
+        $this->logger = $logger;
     }
 
     /**
@@ -55,7 +56,7 @@ class Connector
     public function handle(Router $router, array $config): HttpServer
     {
         $server = new HttpServer([
-            new Middleware\Http\LogRequest($this->writableStream),
+            new Middleware\Http\LogRequest($this->logger),
             new Middleware\Http\StatusPage(),
             function (ServerRequestInterface $request) use ($router) {
                 return $router->handle($request)->asResponse();
@@ -83,7 +84,7 @@ class Connector
     {
         $server->listen(new SocketServer("tls://{$this->hostname}", $this->eventLoop, $options));
 
-        $this->writableStream->write("Server running at https://{$this->hostname}\n");
+        $this->logger->info("Server running at https://{$this->hostname}\n");
     }
 
     /**
@@ -97,6 +98,6 @@ class Connector
     {
         $server->listen(new SocketServer($this->hostname, $this->eventLoop));
 
-        $this->writableStream->write("Server running at http://{$this->hostname}\n");
+        $this->logger->info("Server running at http://{$this->hostname}\n");
     }
 }

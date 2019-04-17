@@ -2,26 +2,26 @@
 
 namespace Minions\Server\Middleware\Http;
 
+use Laravie\Stream\Log\Console as Logger;
 use Psr\Http\Message\ServerRequestInterface;
-use React\Stream\WritableStreamInterface;
 
 class LogRequest
 {
     /**
-     * The writable stream.
+     * The console logger.
      *
-     * @var \React\Stream\WritableStreamInterface
+     * @var \Laravie\Stream\Log\Console
      */
-    protected $writableStream;
+    protected $logger;
 
     /**
      * Construct log request middleware.
      *
-     * @param \React\Stream\WritableStreamInterface $writableStream
+     * @param \Laravie\Stream\Log\Console $logger
      */
-    public function __construct(WritableStreamInterface $writableStream)
+    public function __construct(Logger $logger)
     {
-        $this->writableStream = $writableStream;
+        $this->logger = $logger;
     }
 
     /**
@@ -34,7 +34,7 @@ class LogRequest
      */
     public function __invoke(ServerRequestInterface $request, callable $next)
     {
-        $this->writableStream->write(
+        $this->logger->info(
             \date('Y-m-d H:i:s').' '.$request->getMethod().' '.$request->getUri().PHP_EOL
         );
 

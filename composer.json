@@ -7,6 +7,11 @@
         {
             "name": "KATSANA Developer",
             "email": "developer@katsana.com"
+        },
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@katsana.com",
+            "role": "Developer"
         }
     ],
     "autoload": {
@@ -29,6 +34,7 @@
         "illuminate/support": "~5.8",
         "illuminate/validation": "~5.8",
         "laravie/codex-security": "^1.0",
+        "laravie/stream": "^1.0",
         "react/event-loop": "^1.1",
         "react/promise": "^2.5"
     },

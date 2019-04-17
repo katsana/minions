@@ -4,8 +4,12 @@ namespace Minions\Server\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\DetectsLostConnections;
+use Laravie\Stream\Log\Console as Logger;
 use Minions\Server\Connector;
 use React\EventLoop\Factory as EventLoop;
+use React\EventLoop\LoopInterface;
+use React\Stream\WritableResourceStream;
+use React\Stream\WritableStreamInterface;
 
 class StartJsonRpcServer extends Command
 {
@@ -32,7 +36,10 @@ class StartJsonRpcServer extends Command
         $monolog = $this->laravel->make('log');
         $eventLoop = EventLoop::create();
 
-        $connector = new Connector("{$config['host']}:{$config['port']}", $eventLoop);
+        $this->laravel->instance(LoopInterface::class, $eventLoop);
+        $this->laravel->instance(WritableStreamInterface::class, new WritableResourceStream(STDOUT, $eventLoop));
+
+        $connector = new Connector("{$config['host']}:{$config['port']}", $eventLoop, $this->laravel[Logger::class]);
 
         $server = $connector->handle($this->laravel->make('minions.router'), $config);
 
