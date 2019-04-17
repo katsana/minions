@@ -19,15 +19,15 @@ class LogRequestTest extends TestCase
     /** @test */
     public function it_can_pass_through_middleware()
     {
-        $writable = m::mock('React\Stream\WritableStreamInterface');
+        $logger = m::mock('Laravie\Stream\Logger');
         $request = m::mock('Psr\Http\Message\ServerRequestInterface');
 
-        $writable->shouldReceive('write')->with(m::type('String'))->andReturnNull();
+        $logger->shouldReceive('info')->with(m::type('String'))->andReturnNull();
 
         $request->shouldReceive('getMethod')->once()->andReturn('GET')
             ->shouldReceive('getUri')->once()->andReturn('/');
 
-        $middleware = new LogRequest($writable);
+        $middleware = new LogRequest($logger);
 
         $response = $middleware($request, function ($request) {
             return 'foo';

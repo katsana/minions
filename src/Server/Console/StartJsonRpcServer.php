@@ -33,13 +33,13 @@ class StartJsonRpcServer extends Command
             'host' => '0.0.0.0', 'port' => 8085, 'secure' => false,
         ], $this->laravel->get('config')->get('minions.server', []));
 
+        $hostname = "{$config['host']}:{$config['port']}";
+
         $monolog = $this->laravel->make('log');
-        $eventLoop = EventLoop::create();
+        $eventLoop = $this->laravel->make(LoopInterface::class);
+        $logger = $this->laravel->make(Logger::class);
 
-        $this->laravel->instance(LoopInterface::class, $eventLoop);
-        $this->laravel->instance(WritableStreamInterface::class, new WritableResourceStream(STDOUT, $eventLoop));
-
-        $connector = new Connector("{$config['host']}:{$config['port']}", $eventLoop, $this->laravel[Logger::class]);
+        $connector = new Connector($hostname, $eventLoop, $logger);
 
         $server = $connector->handle($this->laravel->make('minions.router'), $config);
 

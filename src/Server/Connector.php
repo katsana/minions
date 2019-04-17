@@ -2,7 +2,7 @@
 
 namespace Minions\Server;
 
-use Laravie\Stream\Log\Console as Logger;
+use Laravie\Stream\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\LoopInterface;
 use React\Http\Server as HttpServer;
@@ -27,7 +27,7 @@ class Connector
     /**
      * The console logger.
      *
-     * @var \Laravie\Stream\Log\Console
+     * @var \Laravie\Stream\Logger
      */
     protected $logger;
 
@@ -36,7 +36,7 @@ class Connector
      *
      * @param string                         $hostname
      * @param \React\EventLoop\LoopInterface $eventLoop
-     * @param \Laravie\Stream\Log\Console    $logger
+     * @param \Laravie\Stream\Logger    $logger
      */
     public function __construct(string $hostname, LoopInterface $eventLoop, Logger $logger)
     {

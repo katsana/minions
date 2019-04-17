@@ -2,7 +2,7 @@
 
 namespace Minions\Server\Middleware\Http;
 
-use Laravie\Stream\Log\Console as Logger;
+use Laravie\Stream\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 
 class LogRequest
@@ -10,14 +10,14 @@ class LogRequest
     /**
      * The console logger.
      *
-     * @var \Laravie\Stream\Log\Console
+     * @var \Laravie\Stream\Logger
      */
     protected $logger;
 
     /**
      * Construct log request middleware.
      *
-     * @param \Laravie\Stream\Log\Console $logger
+     * @param \Laravie\Stream\Logger $logger
      */
     public function __construct(Logger $logger)
     {
