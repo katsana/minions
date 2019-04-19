@@ -115,8 +115,8 @@ class MessageTest extends TestCase
         $request = m::mock('Psr\Http\Message\ServerRequestInterface');
 
         $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
-            ->shouldReceive('hasHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn(true)
-            ->shouldReceive('getHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn([
+            ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('X-Signature')->andReturn([
                 't=1546300800,v1=3c1faf9b318b33b609f612e5e36cd5117fae4f4caf38c6141782b392ed3343d2',
             ]);
 
@@ -133,8 +133,8 @@ class MessageTest extends TestCase
         $request = m::mock('Psr\Http\Message\ServerRequestInterface');
 
         $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
-            ->shouldReceive('hasHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn(true)
-            ->shouldReceive('getHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn([
+            ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('X-Signature')->andReturn([
                 't=1546300800,v1=3c1faf9b318b33b609f612e5e36cd5117fae4f4caf38c6141782b392ed3343d2',
             ]);
 
@@ -151,7 +151,7 @@ class MessageTest extends TestCase
         $request = m::mock('Psr\Http\Message\ServerRequestInterface');
 
         $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
-            ->shouldReceive('hasHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn(false);
+            ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(false);
 
         $message = new Message('foobar', ['signature' => 'secret'], $request);
 
@@ -166,7 +166,7 @@ class MessageTest extends TestCase
         $request = m::mock('Psr\Http\Message\ServerRequestInterface');
 
         $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
-            ->shouldReceive('hasHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn(true);
+            ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(true);
 
         $message = new Message('foobar', ['signature' => null], $request);
 
@@ -183,8 +183,8 @@ class MessageTest extends TestCase
         $request = m::mock('Psr\Http\Message\ServerRequestInterface');
 
         $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
-            ->shouldReceive('hasHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn(true)
-            ->shouldReceive('getHeader')->once()->with('HTTP_X_SIGNATURE')->andReturn([
+            ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('X-Signature')->andReturn([
                 't=1546300800,v1=3c1faf9b318b33b609f612e5e36cd5117fae4f4caf38c6141782b392ed3343d2',
             ]);
 

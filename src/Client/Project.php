@@ -55,7 +55,7 @@ class Project
             'Content-Type' => 'application/json',
             'X-Request-ID' => $this->id,
             'Authorization' => "Token {$this->config['token']}",
-            'HTTP_X_SIGNATURE' => $message->signature($this->config['signature']),
+            'X-Signature' => $message->signature($this->config['signature']),
         ];
 
         return $this->browser->post('/', $headers, $message->toJson())

@@ -119,12 +119,12 @@ class Message
         $secret = $this->config['signature'] ?? null;
         $body = \json_encode(\json_decode($this->body(), true));
 
-        if (! $this->request->hasHeader('HTTP_X_SIGNATURE') || empty($secret)) {
+        if (! $this->request->hasHeader('X-Signature') || empty($secret)) {
             throw new MissingSignature();
         } else {
             $signature = new Verify($secret, 'sha256', $config['signature_expired_in'] ?? 300);
 
-            if (! $signature($body, $this->request->getHeader('HTTP_X_SIGNATURE')[0])) {
+            if (! $signature($body, $this->request->getHeader('X-Signature')[0])) {
                 throw new InvalidSignature();
             }
         }
