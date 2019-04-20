@@ -2,9 +2,9 @@
 
 namespace Minions;
 
-use React\EventLoop\LoopInterface;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\ServiceProvider;
+use React\EventLoop\LoopInterface;
 
 class MinionsServiceProvider extends ServiceProvider
 {

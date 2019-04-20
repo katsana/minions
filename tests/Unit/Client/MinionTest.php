@@ -2,9 +2,9 @@
 
 namespace Minions\Test\Unit\Client;
 
-use Mockery as m;
 use Minions\Client\Minion;
 use Minions\Client\Project;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use React\EventLoop\LoopInterface;
 

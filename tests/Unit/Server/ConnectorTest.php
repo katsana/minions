@@ -2,14 +2,13 @@
 
 namespace Minions\Tests\Unit\Server;
 
-use Mockery as m;
-use Laravie\Stream\Logger;
-use Minions\Server\Router;
-use React\EventLoop\Factory;
-use Minions\Server\Connector;
-use PHPUnit\Framework\TestCase;
-use React\EventLoop\LoopInterface;
 use Illuminate\Contracts\Container\Container;
+use Laravie\Stream\Logger;
+use Minions\Server\Connector;
+use Minions\Server\Router;
+use Mockery as m;
+use PHPUnit\Framework\TestCase;
+use React\EventLoop\Factory;
 
 class ConnectorTest extends TestCase
 {
@@ -28,7 +27,7 @@ class ConnectorTest extends TestCase
         $logger = m::mock(Logger::class);
         $container = m::mock(Container::class);
 
-        $hostname = "0.0.0.0:8085";
+        $hostname = '0.0.0.0:8085';
 
         $logger->shouldReceive('info')->with("Server running at http://{$hostname}\n")->andReturnNull();
 

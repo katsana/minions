@@ -9,7 +9,6 @@ use React\EventLoop\LoopInterface;
 
 class Minion
 {
-
     /**
      * Configuration.
      *
@@ -35,7 +34,7 @@ class Minion
      * Construct a new Minion.
      *
      * @param \React\EventLoop\LoopInterface $eventLoop
-     * @param array $config
+     * @param array                          $config
      */
     public function __construct(LoopInterface $eventLoop, array $config)
     {
