@@ -56,4 +56,28 @@ class MinionTest extends TestCase
 
         $project = $minion->project('katsana');
     }
+
+    /** @test */
+    public function it_can_replace_event_loop()
+    {
+        $eventLoop1 = m::mock(LoopInterface::class);
+        $eventLoop2 = m::mock(LoopInterface::class);
+
+        $minion = new Minion($eventLoop1, [
+            'id' => 'foobar',
+            'projects' => [
+                'platform' => [
+                    'endpoint' => 'https://127.0.0.1:6005',
+                    'token' => 'secret',
+                    'signature' => 'secret',
+                ],
+            ],
+        ]);
+
+        $this->assertSame($eventLoop1, $minion->getEventLoop());
+
+        $minion->setEventLoop($eventLoop2);
+
+        $this->assertSame($eventLoop2, $minion->getEventLoop());
+    }
 }
