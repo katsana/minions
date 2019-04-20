@@ -80,4 +80,27 @@ class MinionTest extends TestCase
 
         $this->assertSame($eventLoop2, $minion->getEventLoop());
     }
+
+    /** @test */
+    public function it_can_be_run()
+    {
+        $eventLoop = m::mock(LoopInterface::class);
+
+        $eventLoop->shouldReceive('run')->andReturnUsing(function () {
+            $this->addToAssertionCount(1);
+        });
+
+        $minion = new Minion($eventLoop, [
+            'id' => 'foobar',
+            'projects' => [
+                'platform' => [
+                    'endpoint' => 'https://127.0.0.1:6005',
+                    'token' => 'secret',
+                    'signature' => 'secret',
+                ],
+            ],
+        ]);
+
+        $minion->run();
+    }
 }
