@@ -21,6 +21,21 @@ abstract class TestCase extends Testing
     }
 
     /**
+     * Get application providers.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getApplicationProviders($app)
+    {
+        $providers = parent::getApplicationProviders($app);
+        $providers[] = 'Laravie\Stream\Laravel\StreamServiceProvider';
+
+        return $providers;
+    }
+
+    /**
      * Get package providers.
      *
      * @param \Illuminate\Foundation\Application $app

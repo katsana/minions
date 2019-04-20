@@ -2,16 +2,26 @@
 
 namespace Minions\Test\Unit\Client;
 
+use Mockery as m;
 use Minions\Client\Minion;
 use Minions\Client\Project;
 use PHPUnit\Framework\TestCase;
+use React\EventLoop\LoopInterface;
 
 class MinionTest extends TestCase
 {
+    /**
+     * Teardown the test environment.
+     */
+    protected function tearDown(): void
+    {
+        m::close();
+    }
+
     /** @test */
     public function it_can_configure_existing_project()
     {
-        $minion = new Minion([
+        $minion = new Minion(m::mock(LoopInterface::class), [
             'id' => 'foobar',
             'projects' => [
                 'platform' => [
@@ -33,7 +43,7 @@ class MinionTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Unable to find project [katsana].');
 
-        $minion = new Minion([
+        $minion = new Minion(m::mock(LoopInterface::class), [
             'id' => 'foobar',
             'projects' => [
                 'platform' => [
