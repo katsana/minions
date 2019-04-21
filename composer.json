@@ -2,7 +2,7 @@
     "name": "katsana/minions",
     "description": "JSON-RPC Communication for Laravel",
     "type": "library",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "authors": [
         {
             "name": "KATSANA Developer",
