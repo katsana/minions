@@ -16,6 +16,8 @@ Minions can be installed via composer:
 composer require "katsana/minions"
 ```
 
+### Configuration
+
 The package will automatically register a service provider.
 
 Next, you need to publish the Minions configuration file:
