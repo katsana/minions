@@ -22,9 +22,12 @@ class StartJsonRpcServer extends Command
     /**
      * Execute the console command.
      *
+     * @param \React\EventLoop\LoopInterface $eventLoop
+     * @param \Laravie\Stream\Log\Console    $logger
+     *
      * @return void
      */
-    public function handle()
+    public function handle(LoopInterface $eventLoop, Logger $logger)
     {
         $config = \array_merge([
             'host' => '0.0.0.0', 'port' => 8085, 'secure' => false,
@@ -33,8 +36,6 @@ class StartJsonRpcServer extends Command
         $hostname = "{$config['host']}:{$config['port']}";
 
         $monolog = $this->laravel->make('log');
-        $eventLoop = $this->laravel->make(LoopInterface::class);
-        $logger = $this->laravel->make(Logger::class);
 
         $connector = new Connector($hostname, $eventLoop, $logger);
 
