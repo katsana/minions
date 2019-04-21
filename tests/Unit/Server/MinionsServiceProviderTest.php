@@ -13,6 +13,6 @@ class MinionsServiceProviderTest extends TestCase
         $provider = new MinionsServiceProvider(null);
 
         $this->assertTrue($provider->isDeferred());
-        $this->assertSame(['minions.evaluator', 'minions.request'], $provider->provides());
+        $this->assertSame(['minions.controller', 'minions.router'], $provider->provides());
     }
 }

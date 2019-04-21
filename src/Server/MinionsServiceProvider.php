@@ -45,6 +45,6 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     public function provides()
     {
-        return ['minions.evaluator', 'minions.request'];
+        return ['minions.controller', 'minions.router'];
     }
 }
