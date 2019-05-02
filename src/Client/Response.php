@@ -34,7 +34,7 @@ class Response implements ResponseInterface
         $this->original = $response;
 
         if (\in_array($response->getStatusCode(), [200, 201])) {
-            $this->content = json_decode((string) $response->getBody(), true);
+            $this->content = \json_decode((string) $response->getBody(), true);
         }
     }
 
