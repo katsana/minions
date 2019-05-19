@@ -27,6 +27,13 @@ class Router
     protected $config = [];
 
     /**
+     * List of available RPC routes.
+     *
+     * @var array
+     */
+    protected $routes = [];
+
+    /**
      * Construct a new Minion.
      *
      * @param \Illuminate\Contracts\Container\Container $container
@@ -36,6 +43,32 @@ class Router
     {
         $this->container = $container;
         $this->config = $config;
+        $this->routes = $config['services'] ?? [];
+    }
+
+    /**
+     * Set rpc route.
+     *
+     * @param  string $method
+     * @param  string $handler
+     * @param  array  $projects
+     * @return $this
+     */
+    public function rpc(string $method, string $handler, array $projects = ['*'])
+    {
+        $this->routes[$method] = \compact('handler', 'projects');
+
+        return $this;
+    }
+
+    /**
+     * Get available routes.
+     *
+     * @return array
+     */
+    public function getRoutes(): array
+    {
+        return $this->routes;
     }
 
     /**

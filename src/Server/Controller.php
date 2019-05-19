@@ -15,22 +15,22 @@ class Controller
     protected $container;
 
     /**
-     * List of services.
+     * The router.
      *
-     * @var array
+     * @var \Minions\Server\Router
      */
-    protected $services = [];
+    protected $router;
 
     /**
      * Construct a new Evaluator.
      *
      * @param \Illuminate\Contracts\Container\Container $container
-     * @param array                                     $services
+     * @param \Minions\Server\Router $router
      */
-    public function __construct(Container $container, array $services)
+    public function __construct(Container $container, Router $router)
     {
         $this->container = $container;
-        $this->services = $services;
+        $this->router = $router;
     }
 
     /**
@@ -43,7 +43,7 @@ class Controller
     public function handle(Message $message): Reply
     {
         $server = new Server(
-            new Evaluator($this->container, $this->services, $message)
+            new Evaluator($this->container, $this->router->getRoutes(), $message)
         );
 
         return new Reply($server->reply($message->body()));

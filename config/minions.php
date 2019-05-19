@@ -52,17 +52,4 @@ return [
             'options' => [],
         ],
     ],
-
-    /*
-     |--------------------------------------------------------------------------
-     | Services
-     |--------------------------------------------------------------------------
-     |
-     | List of services this app can handle as JSON-RPC server.
-     |
-     */
-
-    'services' => [
-        // 'add-user' => App\JsonRpc\AddUserService::class,
-    ],
 ];
