@@ -49,9 +49,10 @@ class Router
     /**
      * Set rpc route.
      *
-     * @param  string $method
-     * @param  string $handler
-     * @param  array  $projects
+     * @param string $method
+     * @param string $handler
+     * @param array  $projects
+     *
      * @return $this
      */
     public function rpc(string $method, string $handler, array $projects = ['*'])
