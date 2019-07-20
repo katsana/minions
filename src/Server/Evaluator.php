@@ -63,7 +63,7 @@ class Evaluator implements DattoEvaluator
             throw new MethodException();
         }
 
-        return $handler($arguments);
+        return $handler($arguments, $this->message);
     }
 
     /**
