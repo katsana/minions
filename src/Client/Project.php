@@ -59,7 +59,7 @@ class Project
         ];
 
         return $this->browser->post('/', $headers, $message->toJson())
-                ->then(function (ResponseContract $response) use ($message) {
+                ->then(static function (ResponseContract $response) use ($message) {
                     return (new Response($response))->validate($message);
                 });
     }

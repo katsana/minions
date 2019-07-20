@@ -82,17 +82,18 @@ class Router
     public function handle(ServerRequestInterface $request)
     {
         $project = $request->getHeader('X-Request-ID')[0] ?? null;
+        $app = $this->container;
 
         try {
             $config = $this->projectConfiguration($project);
 
-            return (new Pipeline($this->container))
+            return (new Pipeline($app))
                     ->send(new Message($project, $config, $request))
                     ->through([
                         Middleware\VerifyToken::class,
                         Middleware\VerifySignature::class,
-                    ])->then(function (Message $message) {
-                        return $this->container->make('minions.controller')->handle($message);
+                    ])->then(static function (Message $message) use ($app) {
+                        return $app->make('minions.controller')->handle($message);
                     });
         } catch (ErrorException | Throwable $exception) {
             return (new ExceptionHandler())->handle($exception);
