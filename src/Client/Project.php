@@ -69,8 +69,6 @@ class Project
      *
      * @param \Minions\Client\MessageInterface $message
      *
-     * @deprecated v0.5.0 To be removed on v1.0.0 release.
-     *
      * @return \React\Promise\PromiseInterface
      *
      * @see static::send()
