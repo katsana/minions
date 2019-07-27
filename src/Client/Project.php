@@ -48,8 +48,6 @@ class Project
      * @param \Minions\Client\MessageInterface $message
      *
      * @return \React\Promise\PromiseInterface
-     *
-     * @see static::send()
      */
     public function broadcast(MessageInterface $message)
     {
