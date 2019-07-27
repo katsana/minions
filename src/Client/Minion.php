@@ -3,9 +3,12 @@
 namespace Minions\Client;
 
 use Clue\React\Buzz\Browser;
-use InvalidArgumentException;
+use function Clue\React\Block\await;
+use function Clue\React\Block\awaitAll;
 use React\EventLoop\Factory;
+use InvalidArgumentException;
 use React\EventLoop\LoopInterface;
+use React\Promise\PromiseInterface;
 
 class Minion
 {
@@ -64,6 +67,22 @@ class Minion
         $this->eventLoop = $eventLoop;
 
         return $this;
+    }
+
+    /**
+     * Await for the promises to be resolved.
+     *
+     * @param  array|\React\Promise\PromiseInterface  $promises
+     *
+     * @return array|mixed
+     */
+    final public function await($promises)
+    {
+        if (\is_array($promises)) {
+            return awaitAll($promises, $this->eventLoop);
+        }
+
+        return await($promises, $this->eventLoop);
     }
 
     /**
