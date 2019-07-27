@@ -2,13 +2,12 @@
 
 namespace Minions\Client;
 
-use Clue\React\Buzz\Browser;
 use function Clue\React\Block\await;
 use function Clue\React\Block\awaitAll;
-use React\EventLoop\Factory;
+use Clue\React\Buzz\Browser;
 use InvalidArgumentException;
+use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
-use React\Promise\PromiseInterface;
 
 class Minion
 {
@@ -72,7 +71,7 @@ class Minion
     /**
      * Await for the promises to be resolved.
      *
-     * @param  array|\React\Promise\PromiseInterface  $promises
+     * @param array|\React\Promise\PromiseInterface $promises
      *
      * @return array|mixed
      */
