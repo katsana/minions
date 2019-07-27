@@ -43,13 +43,15 @@ class Project
     }
 
     /**
-     * Send message.
+     * Broadcast message.
      *
      * @param \Minions\Client\MessageInterface $message
      *
      * @return \React\Promise\PromiseInterface
+     *
+     * @see static::send()
      */
-    public function send(MessageInterface $message)
+    public function broadcast(MessageInterface $message)
     {
         $headers = [
             'Content-Type' => 'application/json',
@@ -62,19 +64,5 @@ class Project
                 ->then(static function (ResponseContract $response) use ($message) {
                     return (new Response($response))->validate($message);
                 });
-    }
-
-    /**
-     * Broadcast message.
-     *
-     * @param \Minions\Client\MessageInterface $message
-     *
-     * @return \React\Promise\PromiseInterface
-     *
-     * @see static::send()
-     */
-    public function broadcast(MessageInterface $message)
-    {
-        return $this->send($message);
     }
 }
