@@ -19,6 +19,8 @@ class ExceptionHandler
      */
     public function handle($exception): Reply
     {
+        \report($exception);
+
         if ($exception instanceof ModelNotFoundException) {
             return $this->handleModelNotFoundException($exception);
         } elseif ($exception instanceof ValidationException) {
