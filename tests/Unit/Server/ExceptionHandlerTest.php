@@ -2,6 +2,8 @@
 
 namespace Minions\Tests\Unit\Server;
 
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Debug\ExceptionHandler as IlluminateExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
@@ -72,9 +74,15 @@ class ExceptionHandlerTest extends TestCase
     /** @test */
     public function it_can_handle_generic_exception()
     {
+        Container::setInstance($app = new Container());
+
+        $app->instance(IlluminateExceptionHandler::class, $reporter = m::mock(IlluminateExceptionHandler::class));
+
         $exception = new QueryException(
             'SELECT * FROM `users` WHERE email=?', ['crynobone@katsana.com'], m::mock('PDOException')
         );
+
+        $reporter->shouldReceive('report')->once()->with($exception);
 
         $handler = new ExceptionHandler();
 
@@ -84,5 +92,7 @@ class ExceptionHandlerTest extends TestCase
             '{"jsonrpc":"2.0","id":null,"error":{"code":-32603,"message":"Illuminate\\\Database\\\QueryException -  (SQL: SELECT * FROM `users` WHERE email=crynobone@katsana.com)"}}',
             $reply->body()
         );
+
+        Container::setInstance(null);
     }
 }

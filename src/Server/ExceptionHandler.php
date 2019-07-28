@@ -19,8 +19,6 @@ class ExceptionHandler
      */
     public function handle($exception): Reply
     {
-        \report($exception);
-
         if ($exception instanceof ModelNotFoundException) {
             return $this->handleModelNotFoundException($exception);
         } elseif ($exception instanceof ValidationException) {
@@ -116,6 +114,8 @@ class ExceptionHandler
      */
     protected function handleGenericException($exception): Reply
     {
+        \report($exception);
+
         return new Reply(\json_encode([
             'jsonrpc' => Server::VERSION,
             'id' => null,
