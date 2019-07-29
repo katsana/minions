@@ -103,9 +103,4 @@ To use Minions as client, you need to install the following via Composer:
 composer require "react/http=^0.8.4"
 ```
 
-You also need to add the following service provider to `config/app.php` under `provides` configuration:
-
-```php
-Minions\Server\MinionsServiceProvider::class,
-```
 
