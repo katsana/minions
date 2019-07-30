@@ -67,11 +67,11 @@ class ExceptionHandler
         $error = [
             'code' => -32602,
             'message' => $exception->getMessage(),
+            'data' => [
+                'model' => $exception->getModel(),
+                'ids' => $exception->getIds(),
+            ],
         ];
-
-        if (! \is_null($data = $exception->getIds())) {
-            $error['data'] = $data;
-        }
 
         return new Reply(\json_encode([
             'jsonrpc' => Server::VERSION,
@@ -92,16 +92,13 @@ class ExceptionHandler
         $error = [
             'code' => -32602,
             'message' => $exception->getMessage(),
+            'data' => $exception->errors() ?? null,
         ];
-
-        if (! \is_null($data = $exception->errors())) {
-            $error['data'] = $data;
-        }
 
         return new Reply(\json_encode([
             'jsonrpc' => Server::VERSION,
             'id' => null,
-            'error' => $error,
+            'error' => \array_filter($error),
         ]));
     }
 

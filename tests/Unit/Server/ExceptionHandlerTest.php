@@ -47,7 +47,7 @@ class ExceptionHandlerTest extends TestCase
         $reply = $handler->handle($exception);
 
         $this->assertSame(
-            '{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"No query results for model [User] 2","data":[2]}}',
+            '{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"No query results for model [User] 2","data":{"model":"User","ids":[2]}}}',
             $reply->body()
         );
     }
