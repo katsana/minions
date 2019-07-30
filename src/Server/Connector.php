@@ -58,7 +58,7 @@ class Connector
         $server = new HttpServer([
             new Middleware\Http\LogRequest($this->logger),
             new Middleware\Http\StatusPage(),
-            function (ServerRequestInterface $request) use ($router) {
+            static function (ServerRequestInterface $request) use ($router) {
                 return $router->handle($request)->asResponse();
             },
         ]);
