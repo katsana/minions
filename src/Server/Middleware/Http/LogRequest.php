@@ -35,7 +35,7 @@ class LogRequest
     public function __invoke(ServerRequestInterface $request, callable $next)
     {
         $this->logger->info(
-            \date('Y-m-d H:i:s').' '.$request->getMethod().' '.$request->getUri().PHP_EOL
+            \date('Y-m-d H:i:s').' '.$request->getMethod().' '.$request->getUri()
         );
 
         return $next($request);
