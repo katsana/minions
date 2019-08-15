@@ -14,6 +14,24 @@ abstract class Projects implements ArrayAccess
     protected $projects = [];
 
     /**
+     * Register new project.
+     *
+     * @param string      $name
+     * @param string      $token
+     * @param string      $signature
+     * @param string|null $endpoint
+     * @param array       $options
+     *
+     * @return $this
+     */
+    final public function register(string $name, string $token, string $signature, ?string $endpoint = null, array $options = []): self
+    {
+        $this->projects[$name] = \compact('endpoint', 'token', 'signature', 'options');
+
+        return $this;
+    }
+
+    /**
      * Determine if the given offset exists.
      *
      * @param string $offset
