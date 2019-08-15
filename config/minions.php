@@ -11,7 +11,7 @@ return [
      | identify the source of a request.
      */
 
-    'id' => null,
+    'id' => 'minion-server',
 
     /*
      |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
      */
 
     'projects' => [
-        'platform' => [
+        'minion-client' => [
             'endpoint' => null,
             'token' => null,
             'signature' => null,

@@ -42,7 +42,7 @@ return [
      | identify the source of a request.
      */
 
-    'id' => null,
+    'id' => 'minion-server',
 
     /*
      |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
      */
 
     'projects' => [
-        'platform' => [
+        'minion-client' => [
             'endpoint' => null,
             'token' => null,
             'signature' => null,
@@ -93,7 +93,6 @@ To use Minions as client, you need to install the following via Composer:
 ```
 composer require "clue/buzz-react=^2.5"
 ```
-
 
 ### Installation for Server
 
