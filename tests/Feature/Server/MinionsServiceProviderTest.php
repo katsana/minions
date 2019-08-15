@@ -16,7 +16,7 @@ class MinionsServiceProviderTest extends ServerTestCase
     protected function getEnvironmentSetUp($app)
     {
         config([
-            'minions' => ['id' => 'platform', 'services' => []],
+            'minions' => ['id' => 'platform', 'projects' => [], 'services' => []],
         ]);
     }
 

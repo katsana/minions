@@ -17,7 +17,7 @@ class RouterTest extends ServerTestCase
     protected function getEnvironmentSetUp($app)
     {
         config([
-            'minions' => ['id' => 'platform'],
+            'minions' => ['id' => 'platform', 'projects' => []],
         ]);
     }
 

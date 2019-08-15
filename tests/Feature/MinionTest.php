@@ -17,7 +17,7 @@ class MinionTest extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         config([
-            'minions' => ['id' => 'platform'],
+            'minions' => ['id' => 'platform', 'projects' => []],
         ]);
     }
 

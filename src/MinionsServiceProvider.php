@@ -2,12 +2,14 @@
 
 namespace Minions;
 
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider;
 use React\EventLoop\LoopInterface;
 
 class MinionsServiceProvider extends ServiceProvider
 {
+    use Concerns\Configuration;
+
     /**
      * Register the application services.
      *
@@ -15,11 +17,8 @@ class MinionsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('minions.client', static function (Application $app) {
-            return new Client\Minion(
-                $app->make(LoopInterface::class),
-                $app->make('config')->get('minions')
-            );
+        $this->app->singleton('minions.client', function (Container $app) {
+            return new Client\Minion($app->make(LoopInterface::class), $this->useConfiguration($app));
         });
     }
 
