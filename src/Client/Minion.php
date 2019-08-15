@@ -155,7 +155,7 @@ class Minion
      */
     protected function projectConfiguration(string $project): array
     {
-        if (\is_null($project) || ! \array_key_exists($project, $this->config['projects'])) {
+        if (empty($project) || ! isset($this->config['projects'][$project])) {
             throw new InvalidArgumentException("Unable to find project [{$project}].");
         }
 

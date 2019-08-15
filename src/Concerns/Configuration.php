@@ -14,7 +14,7 @@ trait Configuration
      *
      * @return array
      */
-    protected function useConfiguration(Container $app): array
+    protected function useConfigurationFrom(Container $app): array
     {
         $config = $app->make('config')->get('minions');
 

@@ -20,7 +20,7 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
     public function register()
     {
         $this->app->singleton('minions.router', function (Container $app) {
-            return new Router($app, $this->useConfiguration($app));
+            return new Router($app, $this->useConfigurationFrom($app));
         });
 
         $this->app->bind('minions.controller', static function (Container $app) {

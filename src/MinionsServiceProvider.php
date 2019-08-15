@@ -18,7 +18,7 @@ class MinionsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('minions.client', function (Container $app) {
-            return new Client\Minion($app->make(LoopInterface::class), $this->useConfiguration($app));
+            return new Client\Minion($app->make(LoopInterface::class), $this->useConfigurationFrom($app));
         });
     }
 
