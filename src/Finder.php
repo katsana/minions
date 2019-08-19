@@ -24,8 +24,13 @@ abstract class Finder implements ArrayAccess
      *
      * @return $this
      */
-    final public function register(string $name, string $token, string $signature, ?string $endpoint = null, array $options = []): self
-    {
+    final public function register(
+        string $name,
+        string $token,
+        string $signature,
+        ?string $endpoint = null,
+        array $options = []
+    ): self {
         $this->projects[$name] = \compact('endpoint', 'token', 'signature', 'options');
 
         return $this;
