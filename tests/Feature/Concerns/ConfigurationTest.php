@@ -29,7 +29,7 @@ class ConfigurationTest extends TestCase
     public function it_can_retrieve_projects_from_class()
     {
         config([
-            'minions' => ['id' => 'minions', 'projects' => 'Minions\Tests\Feature\Concerns\StubProjects'],
+            'minions' => ['id' => 'minions', 'projects' => 'Minions\Tests\Feature\Concerns\StubFinder'],
         ]);
 
         $config = $this->useConfigurationFrom($this->app);
@@ -42,7 +42,7 @@ class ConfigurationTest extends TestCase
     }
 }
 
-class StubProjects extends \Minions\Projects
+class StubFinder extends \Minions\Finder
 {
     protected $projects = [
         'platform' => ['endpoint' => 'http://rpc.localhost'],

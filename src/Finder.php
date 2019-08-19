@@ -4,7 +4,7 @@ namespace Minions;
 
 use ArrayAccess;
 
-abstract class Projects implements ArrayAccess
+abstract class Finder implements ArrayAccess
 {
     /**
      * List of projects.

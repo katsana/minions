@@ -2,15 +2,15 @@
 
 namespace Minions\Tests\Unit;
 
-use Minions\Projects;
+use Minions\Finder;
 use PHPUnit\Framework\TestCase;
 
-class ProjectTest extends TestCase
+class FinderTest extends TestCase
 {
     /** @test */
     public function it_has_proper_signature()
     {
-        $projects = new class() extends Projects {
+        $projects = new class() extends Finder {
             protected $projects = [
                 'platform' => [
                     'endpoint' => 'https://rpc.localhost',
@@ -26,7 +26,8 @@ class ProjectTest extends TestCase
     /** @test */
     public function it_can_register_new_project_as_server()
     {
-        $projects = new class() extends Projects {
+        $projects = new class() extends Finder {
+            //
         };
 
         $projects->register('platform', 'foobar', 'hello', 'http://rpc.localhost');
@@ -43,7 +44,8 @@ class ProjectTest extends TestCase
     /** @test */
     public function it_can_register_new_project_as_client()
     {
-        $projects = new class() extends Projects {
+        $projects = new class() extends Finder {
+            //
         };
 
         $projects->register('platform', 'foobar', 'hello');

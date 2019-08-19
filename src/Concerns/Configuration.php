@@ -3,7 +3,7 @@
 namespace Minions\Concerns;
 
 use Illuminate\Contracts\Container\Container;
-use Minions\Projects;
+use Minions\Finder;
 
 trait Configuration
 {
@@ -21,7 +21,7 @@ trait Configuration
         if (\is_string($config['projects'])) {
             $projects = $app->make($config['projects']);
 
-            if ($projects instanceof Projects) {
+            if ($projects instanceof Finder) {
                 $config['projects'] = $projects;
             }
         }
