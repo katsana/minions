@@ -55,14 +55,39 @@ class Connector
      */
     public function handle(Router $router, array $config): HttpServer
     {
-        $server = new HttpServer([
+        return $this->bootServer(
+            new HttpServer($this->middlewares($router)), $config
+        );
+    }
+
+    /**
+     * HTTP request middleware.
+     *
+     * @param \Minions\Server\Router $router
+     *
+     * @return array
+     */
+    protected function middlewares(Router $router): array
+    {
+        return [
             new Middleware\Http\LogRequest($this->logger),
             new Middleware\Http\StatusPage(),
             static function (ServerRequestInterface $request) use ($router) {
                 return $router->handle($request)->asResponse();
             },
-        ]);
+        ];
+    }
 
+    /**
+     * Boot server either using HTTPS or HTTP.
+     *
+     * @param \React\Http\Server $server
+     * @param array              $config
+     *
+     * @return \React\Http\Server
+     */
+    protected function bootServer(HttpServer $server, array $config): HttpServer
+    {
         if ($config['secure'] === true) {
             $this->bootSecuredServer($server, $config['options'] ?? []);
         } else {
