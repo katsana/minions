@@ -61,7 +61,7 @@ class Connector
     }
 
     /**
-     * HTTP request middleware.
+     * HTTP request middlewares.
      *
      * @param \Minions\Server\Router $router
      *
