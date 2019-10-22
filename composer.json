@@ -34,7 +34,7 @@
         "illuminate/support": "^5.8 || ^6.0",
         "illuminate/validation": "^5.8 || ^6.0",
         "laravie/codex-security": "^1.0",
-        "laravie/stream": "^0.2",
+        "laravie/stream": "^1.0",
         "react/event-loop": "^1.1",
         "react/promise": "^2.5"
     },
