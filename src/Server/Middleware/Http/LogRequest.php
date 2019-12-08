@@ -16,8 +16,6 @@ class LogRequest
 
     /**
      * Construct log request middleware.
-     *
-     * @param \Laravie\Stream\Logger $logger
      */
     public function __construct(Logger $logger)
     {
@@ -26,9 +24,6 @@ class LogRequest
 
     /**
      * Log request information.
-     *
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param callable                                 $next
      *
      * @return mixed
      */

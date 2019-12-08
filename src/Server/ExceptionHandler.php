@@ -33,8 +33,6 @@ class ExceptionHandler
     /**
      * Handle Json-RPC Exception.
      *
-     * @param \Datto\JsonRpc\Exceptions\Exception $exception
-     *
      * @return \Minions\Server\Reply
      */
     protected function handleJsonRpcException(JsonRpcException $exception): Reply
@@ -58,8 +56,6 @@ class ExceptionHandler
     /**
      * Handle Model not found Exception.
      *
-     * @param \Illuminate\Database\Eloquent\ModelNotFoundException $exception
-     *
      * @return \Minions\Server\Reply
      */
     protected function handleModelNotFoundException(ModelNotFoundException $exception): Reply
@@ -82,8 +78,6 @@ class ExceptionHandler
 
     /**
      * Handle Validation Exception.
-     *
-     * @param \Illuminate\Validation\ValidationException $exception
      *
      * @return \Minions\Server\Reply
      */

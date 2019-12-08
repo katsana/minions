@@ -15,8 +15,6 @@ class Reply
 
     /**
      * Construct a new reply.
-     *
-     * @param string|null $body
      */
     public function __construct(?string $body)
     {
@@ -25,8 +23,6 @@ class Reply
 
     /**
      * Message status.
-     *
-     * @return int
      */
     public function status(): int
     {
@@ -35,8 +31,6 @@ class Reply
 
     /**
      * Message headers.
-     *
-     * @return array
      */
     public function headers(): array
     {
@@ -45,8 +39,6 @@ class Reply
 
     /**
      * Message contents.
-     *
-     * @return string|null
      */
     public function body(): ?string
     {

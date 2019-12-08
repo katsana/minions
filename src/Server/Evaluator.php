@@ -34,9 +34,7 @@ class Evaluator implements DattoEvaluator
     /**
      * Construct a new Evaluator.
      *
-     * @param \Illuminate\Contracts\Container\Container $container
-     * @param array                                     $services
-     * @param \Minions\Server\Message                   $message
+     * @param \Minions\Server\Message $message
      */
     public function __construct(Container $container, array $services, Message $message)
     {
@@ -68,10 +66,6 @@ class Evaluator implements DattoEvaluator
 
     /**
      * Find resolver based on services.
-     *
-     * @param string $key
-     *
-     * @return string|null
      */
     protected function findResolver(string $key): ?string
     {

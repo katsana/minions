@@ -14,19 +14,10 @@ interface ResponseInterface
      */
     public function getRpcResult();
 
-    /**
-     * @return string
-     */
     public function getRpcVersion(): string;
 
-    /**
-     * @return int|null
-     */
     public function getRpcErrorCode(): ?int;
 
-    /**
-     * @return string|null
-     */
     public function getRpcErrorMessage(): ?string;
 
     /**

@@ -26,8 +26,6 @@ class Response implements ResponseInterface
 
     /**
      * Construct response from PSR-7 Response.
-     *
-     * @param \Psr\Http\Message\ResponseInterface $response
      */
     public function __construct(ResponseContract $response)
     {
@@ -72,25 +70,16 @@ class Response implements ResponseInterface
         return $this->content['result'] ?? null;
     }
 
-    /**
-     * @return string
-     */
     public function getRpcVersion(): string
     {
         return $this->content['jsonrpc'];
     }
 
-    /**
-     * @return int|null
-     */
     public function getRpcErrorCode(): ?int
     {
         return $this->content['error']['code'] ?? null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getRpcErrorMessage(): ?string
     {
         return $this->content['error']['message'] ?? null;

@@ -9,8 +9,7 @@ class Exception extends JsonRpcException
     /**
      * Trigger "Internal error" exception.
      *
-     * @param  string  $message
-     * @param  mixed  $data
+     * @param mixed $data
      *
      * @return static
      */
@@ -22,8 +21,7 @@ class Exception extends JsonRpcException
     /**
      * Trigger "Parse error" exception.
      *
-     * @param  string  $message
-     * @param  mixed  $data
+     * @param mixed $data
      *
      * @return static
      */
@@ -35,8 +33,7 @@ class Exception extends JsonRpcException
     /**
      * Trigger "Invalid request" exception.
      *
-     * @param  string  $message
-     * @param  mixed  $data
+     * @param mixed $data
      *
      * @return static
      */
@@ -48,8 +45,7 @@ class Exception extends JsonRpcException
     /**
      * Trigger "Invalid parameters" exception.
      *
-     * @param  string  $message
-     * @param  mixed  $data
+     * @param mixed $data
      *
      * @return static
      */
@@ -61,8 +57,7 @@ class Exception extends JsonRpcException
     /**
      * Trigger "Method not found" exception.
      *
-     * @param  string  $message
-     * @param  mixed  $data
+     * @param mixed $data
      *
      * @return static
      */

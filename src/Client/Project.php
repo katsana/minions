@@ -30,10 +30,6 @@ class Project
 
     /**
      * Construct a new project.
-     *
-     * @param string                   $id
-     * @param array                    $config
-     * @param \Clue\React\Buzz\Browser $browser
      */
     public function __construct(string $id, array $config, Browser $browser)
     {

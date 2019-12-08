@@ -14,8 +14,6 @@ class Message extends Notification
     /**
      * Construct a new Notification.
      *
-     * @param string     $method
-     * @param array      $parameters
      * @param int|string $id
      */
     public function __construct(string $method, array $parameters, $id)
@@ -37,8 +35,6 @@ class Message extends Notification
 
     /**
      * Convert to JSON.
-     *
-     * @return string
      */
     public function toJson(): string
     {

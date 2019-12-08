@@ -22,9 +22,6 @@ class StartJsonRpcServer extends Command
     /**
      * Execute the console command.
      *
-     * @param \React\EventLoop\LoopInterface $eventLoop
-     * @param \Laravie\Stream\Log\Console    $logger
-     *
      * @return void
      */
     public function handle(LoopInterface $eventLoop, Logger $logger)

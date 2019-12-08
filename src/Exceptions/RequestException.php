@@ -24,10 +24,8 @@ class RequestException extends RuntimeException
     /**
      * Construct a request exception.
      *
-     * @param string                            $message
-     * @param int                               $code
-     * @param \Minions\Client\ResponseInterface $response
-     * @param string                            $requestMethod
+     * @param string $message
+     * @param int    $code
      */
     public function __construct($message, $code, ResponseInterface $response, string $requestMethod)
     {
@@ -39,8 +37,6 @@ class RequestException extends RuntimeException
 
     /**
      * Get the RPC Response.
-     *
-     * @return \Minions\Client\ResponseInterface
      */
     public function getResponse(): ResponseInterface
     {
@@ -49,8 +45,6 @@ class RequestException extends RuntimeException
 
     /**
      * Get requested method.
-     *
-     * @return string
      */
     public function getRequestMethod(): string
     {

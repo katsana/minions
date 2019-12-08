@@ -33,10 +33,6 @@ class Connector
 
     /**
      * Construct a new HTTP Server connector.
-     *
-     * @param string                         $hostname
-     * @param \React\EventLoop\LoopInterface $eventLoop
-     * @param \Laravie\Stream\Logger         $logger
      */
     public function __construct(string $hostname, LoopInterface $eventLoop, Logger $logger)
     {
@@ -49,9 +45,6 @@ class Connector
      * Create HTTP Server.
      *
      * @param \Minions\Server\Router $router
-     * @param array                  $config
-     *
-     * @return \React\Http\Server
      */
     public function handle(Router $router, array $config): HttpServer
     {
@@ -64,8 +57,6 @@ class Connector
      * HTTP request middlewares.
      *
      * @param \Minions\Server\Router $router
-     *
-     * @return array
      */
     protected function middlewares(Router $router): array
     {
@@ -80,11 +71,6 @@ class Connector
 
     /**
      * Boot server either using HTTPS or HTTP.
-     *
-     * @param \React\Http\Server $server
-     * @param array              $config
-     *
-     * @return \React\Http\Server
      */
     protected function bootServer(HttpServer $server, array $config): HttpServer
     {
@@ -99,11 +85,6 @@ class Connector
 
     /**
      * Boot HTTPS Socket Server.
-     *
-     * @param \React\Http\Server $server
-     * @param array              $options
-     *
-     * @return void
      */
     protected function bootSecuredServer(HttpServer $server, array $options): void
     {
@@ -114,10 +95,6 @@ class Connector
 
     /**
      * Boot HTTP Socket Server.
-     *
-     * @param \React\Http\Server $server
-     *
-     * @return void
      */
     protected function bootUnsecuredServer(HttpServer $server): void
     {

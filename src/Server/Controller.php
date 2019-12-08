@@ -24,8 +24,7 @@ class Controller
     /**
      * Construct a new Evaluator.
      *
-     * @param \Illuminate\Contracts\Container\Container $container
-     * @param \Minions\Server\Router                    $router
+     * @param \Minions\Server\Router $router
      */
     public function __construct(Container $container, Router $router)
     {

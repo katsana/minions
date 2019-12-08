@@ -34,9 +34,6 @@ class Minion
 
     /**
      * Construct a new Minion.
-     *
-     * @param \React\EventLoop\LoopInterface $eventLoop
-     * @param array                          $config
      */
     public function __construct(LoopInterface $eventLoop, array $config)
     {
@@ -46,8 +43,6 @@ class Minion
 
     /**
      * Get Event Loop implementation.
-     *
-     * @return \React\EventLoop\LoopInterface
      */
     final public function getEventLoop(): LoopInterface
     {
@@ -56,8 +51,6 @@ class Minion
 
     /**
      * Set Event Loop implementation.
-     *
-     * @param \React\EventLoop\LoopInterface $eventLoop
      *
      * @return $this
      */
@@ -86,8 +79,6 @@ class Minion
 
     /**
      * Execute the loop.
-     *
-     * @return void
      */
     final public function run(): void
     {
@@ -96,8 +87,6 @@ class Minion
 
     /**
      * Create project instance.
-     *
-     * @param string $project
      *
      * @return \Minions\Client\Project
      */
@@ -117,7 +106,6 @@ class Minion
     /**
      * Broadcast message.
      *
-     * @param string                           $project
      * @param \Minions\Client\MessageInterface $message
      *
      * @return \React\Promise\PromiseInterface
@@ -129,10 +117,6 @@ class Minion
 
     /**
      * Create a new client using factory.
-     *
-     * @param array $config
-     *
-     * @return \Clue\React\Buzz\Browser
      */
     protected function createBrowser(array $config): Browser
     {
@@ -148,10 +132,6 @@ class Minion
 
     /**
      * Get configuration for a project.
-     *
-     * @param string $project
-     *
-     * @return array
      */
     protected function projectConfiguration(string $project): array
     {

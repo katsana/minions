@@ -35,9 +35,6 @@ class Router
 
     /**
      * Construct a new Minion.
-     *
-     * @param \Illuminate\Contracts\Container\Container $container
-     * @param array                                     $config
      */
     public function __construct(Container $container, array $config)
     {
@@ -48,10 +45,6 @@ class Router
 
     /**
      * Set rpc route.
-     *
-     * @param string $method
-     * @param string $handler
-     * @param array  $projects
      *
      * @return $this
      */
@@ -64,8 +57,6 @@ class Router
 
     /**
      * Get available routes.
-     *
-     * @return array
      */
     public function getRoutes(): array
     {
@@ -74,8 +65,6 @@ class Router
 
     /**
      * Handle request and return Evaluator for the request.
-     *
-     * @param \Psr\Http\Message\ServerRequestInterface $request
      *
      * @return \Minions\Server\Reply
      */
@@ -102,10 +91,6 @@ class Router
 
     /**
      * Get configuration for a project.
-     *
-     * @param string|null $project
-     *
-     * @return array
      */
     protected function projectConfiguration(?string $project): array
     {

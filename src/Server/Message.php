@@ -42,10 +42,6 @@ class Message
 
     /**
      * Construct a new project request.
-     *
-     * @param string                                   $id
-     * @param array                                    $config
-     * @param \Psr\Http\Message\ServerRequestInterface $request
      */
     public function __construct(string $id, array $config, ServerRequestInterface $request)
     {
@@ -57,8 +53,6 @@ class Message
 
     /**
      * Get the request instance.
-     *
-     * @return \Psr\Http\Message\ServerRequestInterface
      */
     public function request(): ServerRequestInterface
     {
@@ -67,8 +61,6 @@ class Message
 
     /**
      * Get the project id.
-     *
-     * @return string
      */
     public function id(): string
     {
@@ -77,8 +69,6 @@ class Message
 
     /**
      * Get the request body.
-     *
-     * @return string
      */
     public function body(): string
     {
@@ -87,8 +77,6 @@ class Message
 
     /**
      * Validate request token.
-     *
-     * @return bool
      */
     public function validateRequestToken(): bool
     {
@@ -111,8 +99,6 @@ class Message
 
     /**
      * Validate request signature.
-     *
-     * @return bool
      */
     public function validateRequestSignature(): bool
     {

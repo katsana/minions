@@ -9,10 +9,6 @@ trait Configuration
 {
     /**
      * Use configuration from.
-     *
-     * @param \Illuminate\Contracts\Container\Container $app
-     *
-     * @return array
      */
     protected function useConfigurationFrom(Container $app): array
     {

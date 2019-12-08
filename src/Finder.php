@@ -16,12 +16,6 @@ abstract class Finder implements ArrayAccess
     /**
      * Register new project.
      *
-     * @param string      $name
-     * @param string      $token
-     * @param string      $signature
-     * @param string|null $endpoint
-     * @param array       $options
-     *
      * @return $this
      */
     final public function register(

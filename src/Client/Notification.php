@@ -24,9 +24,6 @@ class Notification implements MessageInterface
 
     /**
      * Construct a new Notification.
-     *
-     * @param string $method
-     * @param array  $parameters
      */
     public function __construct(string $method, array $parameters)
     {
@@ -46,8 +43,6 @@ class Notification implements MessageInterface
 
     /**
      * Json-RPC version.
-     *
-     * @return string
      */
     public function version(): string
     {
@@ -56,8 +51,6 @@ class Notification implements MessageInterface
 
     /**
      * Method name.
-     *
-     * @return string
      */
     public function method(): string
     {
@@ -66,8 +59,6 @@ class Notification implements MessageInterface
 
     /**
      * Parameters.
-     *
-     * @return array
      */
     public function parameters(): array
     {
@@ -76,8 +67,6 @@ class Notification implements MessageInterface
 
     /**
      * Convert to JSON.
-     *
-     * @return string
      */
     public function toJson(): string
     {
@@ -90,10 +79,6 @@ class Notification implements MessageInterface
 
     /**
      * Message signature.
-     *
-     * @param string $secret
-     *
-     * @return string
      */
     public function signature(string $secret): string
     {
