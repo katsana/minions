@@ -87,8 +87,6 @@ class Minion
 
     /**
      * Create project instance.
-     *
-     * @return \Minions\Client\Project
      */
     public function project(string $project): Project
     {
@@ -121,13 +119,13 @@ class Minion
     protected function createBrowser(array $config): Browser
     {
         return (new Browser($this->getEventLoop()))
-                    ->withBase($config['endpoint'])
-                    ->withOptions([
-                        'timeout' => $config['options']['timeout'] ?? null,
-                        'followRedirects' => false,
-                        'obeySuccessCode' => true,
-                        'streaming' => false,
-                    ]);
+            ->withBase($config['endpoint'])
+            ->withOptions([
+                'timeout' => $config['options']['timeout'] ?? null,
+                'followRedirects' => false,
+                'obeySuccessCode' => true,
+                'streaming' => false,
+            ]);
     }
 
     /**

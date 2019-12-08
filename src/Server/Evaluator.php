@@ -33,8 +33,6 @@ class Evaluator implements DattoEvaluator
 
     /**
      * Construct a new Evaluator.
-     *
-     * @param \Minions\Server\Message $message
      */
     public function __construct(Container $container, array $services, Message $message)
     {

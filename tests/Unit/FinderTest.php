@@ -78,7 +78,7 @@ class FinderTest extends TestCase
             'endpoint' => 'https://rpc.localhost',
             'options' => [],
             'token' => 'foobar',
-            'signature' => 'hello'
+            'signature' => 'hello',
         ], $projects['platform']);
         $this->assertTrue(isset($projects['platform']));
     }

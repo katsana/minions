@@ -23,8 +23,6 @@ class Controller
 
     /**
      * Construct a new Evaluator.
-     *
-     * @param \Minions\Server\Router $router
      */
     public function __construct(Container $container, Router $router)
     {
@@ -34,10 +32,6 @@ class Controller
 
     /**
      * Handle the request.
-     *
-     * @param \Minions\Server\Message $message
-     *
-     * @return \Minions\Server\Reply
      */
     public function handle(Message $message): Reply
     {

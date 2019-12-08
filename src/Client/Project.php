@@ -41,8 +41,6 @@ class Project
     /**
      * Broadcast message.
      *
-     * @param \Minions\Client\MessageInterface $message
-     *
      * @return \React\Promise\PromiseInterface
      */
     public function broadcast(MessageInterface $message)
@@ -55,8 +53,8 @@ class Project
         ];
 
         return $this->browser->post('/', $headers, $message->toJson())
-                ->then(static function (ResponseContract $response) use ($message) {
-                    return (new Response($response))->validate($message);
-                });
+            ->then(static function (ResponseContract $response) use ($message) {
+                return (new Response($response))->validate($message);
+            });
     }
 }

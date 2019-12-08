@@ -14,8 +14,6 @@ class ExceptionHandler
      * to JSON-RPC response.
      *
      * @param \Throwable $exception
-     *
-     * @return \Minions\Server\Reply
      */
     public function handle($exception): Reply
     {
@@ -32,8 +30,6 @@ class ExceptionHandler
 
     /**
      * Handle Json-RPC Exception.
-     *
-     * @return \Minions\Server\Reply
      */
     protected function handleJsonRpcException(JsonRpcException $exception): Reply
     {
@@ -55,8 +51,6 @@ class ExceptionHandler
 
     /**
      * Handle Model not found Exception.
-     *
-     * @return \Minions\Server\Reply
      */
     protected function handleModelNotFoundException(ModelNotFoundException $exception): Reply
     {
@@ -78,8 +72,6 @@ class ExceptionHandler
 
     /**
      * Handle Validation Exception.
-     *
-     * @return \Minions\Server\Reply
      */
     protected function handleValidationException(ValidationException $exception): Reply
     {
@@ -100,8 +92,6 @@ class ExceptionHandler
      * Handle generic Exception.
      *
      * @param \Throwable|\Error $exception
-     *
-     * @return \Minions\Server\Reply
      */
     protected function handleGenericException($exception): Reply
     {

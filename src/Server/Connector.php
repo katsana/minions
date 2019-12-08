@@ -43,8 +43,6 @@ class Connector
 
     /**
      * Create HTTP Server.
-     *
-     * @param \Minions\Server\Router $router
      */
     public function handle(Router $router, array $config): HttpServer
     {
@@ -55,8 +53,6 @@ class Connector
 
     /**
      * HTTP request middlewares.
-     *
-     * @param \Minions\Server\Router $router
      */
     protected function middlewares(Router $router): array
     {

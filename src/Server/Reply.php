@@ -47,8 +47,6 @@ class Reply
 
     /**
      * Convert message to response.
-     *
-     * @return \React\Http|Response
      */
     public function asResponse(): Response
     {
