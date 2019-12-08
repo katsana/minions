@@ -55,6 +55,8 @@ class Response implements ResponseInterface
     }
 
     /**
+     * Get RPC ID.
+     *
      * @return string|int|null
      */
     public function getRpcId()
@@ -63,6 +65,8 @@ class Response implements ResponseInterface
     }
 
     /**
+     * Get RPC result.
+     *
      * @return mixed
      */
     public function getRpcResult()
@@ -70,22 +74,33 @@ class Response implements ResponseInterface
         return $this->content['result'] ?? null;
     }
 
+    /**
+     * Get RPC version.
+     */
     public function getRpcVersion(): string
     {
         return $this->content['jsonrpc'];
     }
 
+    /**
+     * Get RPC error code.
+     */
     public function getRpcErrorCode(): ?int
     {
         return $this->content['error']['code'] ?? null;
     }
 
+    /**
+     * Get RPC error message.
+     */
     public function getRpcErrorMessage(): ?string
     {
         return $this->content['error']['message'] ?? null;
     }
 
     /**
+     * Get RPC error data.
+     *
      * @return mixed
      */
     public function getRpcErrorData()
