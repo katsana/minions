@@ -58,4 +58,44 @@ class FinderTest extends TestCase
             'options' => [],
         ], $projects['platform']);
     }
+
+    /** @test */
+    public function it_use_manually_set_a_project()
+    {
+        $projects = new class() extends Finder {
+            //
+        };
+
+        $this->assertFalse(isset($projects['platform']));
+
+        $projects['platform'] = [
+            'endpoint' => 'https://rpc.localhost',
+            'token' => 'foobar',
+            'signature' => 'hello',
+        ];
+
+        $this->assertSame([
+            'endpoint' => 'https://rpc.localhost',
+            'options' => [],
+            'token' => 'foobar',
+            'signature' => 'hello'
+        ], $projects['platform']);
+        $this->assertTrue(isset($projects['platform']));
+    }
+
+    /** @test */
+    public function it_use_manually_unset_a_project()
+    {
+        $projects = new class() extends Finder {
+            //
+        };
+
+        $projects->register('platform', 'foobar', 'hello', 'http://rpc.localhost');
+
+        $this->assertTrue(isset($projects['platform']));
+
+        unset($projects['platform']);
+
+        $this->assertFalse(isset($projects['platform']));
+    }
 }

@@ -3,6 +3,7 @@
 namespace Minions;
 
 use ArrayAccess;
+use Illuminate\Support\Arr;
 
 abstract class Finder implements ArrayAccess
 {
@@ -64,7 +65,10 @@ abstract class Finder implements ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        $this->projects[$offset] = $value;
+        $this->projects[$offset] = \array_merge([
+            'endpoint' => null,
+            'options' => [],
+        ], Arr::only($value, ['endpoint', 'token', 'signature', 'options']));
     }
 
     /**
