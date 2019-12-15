@@ -22,7 +22,7 @@ class StartJsonRpcServer extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
     public function handle(LoopInterface $eventLoop, Logger $logger)
     {
@@ -49,5 +49,7 @@ class StartJsonRpcServer extends Command
         });
 
         $eventLoop->run();
+
+        return 0;
     }
 }
