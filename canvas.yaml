@@ -1,0 +1,23 @@
+preset: package
+
+namespace: Minions
+
+paths:
+  src: src
+  resource: resources
+
+factory:
+  path: database/factories
+
+migration:
+  path: database/migrations
+  prefix: ''
+
+console:
+  namespace: Minions\Server\Console
+
+provider:
+  namespace: Minions
+
+testing:
+  namespace: Minions\Tests
