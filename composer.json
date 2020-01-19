@@ -35,6 +35,7 @@
         "illuminate/validation": "^6.0 || ^7.0",
         "laravie/codex-security": "^1.0",
         "laravie/stream": "^1.0",
+        "orchestra/canvas-core": "^4.4",
         "react/event-loop": "^1.1",
         "react/promise": "^2.5"
     },
