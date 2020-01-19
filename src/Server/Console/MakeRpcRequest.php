@@ -32,7 +32,7 @@ class MakeRpcRequest extends Generator
      */
     public function getStubFile(): string
     {
-        // Implement path to stub file.
+        return __DIR__.'/stubs/request.stub';
     }
 
     /**
