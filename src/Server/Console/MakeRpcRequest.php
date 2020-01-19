@@ -11,7 +11,7 @@ class MakeRpcRequest extends Generator
      *
      * @var string
      */
-    protected $signature = 'minion:make';
+    protected $name = 'minions:make';
 
     /**
      * The console command description.
