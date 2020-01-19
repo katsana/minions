@@ -21,3 +21,7 @@ provider:
 
 testing:
   namespace: Minions\Tests
+
+generators:
+  - Orchestra\Canvas\Commands\Code
+  - Orchestra\Canvas\Commands\ConsoleGenerator

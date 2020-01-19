@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+use Minions\Server\Message;
+
+class DummyClass
+{
+    /**
+     * Handle the incoming request.
+     *
+     * @param  array  $arguments
+     * @param  \Minions\Server\Message  $message
+     *
+     * @return array
+     */
+    public function __invoke(array $arguments, Message $message): array
+    {
+        return [];
+    }
+}

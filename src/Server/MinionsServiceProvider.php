@@ -36,6 +36,7 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
+                Console\MakeRpcRequest::class,
                 Console\StartJsonRpcServer::class,
             ]);
         }
