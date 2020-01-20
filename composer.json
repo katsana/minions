@@ -37,7 +37,8 @@
         "laravie/stream": "^1.0",
         "orchestra/canvas-core": "^4.4.2 || ^5.0",
         "react/event-loop": "^1.1",
-        "react/promise": "^2.5"
+        "react/promise": "^2.5",
+        "symfony/yaml": "^4.2 || ^5.0"
     },
     "require-dev": {
         "clue/block-react": "^1.3",
