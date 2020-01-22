@@ -1,0 +1,5 @@
+<?php
+
+use Minions\Router;
+
+// Router::rpc('action', 'App\JsonRpc\Action');

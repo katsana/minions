@@ -43,6 +43,7 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
         if ($this->app->runningInConsole()) {
             $this->commands([
                 'minions.commands.make-request',
+                Console\InstallServer::class,
                 Console\StartJsonRpcServer::class,
             ]);
 
@@ -57,7 +58,7 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function bootRpcRoutes()
     {
-        $routeFile = \base_path('routes/rpc.php');
+        $routeFile = $this->app->basePath('routes/rpc.php');
 
         if ($this->app->make('files')->exists($routeFile)) {
             require $routeFile;
