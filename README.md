@@ -12,6 +12,8 @@ JSON-RPC Communication for Laravel
 * [Setup](#setup)
     - [Setup for Server](#setup-for-server)
     - [Setup for Client](#setup-for-client)
+* [Request Handler](#request-handler)
+* [Making a Request](#making-a-request)
 
 ## Installation
 
@@ -140,4 +142,66 @@ return [
 ];
 ```
 
+## Request Handler
+ 
+To receive a request from a client, first we need to create a request handler on the server, for example let say we want to create a `Add` request.
+
+```php
+<?php
+
+namespace App\JsonRpc;
+
+use Minions\Server\Message;
+
+class Add
+{
+    /**
+     * Handle the incoming request.
+     *
+     * @param  array  $arguments
+     * @param  \Minions\Server\Message  $message
+     *
+     * @return array
+     */
+    public function __invoke(array $arguments, Message $message): array
+    {
+        return \array_sum($arguments);
+    }
+}
+```
+
+> You can use `php artisan minions:make Add` to generate the base stub file `App\JsonRpc\Add`.
+
+### Registering the route
+
+To register the route, all you need to do is add the request handler to `routes/rpc.php`:
+
+```php
+<?php
+
+use Minions\Router;
+
+
+Router::rpc('math.add', 'App\JsonRpc\Add');
+```
+
+## Making a Request
+
+To make a request, you can create the following code:
+
+```php
+<?php
+
+use Minions\Client\Message;
+use Minions\Client\ResponseInterface;
+use Minions\Minion;
+
+Minion::broadcast('server-project-id', new Message(
+    'math.add', [1, 2, 3, 4]
+))->then(function (ResponseInterface $response) {
+    assert(10, $response->getRpcResult());
+});
+
+Minion::run();
+```
 
