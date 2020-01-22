@@ -45,6 +45,22 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
                 'minions.commands.make-request',
                 Console\StartJsonRpcServer::class,
             ]);
+
+            $this->bootRpcRoutes();
+        }
+    }
+
+    /**
+     * Register rpc routes.
+     *
+     * @return void
+     */
+    protected function bootRpcRoutes()
+    {
+        $routeFile = \base_path('routes/rpc.php');
+
+        if ($this->app->make('files')->exists($routeFile)) {
+            require $routeFile;
         }
     }
 
