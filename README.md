@@ -10,8 +10,8 @@ JSON-RPC Communication for Laravel
 
 * [Installation](#installation)
     - [Setup](#setup)
-* [Configuration for Client](#configuration-for-client)
 * [Configuration for Server](#configuration-for-server)
+* [Configuration for Client](#configuration-for-client)
 
 ## Installation
 
@@ -30,57 +30,6 @@ Next, you need to publish the Minions configuration file:
 ```
 php artisan vendor:publish --provider="Minions\MinionsServiceProvider" --tag="config"
 ```
-
-## Configuration for Client
-
-To use Minions as a client, you need to install the following via Composer:
-
-```
-composer require "clue/buzz-react=^2.5"
-```
-
-The following changes is meant for `config/minions.php`.
-
-### Set Project ID
-
-Before continuing, you need to setup the Project ID which will be used by the servers to identify authorized RPC requests. To do set `minions.id` value:
-
-```php
-<?php
-
-return [
-    // ...
-    
-    'id' => 'client-project-id',
-    
-    // ...
-
-];
-```
-
-### Configure Project Servers
-
-Next, you need to setup the project servers endpoint and credentials.
-
-```php
-<?php
-
-return [
-    // ...
-    
-    'projects' => [
-        'server-project-id' => [
-            'endpoint' => 'http://rpc.server-project-id',
-            'token' => 'secret-token',
-            'signature' => 'secret-signature',
-        ],
-    ],
-
-    // ...
-
-];
-```
-
 ## Configuration for Server
 
 To use Minions as a server, you need to install the following via Composer:
@@ -131,5 +80,55 @@ return [
 ```
 
 > A client endpoint is not required because server will never need to make a request to a client.
+
+## Configuration for Client
+
+To use Minions as a client, you need to install the following via Composer:
+
+```
+composer require "clue/buzz-react=^2.5"
+```
+
+The following changes is meant for `config/minions.php`.
+
+### Set Project ID
+
+Before continuing, you need to setup the Project ID which will be used by the servers to identify authorized RPC requests. To do set `minions.id` value:
+
+```php
+<?php
+
+return [
+    // ...
+    
+    'id' => 'client-project-id',
+    
+    // ...
+
+];
+```
+
+### Configure Project Servers
+
+Next, you need to setup the project servers endpoint and credentials.
+
+```php
+<?php
+
+return [
+    // ...
+    
+    'projects' => [
+        'server-project-id' => [
+            'endpoint' => 'http://rpc.server-project-id',
+            'token' => 'secret-token',
+            'signature' => 'secret-signature',
+        ],
+    ],
+
+    // ...
+
+];
+```
 
 
