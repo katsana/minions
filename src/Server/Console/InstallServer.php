@@ -27,7 +27,7 @@ class InstallServer extends Command
      *
      * @return mixed
      */
-    public function handle(Filesystem $filesystem)
+    public function handle(Filesystem $files)
     {
         $routeFile = $this->laravel->basePath('routes/rpc.php');
 
