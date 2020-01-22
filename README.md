@@ -8,6 +8,11 @@ JSON-RPC Communication for Laravel
 [![License](https://poser.pugx.org/katsana/minions/license)](https://packagist.org/packages/katsana/minions)
 [![Coverage Status](https://coveralls.io/repos/github/katsana/minions/badge.svg?branch=master)](https://coveralls.io/github/katsana/minions?branch=master)
 
+* [Installation](#installation)
+    - [Configuration](#configuration)
+    - [Installation for Client](#installation-for-client)
+    - [Installation for Server](#installation-for-server)
+
 ## Installation
 
 Minions can be installed via composer:
