@@ -185,6 +185,14 @@ use Minions\Router;
 Router::rpc('math.add', 'App\JsonRpc\Add');
 ```
 
+### Running the server
+
+Minions behind the hood run using ReactPHP running from Artisan command. To run the server you simple need to run:
+
+    php artisan minions:serve
+
+> Do read the Deployment section (to do) on what's the best practise to deploy the server.
+
 ## Making a Request
 
 To make a request, you can create the following code:
@@ -204,4 +212,3 @@ Minion::broadcast('server-project-id', new Message(
 
 Minion::run();
 ```
-
