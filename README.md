@@ -9,9 +9,9 @@ JSON-RPC Communication for Laravel
 [![Coverage Status](https://coveralls.io/repos/github/katsana/minions/badge.svg?branch=master)](https://coveralls.io/github/katsana/minions?branch=master)
 
 * [Installation](#installation)
-    - [Setup](#setup)
-* [Configuration for Server](#configuration-for-server)
-* [Configuration for Client](#configuration-for-client)
+* [Setup](#setup)
+    - [Setup for Server](#setup-for-server)
+    - [Setup for Client](#setup-for-client)
 
 ## Installation
 
@@ -21,7 +21,7 @@ Minions can be installed via composer:
 composer require "katsana/minions"
 ```
 
-### Setup
+## Setup
 
 The package will automatically register a service provider.
 
@@ -30,7 +30,8 @@ Next, you need to publish the Minions configuration file:
 ```
 php artisan vendor:publish --provider="Minions\MinionsServiceProvider" --tag="config"
 ```
-## Configuration for Server
+
+### Setup for Server
 
 To use Minions as a server, you need to install the following via Composer:
 
@@ -40,7 +41,15 @@ composer require "react/http=^0.8.4"
 
 The following changes is meant for `config/minions.php`.
 
-### Set Project ID
+#### Install
+
+First, execute the following command:
+
+    php artisan minions:install-server
+
+> This will create `routes/rpc.php` route file to manage all JSON-RPC endpoint available from the server.
+
+#### Set Project ID
 
 Before continuing, you need to setup the Project ID which will be used by the servers to identify authorized RPC requests. To do set `minions.id` value:
 
@@ -57,7 +66,7 @@ return [
 ];
 ```
 
-### Configure Project Clients
+#### Configure Project Clients
 
 Next, you need to setup the project client credentials:
 
@@ -81,7 +90,7 @@ return [
 
 > A client endpoint is not required because server will never need to make a request to a client.
 
-## Configuration for Client
+### Setup for Client
 
 To use Minions as a client, you need to install the following via Composer:
 
@@ -91,7 +100,7 @@ composer require "clue/buzz-react=^2.5"
 
 The following changes is meant for `config/minions.php`.
 
-### Set Project ID
+#### Set Project ID
 
 Before continuing, you need to setup the Project ID which will be used by the servers to identify authorized RPC requests. To do set `minions.id` value:
 
@@ -108,7 +117,7 @@ return [
 ];
 ```
 
-### Configure Project Servers
+#### Configure Project Servers
 
 Next, you need to setup the project servers endpoint and credentials.
 
