@@ -10,6 +10,8 @@ JSON-RPC Communication for Laravel
 
 * [Installation](#installation)
 * [Setup](#setup)
+    - [Setting Project ID](#setting-project-id)
+    - [Configure Projects](#configure-projects)
     - [Setup for Server](#setup-for-server)
     - [Setup for Client](#setup-for-client)
 * [Request Handler](#request-handler)
@@ -37,7 +39,7 @@ Next, you need to publish the Minions configuration file:
 php artisan vendor:publish --provider="Minions\MinionsServiceProvider" --tag="config"
 ```
 
-### Set Project ID
+### Setting Project ID
 
 Each project need to have a unique Project ID to be used to identify authorized RPC requests. You can set the project ID on `config/minions.php` configuration file:
 
