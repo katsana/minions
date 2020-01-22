@@ -189,7 +189,7 @@ MINION_SERVER_PORT=8081
 
 #### Restricting the listening host
 
-By default, the RPC server will listen on `127.0.0.1` and will allow incoming connections from local networks. If you want to expose this, you set a different host updating the environment file (or `config/minions.php`).
+By default, the RPC server will listen on `127.0.0.1` and will **only** allow incoming connections from local networks. If you want to expose this, you set a different host updating the environment file (or `config/minions.php`).
 
 ```ini
 MINION_SERVER_HOST='0.0.0.0'
