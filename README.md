@@ -13,7 +13,11 @@ JSON-RPC Communication for Laravel
     - [Setup for Server](#setup-for-server)
     - [Setup for Client](#setup-for-client)
 * [Request Handler](#request-handler)
+    - [Registering the route](#registering-the-route)
 * [Making a Request](#making-a-request)
+* [Starting the RPC server](#starting-the-rpc-server)
+    - [Configurations](#configurations)
+    - [Keeping the socket server running with supervisord](#keeping-the-socket-server-running-with-supervisord)
 
 ## Installation
 
@@ -185,10 +189,6 @@ use Minions\Router;
 Router::rpc('math.add', 'App\JsonRpc\Add');
 ```
 
-### Running the server
-
-
-
 ## Making a Request
 
 To make a request, you can create the following code:
@@ -215,7 +215,9 @@ Minions behind the hood run using ReactPHP running from Artisan command. You can
 
     php artisan minions:serve
 
-### Using a different port
+### Configurations
+
+#### Using a different port
 
 The default port of the RPC server is `8085`. You may set a different port by updating the environment file (or `config/minions.php`).
 
@@ -223,7 +225,7 @@ The default port of the RPC server is `8085`. You may set a different port by up
 MINION_SERVER_PORT=8081
 ```
 
-### Restricting the listening host
+#### Restricting the listening host
 
 By default, the RPC server will listen on `127.0.0.1` and will allow incoming connections from local networks. If you want to expose this, you set a different host updating the environment file (or `config/minions.php`).
 
