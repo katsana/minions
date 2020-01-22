@@ -26,80 +26,110 @@ Next, you need to publish the Minions configuration file:
 php artisan vendor:publish --provider="Minions\MinionsServiceProvider" --tag="config"
 ```
 
-This is the default content of the config file that will be published as `config/minions.php`:
-
-```php
-<?php
-
-return [
-    /*
-     |--------------------------------------------------------------------------
-     | Project ID
-     |--------------------------------------------------------------------------
-     |
-     | Define the project ID of this application so any request by this app
-     | will include the project id information allowing the server to
-     | identify the source of a request.
-     */
-
-    'id' => 'minion-server',
-
-    /*
-     |--------------------------------------------------------------------------
-     | Server Configuration
-     |--------------------------------------------------------------------------
-     |
-     | Define the server configuration including port number, SSL support etc.
-     |
-     */
-
-    'server' => [
-        'host' => env('MINION_SERVER_HOST', '127.0.0.1'),
-        'port' => env('MINION_SERVER_PORT', 8085),
-        'secure' => env('MINION_SERVER_SECURE', false),
-        'options' => [
-            'tls' => array_filter([
-                'local_cert' => env('MINION_SERVER_TLS_CERT', null),
-                // 'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_SERVER
-            ]),
-        ],
-    ],
-
-
-    /*
-     |--------------------------------------------------------------------------
-     | Projects
-     |--------------------------------------------------------------------------
-     |
-     | List of applications this app will communicate with.
-     |
-     */
-
-    'projects' => [
-        'minion-client' => [
-            'endpoint' => null,
-            'token' => null,
-            'signature' => null,
-            'options' => [],
-        ],
-    ],
-];
-```
-
 ### Installation for Client
 
-To use Minions as client, you need to install the following via Composer:
+To use Minions as a client, you need to install the following via Composer:
 
 ```
 composer require "clue/buzz-react=^2.5"
 ```
 
+#### Configurations
+
+The following changes is meant for `config/minions.php`.
+
+##### Set Project ID
+
+Before continuing, you need to setup the Project ID which will be used by the servers to identify authorized RPC requests. To do set `minions.id` value:
+
+```php
+<?php
+
+return [
+    // ...
+    
+    'id' => 'client-project-id',
+    
+    // ...
+
+];
+```
+
+##### Configure Project Servers
+
+Next, you need to setup the project servers endpoint and credentials.
+
+```php
+<?php
+
+return [
+    // ...
+    
+    'projects' => [
+        'server-project-id' => [
+            'endpoint' => 'http://rpc.server-project-id',
+            'token' => 'secret-token',
+            'signature' => 'secret-signature',
+        ],
+    ],
+
+    // ...
+
+];
+```
+
 ### Installation for Server
 
-To use Minions as client, you need to install the following via Composer:
+To use Minions as a server, you need to install the following via Composer:
 
 ```
 composer require "react/http=^0.8.4"
 ```
+
+
+#### Configurations
+
+The following changes is meant for `config/minions.php`.
+
+##### Set Project ID
+
+Before continuing, you need to setup the Project ID which will be used by the servers to identify authorized RPC requests. To do set `minions.id` value:
+
+```php
+<?php
+
+return [
+    // ...
+    
+    'id' => 'server-project-id',
+    
+    // ...
+
+];
+```
+
+##### Configure Project Clients
+
+Next, you need to setup the project client credentials:
+
+```php
+<?php
+
+return [
+    // ...
+    
+    'projects' => [
+        'client-project-id' => [
+            'token' => 'secret-token',
+            'signature' => 'secret-signature',
+        ],
+    ],
+
+    // ...
+
+];
+```
+
+> A client endpoint is not required because server will never need to make a request to a client.
 
 
