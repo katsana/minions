@@ -37,27 +37,9 @@ Next, you need to publish the Minions configuration file:
 php artisan vendor:publish --provider="Minions\MinionsServiceProvider" --tag="config"
 ```
 
-### Setup for Server
+### Set Project ID
 
-To use Minions as a server, you need to install the following via Composer:
-
-```
-composer require "react/http=^0.8.4"
-```
-
-The following changes is meant for `config/minions.php`.
-
-#### Install
-
-First, execute the following command:
-
-    php artisan minions:install-server
-
-> This will create `routes/rpc.php` route file to manage all JSON-RPC endpoint available from the server.
-
-#### Set Project ID
-
-Before continuing, you need to setup the Project ID which will be used by the servers to identify authorized RPC requests. To do set `minions.id` value:
+Each project need to have a unique Project ID to be used to identify authorized RPC requests. You can set the project ID on `config/minions.php` configuration file:
 
 ```php
 <?php
@@ -65,16 +47,16 @@ Before continuing, you need to setup the Project ID which will be used by the se
 return [
     // ...
     
-    'id' => 'server-project-id',
+    'id' => 'project-id',
     
     // ...
 
 ];
 ```
 
-#### Configure Project Clients
+### Configure Projects
 
-Next, you need to setup the project client credentials:
+Next, you need to setup the project clients and servers information:
 
 ```php
 <?php
@@ -87,6 +69,11 @@ return [
             'token' => 'secret-token',
             'signature' => 'secret-signature',
         ],
+        'server-project-id' => [
+            'endpoint' => 'http://server-project-id:8084',
+            'token' => 'another-secret-token',
+            'signature' => 'another-secret-signature',
+        ],
     ],
 
     // ...
@@ -94,7 +81,22 @@ return [
 ];
 ```
 
-> A client endpoint is not required because server will never need to make a request to a client.
+* `endpoint` is only required for configurating server project connection from a client project. A server will never send request to a client project.
+* Each project should have a pair of unique `token` and `secret`, this will be shared only by the client and server as a form of message verification.
+
+### Setup for Server
+
+To use Minions as a server, you need to install the following via Composer:
+
+```
+composer require "react/http=^0.8.4"
+```
+
+Next, execute the following command:
+
+    php artisan minions:install-server
+
+> This will create `routes/rpc.php` route file to manage all JSON-RPC endpoint available from the server.
 
 ### Setup for Client
 
@@ -102,48 +104,6 @@ To use Minions as a client, you need to install the following via Composer:
 
 ```
 composer require "clue/buzz-react=^2.5"
-```
-
-The following changes is meant for `config/minions.php`.
-
-#### Set Project ID
-
-Before continuing, you need to setup the Project ID which will be used by the servers to identify authorized RPC requests. To do set `minions.id` value:
-
-```php
-<?php
-
-return [
-    // ...
-    
-    'id' => 'client-project-id',
-    
-    // ...
-
-];
-```
-
-#### Configure Project Servers
-
-Next, you need to setup the project servers endpoint and credentials.
-
-```php
-<?php
-
-return [
-    // ...
-    
-    'projects' => [
-        'server-project-id' => [
-            'endpoint' => 'http://rpc.server-project-id',
-            'token' => 'secret-token',
-            'signature' => 'secret-signature',
-        ],
-    ],
-
-    // ...
-
-];
 ```
 
 ## Request Handler
