@@ -119,7 +119,7 @@ namespace App\JsonRpc;
 
 use Minions\Server\Message;
 
-class Add
+class MathAdd
 {
     /**
      * Handle the incoming request.
@@ -127,16 +127,16 @@ class Add
      * @param  array  $arguments
      * @param  \Minions\Server\Message  $message
      *
-     * @return array
+     * @return mixed
      */
-    public function __invoke(array $arguments, Message $message): array
+    public function __invoke(array $arguments, Message $message)
     {
         return \array_sum($arguments);
     }
 }
 ```
 
-> You can use `php artisan minions:make Add` to generate the base stub file `App\JsonRpc\Add`.
+> You can use `php artisan minions:make MathAdd` to generate the base stub file `App\JsonRpc\Add`.
 
 ### Registering the route
 
@@ -148,7 +148,7 @@ To register the route, all you need to do is add the request handler to `routes/
 use Minions\Router;
 
 
-Router::rpc('math.add', 'App\JsonRpc\Add');
+Router::rpc('math.add', 'App\JsonRpc\MathAdd');
 ```
 
 ## Making a Request
