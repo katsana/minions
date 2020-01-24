@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Minions\Server\Message;
+use Minions\Http\Message;
 
 class DummyClass
 {
@@ -10,7 +10,7 @@ class DummyClass
      * Handle the incoming request.
      *
      * @param  array  $arguments
-     * @param  \Minions\Server\Message  $message
+     * @param  \Minions\Http\Message  $message
      *
      * @return mixed
      */

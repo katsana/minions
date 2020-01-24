@@ -101,7 +101,7 @@ To receive a request from a client, first we need to create a request handler on
 
 namespace App\JsonRpc;
 
-use Minions\Server\Message;
+use Minions\Http\Message;
 
 class MathAdd
 {
@@ -109,7 +109,7 @@ class MathAdd
      * Handle the incoming request.
      *
      * @param  array  $arguments
-     * @param  \Minions\Server\Message  $message
+     * @param  \Minions\Http\Message  $message
      *
      * @return mixed
      */
