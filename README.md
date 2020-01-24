@@ -96,7 +96,9 @@ composer require "react/http=^0.8.4"
 
 Next, execute the following command:
 
-    php artisan minions:install-server
+```
+php artisan vendor:publish --provider="Minions\Http\MinionsServiceProvider" --tag="routes"
+```
 
 > This will create `routes/rpc.php` route file to manage all JSON-RPC endpoint available from the server.
 

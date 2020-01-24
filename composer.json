@@ -66,6 +66,7 @@
         "laravel": {
             "providers": [
                 "Minions\\MinionsServiceProvider",
+                "Minions\\Http\\MinionsServiceProvider",
                 "Minions\\Server\\MinionsServiceProvider"
             ],
             "aliases": {

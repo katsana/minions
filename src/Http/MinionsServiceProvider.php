@@ -44,7 +44,7 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
 
         $this->publishes([
             __DIR__.'/stubs/route.stub' => \base_path('routes/rpc.php'),
-        ], 'route');
+        ], 'routes');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
