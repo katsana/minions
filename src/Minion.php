@@ -23,4 +23,23 @@ class Minion extends Facade
     {
         return 'minions.client';
     }
+
+    /**
+     * Construct a new Message.
+     *
+     * @param int|string|null $id
+     */
+    public static function message(string $method, array $parameters, $id = null): Client\Message
+    {
+        return new Client\Message($method, $parameters, $id ?? \uniqid());
+    }
+
+
+    /**
+     * Construct a new Notification.
+     */
+    public static function notification(string $method, array $parameters): Client\Notification
+    {
+        return new Client\Notification($method, $parameters, $id);
+    }
 }

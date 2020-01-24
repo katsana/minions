@@ -152,7 +152,7 @@ use Minions\Client\Message;
 use Minions\Client\ResponseInterface;
 use Minions\Minion;
 
-Minion::broadcast('server-project-id', new Message(
+Minion::broadcast('server-project-id', Minion::message(
     'math.add', [1, 2, 3, 4]
 ))->then(function (ResponseInterface $response) {
     assert(10, $response->getRpcResult());

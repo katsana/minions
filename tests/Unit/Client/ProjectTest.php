@@ -27,7 +27,7 @@ class ProjectTest extends TestCase
         $browser = m::mock(Browser::class);
         $message = m::mock(MessageInterface::class);
 
-        $browser->shouldReceive('post')->with('/', [
+        $browser->shouldReceive('post')->with('', [
             'Content-Type' => 'application/json',
             'X-Request-ID' => 'foobar',
             'Authorization' => 'Token secret',
