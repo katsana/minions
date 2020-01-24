@@ -86,22 +86,6 @@ return [
 * `endpoint` is only required for configurating server project connection from a client project. A server will never send request to a client project.
 * Each project should have a pair of unique `token` and `secret`, this will be shared only by the client and server as a form of message verification.
 
-### Setup for Server
-
-To use Minions as a server, you need to install the following via Composer:
-
-```
-composer require "react/http=^0.8.4"
-```
-
-Next, execute the following command:
-
-```
-php artisan vendor:publish --provider="Minions\Http\MinionsServiceProvider" --tag="routes"
-```
-
-> This will create `routes/rpc.php` route file to manage all JSON-RPC endpoint available from the server.
-
 ### Setup for Client
 
 To use Minions as a client, you need to install the following via Composer:
@@ -153,6 +137,12 @@ use Minions\Router;
 Router::rpc('math.add', 'App\JsonRpc\MathAdd');
 ```
 
+You can run the following command to stub `routes/rpc.php`:
+
+```
+php artisan vendor:publish --provider="Minions\Http\MinionsServiceProvider" --tag="routes"
+```
+
 ## Making a Request
 
 To make a request, you can create the following code:
@@ -172,6 +162,16 @@ Minion::broadcast('server-project-id', new Message(
 
 Minion::run();
 ```
+
+
+## RPC Server
+
+To use Minions as a server, you need to install the following via Composer:
+
+```
+composer require "react/http=^0.8.4"
+```
+
 
 ## Starting the RPC server
 

@@ -45,7 +45,6 @@
         "mockery/mockery": "^1.3.1",
         "orchestra/canvas": "^4.5 || ^5.0",
         "orchestra/testbench": "^4.0 || ^5.0",
-        "orchestra/testbench-dusk": "^4.5 || ^5.0",
         "phpunit/phpunit": "^8.4",
         "react/http": "^0.8.4"
     },
