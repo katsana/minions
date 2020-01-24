@@ -52,7 +52,7 @@ class Project
             'X-Signature' => $message->signature($this->config['signature'] ?? ''),
         ];
 
-        return $this->browser->post('/', $headers, $message->toJson())
+        return $this->browser->post('', $headers, $message->toJson())
             ->then(static function (ResponseContract $response) use ($message) {
                 return (new Response($response))->validate($message);
             });
