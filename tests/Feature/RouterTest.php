@@ -3,9 +3,9 @@
 namespace Minions\Tests\Feature;
 
 use Minions\Router;
-use Minions\Tests\ServerTestCase;
+use Minions\Tests\HttpTestCase;
 
-class RouterTest extends ServerTestCase
+class RouterTest extends HttpTestCase
 {
     /**
      * Define environment setup.

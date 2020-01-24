@@ -3,10 +3,10 @@
 namespace Minions\Tests\Feature\Http;
 
 use Carbon\Carbon;
-use Minions\Tests\ServerTestCase;
+use Minions\Tests\HttpTestCase;
 use Mockery as m;
 
-class RouterTest extends ServerTestCase
+class RouterTest extends HttpTestCase
 {
     /** @test */
     public function it_can_dispatch_the_request()

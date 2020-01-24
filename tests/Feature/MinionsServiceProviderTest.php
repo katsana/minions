@@ -2,9 +2,9 @@
 
 namespace Minions\Tests\Feature;
 
-use Minions\Tests\ServerTestCase;
+use Minions\Tests\HttpTestCase;
 
-class MinionsServiceProviderTest extends ServerTestCase
+class MinionsServiceProviderTest extends HttpTestCase
 {
     /**
      * Define environment setup.

@@ -2,7 +2,7 @@
 
 namespace Minions\Tests;
 
-abstract class ServerTestCase extends TestCase
+abstract class HttpTestCase extends TestCase
 {
     /**
      * Get application providers.
@@ -14,7 +14,6 @@ abstract class ServerTestCase extends TestCase
     protected function getApplicationProviders($app)
     {
         $providers = parent::getApplicationProviders($app);
-        $providers[] = 'Minions\Server\MinionsServiceProvider';
         $providers[] = 'Minions\Http\MinionsServiceProvider';
 
         return $providers;
