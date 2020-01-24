@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Server;
+namespace Minions\Http;
 
 use Datto\JsonRpc\Server;
 use Illuminate\Contracts\Container\Container;
@@ -17,7 +17,7 @@ class Controller
     /**
      * The router.
      *
-     * @var \Minions\Server\Router
+     * @var \Minions\Http\Router
      */
     protected $router;
 

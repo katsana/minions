@@ -1,8 +1,8 @@
 <?php
 
-namespace Minions\Tests\Unit\Server\Middleware;
+namespace Minions\Tests\Unit\Http\Middleware;
 
-use Minions\Server\Middleware\VerifyToken;
+use Minions\Http\Middleware\VerifyToken;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +21,7 @@ class VerifyTokenTest extends TestCase
     {
         $middleware = new VerifyToken();
 
-        $message = m::mock('Minions\Server\Message');
+        $message = m::mock('Minions\Http\Message');
 
         $message->shouldReceive('validateRequestToken')->once()->andReturn(true);
 

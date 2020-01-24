@@ -20,14 +20,6 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     public function register()
     {
-        $this->app->singleton('minions.router', function (Container $app) {
-            return new Router($app, $this->useConfigurationFrom($app));
-        });
-
-        $this->app->bind('minions.controller', static function (Container $app) {
-            return new Controller($app, $app->make('minions.router'));
-        });
-
         $this->app->singleton('minions.commands.make-request', function (Container $app) {
             return new Console\MakeRpcRequest($this->presetForLaravel($app));
         });
@@ -52,28 +44,12 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
     }
 
     /**
-     * Register rpc routes.
-     *
-     * @return void
-     */
-    protected function bootRpcRoutes()
-    {
-        $routeFile = $this->app->basePath('routes/rpc.php');
-
-        if (\file_exists($routeFile)) {
-            Router::routeResolver(static function () use ($routeFile) {
-                require $routeFile;
-            });
-        }
-    }
-
-    /**
      * Get the events that trigger this service provider to register.
      *
      * @return array
      */
     public function provides()
     {
-        return ['minions.controller', 'minions.router'];
+        return ['minions.router'];
     }
 }

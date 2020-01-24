@@ -5,7 +5,7 @@ namespace Minions\Tests\Unit\Server;
 use Illuminate\Contracts\Container\Container;
 use Laravie\Stream\Logger;
 use Minions\Server\Connector;
-use Minions\Server\Router;
+use Minions\Http\Router;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use React\EventLoop\Factory;

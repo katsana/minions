@@ -1,9 +1,9 @@
 <?php
 
-namespace Minions\Tests\Unit\Server;
+namespace Minions\Tests\Unit\Http;
 
 use Carbon\Carbon;
-use Minions\Server\Message;
+use Minions\Http\Message;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 

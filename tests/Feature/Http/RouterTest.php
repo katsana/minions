@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Tests\Feature\Server;
+namespace Minions\Tests\Feature\Http;
 
 use Carbon\Carbon;
 use Minions\Tests\ServerTestCase;
@@ -39,7 +39,7 @@ class RouterTest extends ServerTestCase
 
         $reply = $this->app['minions.router']->handle($request);
 
-        $this->assertInstanceOf('Minions\Server\Reply', $reply);
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"result":3}', $reply->body());
     }
 
@@ -75,7 +75,7 @@ class RouterTest extends ServerTestCase
 
         $reply = $router->handle($request);
 
-        $this->assertInstanceOf('Minions\Server\Reply', $reply);
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"result":3}', $reply->body());
     }
 
@@ -110,7 +110,7 @@ class RouterTest extends ServerTestCase
 
         $reply = $this->app['minions.router']->handle($request);
 
-        $this->assertInstanceOf('Minions\Server\Reply', $reply);
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"result":3}', $reply->body());
     }
 
@@ -145,7 +145,7 @@ class RouterTest extends ServerTestCase
 
         $reply = $this->app['minions.router']->handle($request);
 
-        $this->assertInstanceOf('Minions\Server\Reply', $reply);
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"result":3}', $reply->body());
     }
 
@@ -180,7 +180,7 @@ class RouterTest extends ServerTestCase
 
         $reply = $this->app['minions.router']->handle($request);
 
-        $this->assertInstanceOf('Minions\Server\Reply', $reply);
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"result":3}', $reply->body());
     }
 
@@ -215,7 +215,7 @@ class RouterTest extends ServerTestCase
 
         $reply = $this->app['minions.router']->handle($request);
 
-        $this->assertInstanceOf('Minions\Server\Reply', $reply);
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Method not found"}}', $reply->body());
     }
 
@@ -250,7 +250,7 @@ class RouterTest extends ServerTestCase
 
         $reply = $this->app['minions.router']->handle($request);
 
-        $this->assertInstanceOf('Minions\Server\Reply', $reply);
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Method not found"}}', $reply->body());
     }
 
@@ -285,7 +285,7 @@ class RouterTest extends ServerTestCase
 
         $reply = $this->app['minions.router']->handle($request);
 
-        $this->assertInstanceOf('Minions\Server\Reply', $reply);
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Method not found"}}', $reply->body());
     }
 
@@ -300,7 +300,7 @@ class RouterTest extends ServerTestCase
 
         $reply = $this->app['minions.router']->handle($request);
 
-        $this->assertInstanceOf('Minions\Server\Reply', $reply);
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
         $this->assertSame('{"jsonrpc":"2.0","id":null,"error":{"code":-32600,"message":"Unable to find project: hello"}}', $reply->body());
     }
 }

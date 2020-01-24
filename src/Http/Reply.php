@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Server;
+namespace Minions\Http;
 
 use React\Http\Response;
 
@@ -43,15 +43,5 @@ class Reply
     public function body(): ?string
     {
         return $this->body;
-    }
-
-    /**
-     * Convert message to response.
-     */
-    public function asResponse(): Response
-    {
-        return new Response(
-            $this->status(), $this->headers(), $this->body()
-        );
     }
 }

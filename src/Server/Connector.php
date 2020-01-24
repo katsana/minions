@@ -3,8 +3,10 @@
 namespace Minions\Server;
 
 use Laravie\Stream\Logger;
+use Minions\Http\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\LoopInterface;
+use React\Http\Response;
 use React\Http\Server as HttpServer;
 use React\Socket\Server as SocketServer;
 
@@ -60,7 +62,11 @@ class Connector
             new Middleware\Http\LogRequest($this->logger),
             new Middleware\Http\StatusPage(),
             static function (ServerRequestInterface $request) use ($router) {
-                return $router->handle($request)->asResponse();
+                $reply = $router->handle($request);
+
+                return new Response(
+                    $reply->status(), $reply->headers(), $reply->body()
+                );
             },
         ];
     }

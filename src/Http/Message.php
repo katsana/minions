@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Server;
+namespace Minions\Http;
 
 use Illuminate\Support\Str;
 use Laravie\Codex\Security\TimeLimitSignature\Verify;

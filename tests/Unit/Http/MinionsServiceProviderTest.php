@@ -1,8 +1,8 @@
 <?php
 
-namespace Minions\Tests\Unit\Server;
+namespace Minions\Tests\Unit\Http;
 
-use Minions\Server\MinionsServiceProvider;
+use Minions\Http\MinionsServiceProvider;
 use PHPUnit\Framework\TestCase;
 
 class MinionsServiceProviderTest extends TestCase

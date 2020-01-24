@@ -1,8 +1,8 @@
 <?php
 
-namespace Minions\Tests\Unit\Server\Middleware;
+namespace Minions\Tests\Unit\Http\Middleware;
 
-use Minions\Server\Middleware\VerifySignature;
+use Minions\Http\Middleware\VerifySignature;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +21,7 @@ class VerifySignatureTest extends TestCase
     {
         $middleware = new VerifySignature();
 
-        $message = m::mock('Minions\Server\Message');
+        $message = m::mock('Minions\Http\Message');
 
         $message->shouldReceive('validateRequestSignature')->once()->andReturn(true);
 

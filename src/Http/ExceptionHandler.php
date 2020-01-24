@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Server;
+namespace Minions\Http;
 
 use Datto\JsonRpc\Exceptions\Exception as JsonRpcException;
 use Datto\JsonRpc\Server;

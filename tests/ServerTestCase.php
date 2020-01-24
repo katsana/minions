@@ -15,6 +15,7 @@ abstract class ServerTestCase extends TestCase
     {
         $providers = parent::getApplicationProviders($app);
         $providers[] = 'Minions\Server\MinionsServiceProvider';
+        $providers[] = 'Minions\Http\MinionsServiceProvider';
 
         return $providers;
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Minions\Server\Middleware;
+namespace Minions\Http\Middleware;
 
 use Closure;
-use Minions\Server\Message;
+use Minions\Http\Message;
 
 class VerifyToken
 {

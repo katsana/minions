@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Tests\Unit\Server;
+namespace Minions\Tests\Unit\Http;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler as IlluminateExceptionHandler;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 use Minions\Exceptions\MissingSignature;
-use Minions\Server\ExceptionHandler;
+use Minions\Http\ExceptionHandler;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 

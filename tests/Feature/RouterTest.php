@@ -26,6 +26,6 @@ class RouterTest extends ServerTestCase
     {
         $router = Router::getFacadeRoot();
 
-        $this->assertInstanceOf('Minions\Server\Router', $router);
+        $this->assertInstanceOf('Minions\Http\Router', $router);
     }
 }
