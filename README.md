@@ -166,7 +166,7 @@ Minion::run();
 To run Minions RPC Server, you have two options:
 
 * ReactPHP RPC Server using [katsana/minions-server](https://github.com/katsana/minions-server)
-* Laravel Routing Polyfill RPC Server [katsana/minions-policy](https://github.com/katsana/minions-polyfill)
+* Laravel Routing (Polyfill) RPC Server using [katsana/minions-policy](https://github.com/katsana/minions-polyfill)
 
 Please go through each option documentation for installation and usages guide.
 
