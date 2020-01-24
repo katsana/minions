@@ -121,7 +121,7 @@ class Minion
         return (new Browser($this->getEventLoop()))
             ->withBase($config['endpoint'])
             ->withOptions([
-                'timeout' => $config['options']['timeout'] ?? null,
+                'timeout' => $config['options']['timeout'] ?? 60,
                 'followRedirects' => false,
                 'obeySuccessCode' => true,
                 'streaming' => false,
