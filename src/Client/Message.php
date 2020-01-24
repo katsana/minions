@@ -14,13 +14,13 @@ class Message extends Notification
     /**
      * Construct a new Notification.
      *
-     * @param int|string $id
+     * @param int|string|null $id
      */
-    public function __construct(string $method, array $parameters, $id)
+    public function __construct(string $method, array $parameters, $id = null)
     {
         parent::__construct($method, $parameters);
 
-        $this->id = $id;
+        $this->id = $id ?? \time();
     }
 
     /**
