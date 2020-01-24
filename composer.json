@@ -48,7 +48,9 @@
     },
     "suggest": {
         "clue/block-react": "Allow to use traditional, blocking environment with Minions (^1.3).",
-        "clue/buzz-react": "Allow to use Minions as JSON-RPC Client (^2.5)."
+        "clue/buzz-react": "Allow to use Minions as JSON-RPC Client (^2.5).",
+        "katsana/minions-server": "Allow to use ReactPHP as RPC Server (^1.0).",
+        "katsana/minions-polyfill": "Allow to use Laravel Routing as RPC Server Polyfill (^1.0)."
     },
     "scripts": {
         "test": [
