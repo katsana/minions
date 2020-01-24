@@ -22,7 +22,7 @@ class RouterTest extends ServerTestCase
                 ],
             ],
             'services' => [
-                'math/add' => 'Minions\Tests\Stubs\AddMath',
+                'math/add' => 'Minions\Tests\Stubs\MathAdd',
             ],
         ]]);
 
@@ -60,7 +60,7 @@ class RouterTest extends ServerTestCase
 
         $router = $this->app['minions.router'];
 
-        $router->rpc('math/add', 'Minions\Tests\Stubs\AddMath');
+        $router->rpc('math/add', 'Minions\Tests\Stubs\MathAdd');
 
         $request = m::mock('Psr\Http\Message\ServerRequestInterface');
 
@@ -93,7 +93,7 @@ class RouterTest extends ServerTestCase
                 ],
             ],
             'services' => [
-                'math/add' => ['handler' => 'Minions\Tests\Stubs\AddMath', 'projects' => ['*']],
+                'math/add' => ['handler' => 'Minions\Tests\Stubs\MathAdd', 'projects' => ['*']],
             ],
         ]]);
 
@@ -128,7 +128,7 @@ class RouterTest extends ServerTestCase
                 ],
             ],
             'services' => [
-                'math/add' => ['handler' => 'Minions\Tests\Stubs\AddMath'],
+                'math/add' => ['handler' => 'Minions\Tests\Stubs\MathAdd'],
             ],
         ]]);
 
@@ -163,7 +163,7 @@ class RouterTest extends ServerTestCase
                 ],
             ],
             'services' => [
-                'math/add' => ['handler' => 'Minions\Tests\Stubs\AddMath', 'projects' => ['demo']],
+                'math/add' => ['handler' => 'Minions\Tests\Stubs\MathAdd', 'projects' => ['demo']],
             ],
         ]]);
 
@@ -198,7 +198,7 @@ class RouterTest extends ServerTestCase
                 ],
             ],
             'services' => [
-                'math/deduct' => 'Minions\Tests\Stubs\AddMath',
+                'math/deduct' => 'Minions\Tests\Stubs\MathAdd',
             ],
         ]]);
 
@@ -233,7 +233,7 @@ class RouterTest extends ServerTestCase
                 ],
             ],
             'services' => [
-                'math/add' => ['handler' => 'Minions\Tests\Stubs\AddMath', 'projects' => []],
+                'math/add' => ['handler' => 'Minions\Tests\Stubs\MathAdd', 'projects' => []],
             ],
         ]]);
 

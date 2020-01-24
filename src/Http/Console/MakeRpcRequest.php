@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Server\Console;
+namespace Minions\Http\Console;
 
 use Orchestra\Canvas\Core\Commands\Generator;
 

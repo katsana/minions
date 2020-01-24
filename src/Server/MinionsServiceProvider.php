@@ -10,9 +10,6 @@ use Orchestra\Canvas\Core\CommandsProvider;
 
 class MinionsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    use CommandsProvider,
-        Configuration;
-
     /**
      * Register the application services.
      *
@@ -20,9 +17,7 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     public function register()
     {
-        $this->app->singleton('minions.commands.make-request', function (Container $app) {
-            return new Console\MakeRpcRequest($this->presetForLaravel($app));
-        });
+        //
     }
 
     /**
@@ -34,13 +29,9 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                'minions.commands.make-request',
-                Console\InstallServer::class,
                 Console\StartJsonRpcServer::class,
             ]);
         }
-
-        $this->bootRpcRoutes();
     }
 
     /**
@@ -50,6 +41,6 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     public function provides()
     {
-        return ['minions.router'];
+        return [];
     }
 }

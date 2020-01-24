@@ -2,7 +2,7 @@
 
 namespace Minions\Tests\Stubs;
 
-class AddMath
+class MathAdd
 {
     public function __invoke($arguments)
     {
