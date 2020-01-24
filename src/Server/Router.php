@@ -34,6 +34,13 @@ class Router
     protected $routes = [];
 
     /**
+     * Route resolver.
+     *
+     * @var callable|null
+     */
+    protected static $routeResolver;
+
+    /**
      * Construct a new Minion.
      */
     public function __construct(Container $container, array $config)
@@ -41,6 +48,17 @@ class Router
         $this->container = $container;
         $this->config = $config;
         $this->routes = $config['services'] ?? [];
+    }
+
+    /**
+     * Register route resolver.
+     *
+     * @param  callable  $resolver
+     * @return void
+     */
+    public static function routeResolver(callable $resolver): void
+    {
+        static::$routeResolver = $resolver;
     }
 
     /**
@@ -60,6 +78,12 @@ class Router
      */
     public function getRoutes(): array
     {
+        if (\is_callable(static::$routeResolver)) {
+            \call_user_func(static::$routeResolver);
+
+            static::$routeResolver = null;
+        }
+
         return $this->routes;
     }
 
