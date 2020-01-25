@@ -52,9 +52,6 @@ class Router
 
     /**
      * Register route resolver.
-     *
-     * @param  callable  $resolver
-     * @return void
      */
     public static function routeResolver(callable $resolver): void
     {

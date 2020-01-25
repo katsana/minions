@@ -34,7 +34,6 @@ class Minion extends Facade
         return new Client\Message($method, $parameters, $id ?? \uniqid());
     }
 
-
     /**
      * Construct a new Notification.
      */

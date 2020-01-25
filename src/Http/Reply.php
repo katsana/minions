@@ -2,8 +2,6 @@
 
 namespace Minions\Http;
 
-use React\Http\Response;
-
 class Reply
 {
     /**
