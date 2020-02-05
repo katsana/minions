@@ -39,6 +39,6 @@ class Minion extends Facade
      */
     public static function notification(string $method, array $parameters): Client\Notification
     {
-        return new Client\Notification($method, $parameters, $id);
+        return new Client\Notification($method, $parameters);
     }
 }
