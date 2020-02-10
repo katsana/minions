@@ -2,6 +2,7 @@
 
 namespace Minions\Http;
 
+use Illuminate\Console\Application as Artisan;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
@@ -10,7 +11,7 @@ use Orchestra\Canvas\Core\CommandsProvider;
 
 class MinionsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    use Configuration;
+    use Configuration, CommandsProvider;
 
     /**
      * Register the application services.
@@ -42,9 +43,11 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
         ], 'routes');
 
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                Console\MakeRpcRequest::class,
-            ]);
+            $preset = $this->presetForLaravel($this->app);
+
+            Artisan::starting(function ($artisan) use ($preset) {
+                $artisan->add(new Console\MakeRpcRequest($preset));
+            });
         }
     }
 
