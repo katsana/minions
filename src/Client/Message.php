@@ -34,15 +34,23 @@ class Message extends Notification
     }
 
     /**
-     * Convert to JSON.
+     * Convert to array.
      */
-    public function toJson(): string
+    public function toArray(): array
     {
-        return \json_encode(\array_filter([
+        return \array_filter([
             'jsonrpc' => $this->version(),
             'method' => $this->method(),
             'params' => $this->parameters(),
             'id' => $this->id(),
-        ]));
+        ]);
+    }
+
+    /**
+     * Convert to JSON.
+     */
+    public function toJson(): string
+    {
+        return \json_encode($this->toArray());
     }
 }
