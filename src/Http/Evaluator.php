@@ -6,6 +6,7 @@ use Datto\JsonRpc\Evaluator as DattoEvaluator;
 use Datto\JsonRpc\Exceptions\MethodException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\Support\Arrayable;
 use ReflectionException;
 
 class Evaluator implements DattoEvaluator
@@ -59,7 +60,13 @@ class Evaluator implements DattoEvaluator
             throw new MethodException();
         }
 
-        return $handler($arguments, $this->message);
+        $response = $handler($arguments, $this->message);
+
+        if ($response instanceof Arrayable) {
+            return $response->toArray();
+        }
+
+        return $response;
     }
 
     /**
