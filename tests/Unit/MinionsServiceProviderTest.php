@@ -12,6 +12,6 @@ class MinionsServiceProviderTest extends TestCase
     {
         $provider = new MinionsServiceProvider(null);
 
-        $this->assertFalse($provider->isDeferred());
+        $this->assertTrue($provider->isDeferred());
     }
 }
