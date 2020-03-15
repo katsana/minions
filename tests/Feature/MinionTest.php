@@ -41,7 +41,7 @@ class MinionTest extends TestCase
         $this->assertSame(1, $message->id());
     }
 
-     /** @test */
+    /** @test */
     public function it_can_generate_a_message_can_generate_uniqid()
     {
         $message = Minion::message('math/add', [1, 2]);
