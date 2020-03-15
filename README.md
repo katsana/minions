@@ -24,7 +24,7 @@ JSON-RPC Communication for Laravel
 Minions can be installed via composer:
 
 ```
-composer require "katsana/minions=^1.2"
+composer require "katsana/minions"
 ```
 
 ## Setup
