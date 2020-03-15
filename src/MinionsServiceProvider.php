@@ -19,7 +19,9 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
     public function register()
     {
         $this->app->singleton('minions.client', function (Container $app) {
-            return new Client\Minion($app->make(LoopInterface::class), $this->useConfigurationFrom($app));
+            return new Client\Minion(
+                $app->make(LoopInterface::class), $this->useConfigurationFrom($app)
+            );
         });
     }
 

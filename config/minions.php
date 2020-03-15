@@ -13,6 +13,18 @@ return [
 
     'id' => 'minion-server',
 
+
+    /*
+     |--------------------------------------------------------------------------
+     | Enable Minions
+     |--------------------------------------------------------------------------
+     |
+     | Toggle this to "false" if you want to avoid running the Minions
+     | on certain environment, especially on "testing" environment.
+     */
+
+    'enabled' => env('MINIONS_ENABLED', true),
+
     /*
      |--------------------------------------------------------------------------
      | Projects
