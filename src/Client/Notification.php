@@ -66,15 +66,23 @@ class Notification implements MessageInterface
     }
 
     /**
+     * Convert to array.
+     */
+    public function toArray(): array
+    {
+        return \array_filter([
+            'jsonrpc' => $this->version(),
+            'method' => $this->method(),
+            'params' => $this->parameters(),
+        ]);
+    }
+
+    /**
      * Convert to JSON.
      */
     public function toJson(): string
     {
-        return \json_encode(\array_filter([
-            'jsonrpc' => $this->version(),
-            'method' => $this->method(),
-            'params' => $this->parameters(),
-        ]));
+        return \json_encode($this->toArray());
     }
 
     /**

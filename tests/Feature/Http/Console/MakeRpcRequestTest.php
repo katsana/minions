@@ -2,7 +2,6 @@
 
 namespace Minions\Tests\Feature\Http\Console;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Canvas\Core\Testing\TestCase;
 
 class MakeRpcRequestTest extends TestCase

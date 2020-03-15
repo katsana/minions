@@ -37,6 +37,10 @@ class Minion
      */
     public function __construct(LoopInterface $eventLoop, array $config)
     {
+        if (! isset($config['enabled'])) {
+            $config['enabled'] = true;
+        }
+
         $this->eventLoop = $eventLoop;
         $this->config = $config;
     }
@@ -70,6 +74,10 @@ class Minion
      */
     final public function await($promises)
     {
+        if ($this->config['enabled'] !== true) {
+            return null;
+        }
+
         if (\is_array($promises)) {
             return awaitAll($promises, $this->eventLoop);
         }
@@ -82,6 +90,10 @@ class Minion
      */
     final public function run(): void
     {
+        if ($this->config['enabled'] !== true) {
+            return;
+        }
+
         $this->getEventLoop()->run();
     }
 
