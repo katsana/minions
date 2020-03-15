@@ -37,10 +37,12 @@ class Minion
      */
     public function __construct(LoopInterface $eventLoop, array $config)
     {
+        if (! isset($config['enabled'])) {
+            $config['enabled'] = true;
+        }
+
         $this->eventLoop = $eventLoop;
-        $this->config = \array_merge($config, [
-            'enabled' => true,
-        ]);
+        $this->config = $config;
     }
 
     /**
