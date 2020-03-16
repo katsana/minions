@@ -381,7 +381,7 @@ class RouterTest extends HttpTestCase
                 ],
             ],
             'services' => [
-                'math/substract' => 'Minions\Tests\Stubs\MathSubstract',
+                'math/add' => 'Minions\Tests\Stubs\MathAdd',
             ],
         ]]);
 
