@@ -329,6 +329,45 @@ class RouterTest extends HttpTestCase
     }
 
     /** @test */
+    public function it_cant_dispatch_the_request_is_not_authorized()
+    {
+        Carbon::setTestNow(Carbon::createFromTimestamp(1546300800));
+
+        config(['minions' => [
+            'id' => 'foobar',
+            'projects' => [
+                'demo' => [
+                    'token' => 'secret!',
+                    'signature' => 'secret',
+                ],
+                'dummy' => [
+                    'token' => 'secret!',
+                    'signature' => 'secret',
+                ],
+            ],
+            'services' => [
+                'math/substract' => 'Minions\Tests\Stubs\MathSubstract',
+            ],
+        ]]);
+
+        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
+
+        $request->shouldReceive('getHeader')->once()->with('X-Request-ID')->andReturn(['dummy'])
+            ->shouldReceive('hasHeader')->once()->with('Authorization')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('Authorization')->andreturn(['Token secret!'])
+            ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('X-Signature')->andReturn([
+                't=1546300800,v1=17f40ac0151055bd2c464a58eafdff28bf25d3118d41005f8209754b26f0e20a',
+            ])
+            ->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2],"id":3}');
+
+        $reply = $this->app['minions.router']->handle($request);
+
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
+        $this->assertSame('{"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Method not found"}}', $reply->body());
+    }
+
+    /** @test */
     public function it_fails_when_project_id_is_missing()
     {
         config(['minions' => ['id' => 'foobar', 'projects' => []]]);
