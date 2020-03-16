@@ -18,4 +18,16 @@ class DummyClass
     {
         return [];
     }
+
+    /**
+     * Authorize the incoming request.
+     *
+     * @param  \Minions\Http\Message  $message
+     *
+     * @return bool
+     */
+    public function authorize(Message $message): bool
+    {
+        return true;
+    }
 }
