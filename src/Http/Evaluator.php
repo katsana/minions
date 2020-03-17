@@ -60,6 +60,10 @@ class Evaluator implements DattoEvaluator
             throw new MethodException();
         }
 
+        if (\method_exists($handler, 'authorize') && $handler->authorize($this->message) !== true) {
+            throw new MethodException();
+        }
+
         $response = $handler($arguments, $this->message);
 
         if ($response instanceof Arrayable) {
