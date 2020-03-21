@@ -5,10 +5,10 @@ namespace Minions;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method \Minions\Server\Router rpc(string $method, string $handler, array $projects = ['*'])
+ * @method \Minions\Http\Router rpc(string $method, string $handler, array $projects = ['*'])
  * @method array getRoutes()
  *
- * @see \Minions\Server\Router
+ * @see \Minions\Http\Router
  */
 class Router extends Facade
 {
