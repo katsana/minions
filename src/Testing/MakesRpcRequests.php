@@ -2,7 +2,6 @@
 
 namespace Minions\Testing;
 
-use Illuminate\Contracts\Config\Repository;
 use Minions\Minion;
 
 trait MakesRpcRequests
