@@ -7,24 +7,24 @@ use Illuminate\Contracts\Config\Repository;
 trait MakesRpcRequests
 {
     /**
-     * Setup Minions configuration.
+     * Get minion configuration.
      */
-    protected function setUpMinionConfiguration(Repository $config): void
+    protected function getMinionConfiguration(string $clientId, string $serverId): array
     {
-        $config->set([
-            'minions.id' => 'server-project-id',
+        return [
+            'minions.id' => $serverId,
             'minions.projects' => [
-                'client-project-id' => [
+                "{$clientId}" => [
                     'token' => 'secret-token',
                     'signature' => 'secret-signature',
                 ],
-                'server-project-id' => [
+                "{$serverId}" => [
                     'endpoint' => 'http://localhost/rpc',
                     'token' => 'secret-token',
                     'signature' => 'secret-signature',
                 ],
             ],
-        ]);
+        ];
     }
 
     /**
@@ -32,14 +32,20 @@ trait MakesRpcRequests
      *
      * @return \Illuminate\Foundation\Testing\TestResponse|\Illuminate\Testing\TestResponse
      */
-    protected function postRpc(string $method, array $parameters = [])
-    {
-        $this->setUpMinionConfiguration($this->app->make('config'));
+    protected function postRpc(
+        string $method,
+        array $parameters = [],
+        string $clientId = 'client-project-id',
+        string $serverId = 'server-project-id'
+    ) {
+        $config = \tap($this->app->make('config'), function ($config) {
+            $config->set($this->getMinionConfiguration($clientId, $serverId));
+        });
 
         $message = Minion::message($method, $parameters);
 
         return $this->postJson('rpc', $message->toArray(), [
-            'X-Request-ID' => 'client-project-id',
+            'X-Request-ID' => $clientId,
             'Authorization' => 'Token secret-token',
             'X-Signature' => $message->signature('secret-signature'),
             'Content-Type' => 'application/json',
