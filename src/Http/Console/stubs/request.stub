@@ -3,9 +3,12 @@
 namespace DummyNamespace;
 
 use Minions\Http\Message;
+use Minions\Http\ValidatesRequests;
 
 class DummyClass
 {
+    use ValidatesRequests;
+
     /**
      * Handle the incoming request.
      *
