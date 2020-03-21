@@ -2,17 +2,17 @@
 
 namespace Minions\Tests\Stubs;
 
-use Minions\Http\Message;
+use Minions\Http\Request;
 
 class MathAdd
 {
-    public function __invoke($arguments)
+    public function __invoke(Request $request)
     {
-        return \array_sum($arguments);
+        return \array_sum($request->all());
     }
 
-    public function authorize(Message $message): bool
+    public function authorize(Request $request): bool
     {
-        return $message->id() === 'demo';
+        return $request->id() === 'demo';
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Minions\Http\Message;
+use Minions\Http\Request;
 use Minions\Http\ValidatesRequests;
 
 class DummyClass
@@ -12,12 +12,11 @@ class DummyClass
     /**
      * Handle the incoming request.
      *
-     * @param  array  $arguments
-     * @param  \Minions\Http\Message  $message
+     * @param  \Minions\Http\Request  $request
      *
      * @return mixed
      */
-    public function __invoke(array $arguments, Message $message)
+    public function __invoke(Request $request)
     {
         return [];
     }
@@ -25,11 +24,11 @@ class DummyClass
     /**
      * Authorize the incoming request.
      *
-     * @param  \Minions\Http\Message  $message
+     * @param  \Minions\Http\Request  $request
      *
      * @return bool
      */
-    public function authorize(Message $message): bool
+    public function authorize(Request $request): bool
     {
         return true;
     }

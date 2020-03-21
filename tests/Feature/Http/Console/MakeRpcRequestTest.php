@@ -18,11 +18,11 @@ class MakeRpcRequestTest extends TestCase
 
         $this->assertFileContains([
             'namespace App\JsonRpc;',
-            'use Minions\Http\Message;',
+            'use Minions\Http\Request;',
             'use Minions\Http\ValidatesRequests;',
             'class Ping',
             'use ValidatesRequests;',
-            'public function __invoke(array $arguments, Message $message)',
+            'public function __invoke(Request $request)',
         ], 'app/JsonRpc/Ping.php');
     }
 

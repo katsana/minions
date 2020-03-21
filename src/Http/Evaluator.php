@@ -54,17 +54,19 @@ class Evaluator implements DattoEvaluator
             throw new MethodException();
         }
 
+        $request = new Request($arguments, $this->message);
+
         try {
             $handler = $this->container->make($resolver);
         } catch (BindingResolutionException | ReflectionException $e) {
             throw new MethodException();
         }
 
-        if (\method_exists($handler, 'authorize') && $handler->authorize($this->message) !== true) {
+        if (\method_exists($handler, 'authorize') && $handler->authorize($request) !== true) {
             throw new MethodException();
         }
 
-        $response = $handler($arguments, $this->message);
+        $response = $handler($request);
 
         if ($response instanceof Arrayable) {
             return $response->toArray();
