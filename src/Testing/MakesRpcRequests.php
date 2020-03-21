@@ -3,6 +3,7 @@
 namespace Minions\Testing;
 
 use Illuminate\Contracts\Config\Repository;
+use Minions\Minion;
 
 trait MakesRpcRequests
 {
@@ -38,7 +39,7 @@ trait MakesRpcRequests
         string $clientId = 'client-project-id',
         string $serverId = 'server-project-id'
     ) {
-        $config = \tap($this->app->make('config'), function ($config) {
+        $config = \tap($this->app->make('config'), function ($config) use ($clientId, $serverId) {
             $config->set($this->getMinionConfiguration($clientId, $serverId));
         });
 
