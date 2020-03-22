@@ -259,6 +259,77 @@ class RouterTest extends HttpTestCase
     }
 
     /** @test */
+    public function it_can_dispatch_the_request_when_project_with_validation()
+    {
+        Carbon::setTestNow(Carbon::createFromTimestamp(1546300800));
+
+        config(['minions' => [
+            'id' => 'foobar',
+            'projects' => [
+                'demo' => [
+                    'token' => 'secret!',
+                    'signature' => 'secret',
+                ],
+            ],
+            'services' => [
+                'user' => ['handler' => 'Minions\Tests\Stubs\User'],
+            ],
+        ]]);
+
+        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
+
+        $request->shouldReceive('getHeader')->once()->with('X-Request-ID')->andReturn(['demo'])
+            ->shouldReceive('hasHeader')->once()->with('Authorization')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('Authorization')->andreturn(['Token secret!'])
+            ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('X-Signature')->andReturn([
+                't=1546300800,v1=bb228214cf18bd11acea6205b3e5a9d84319248e75d2f39e53457b0e3ff2ba7b',
+            ])
+            ->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"user","params":{"id":1,"email":"crynobone@katsana.com"},"id":3}');
+
+        $reply = $this->app['minions.router']->handle($request);
+
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
+        $this->assertSame('{"jsonrpc":"2.0","id":3,"result":{"id":1,"email":"crynobone@katsana.com"}}', $reply->body());
+    }
+
+    /** @test */
+    public function it_cant_dispatch_the_request_when_project_with_failed_validation()
+    {
+        Carbon::setTestNow(Carbon::createFromTimestamp(1546300800));
+
+        config(['minions' => [
+            'id' => 'foobar',
+            'projects' => [
+                'demo' => [
+                    'token' => 'secret!',
+                    'signature' => 'secret',
+                ],
+            ],
+            'services' => [
+                'user' => ['handler' => 'Minions\Tests\Stubs\User'],
+            ],
+        ]]);
+
+        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
+
+        $request->shouldReceive('getHeader')->once()->with('X-Request-ID')->andReturn(['demo'])
+            ->shouldReceive('hasHeader')->once()->with('Authorization')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('Authorization')->andreturn(['Token secret!'])
+            ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(true)
+            ->shouldReceive('getHeader')->once()->with('X-Signature')->andReturn([
+                't=1546300800,v1=b0ec1668e10ea42ff95dc83444d0fbf40ffb7169b8889e6c2e14a4e833d3c690',
+            ])
+            ->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"user","params":{"id":1,"email":"crynobone[at]katsana.com"},"id":3}');
+
+        $reply = $this->app['minions.router']->handle($request);
+
+        $this->assertInstanceOf('Minions\Http\Reply', $reply);
+        $this->assertSame('{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"The given data was invalid.","data":{"email":["The email must be a valid email address."]}}}', $reply->body());
+    }
+
+
+    /** @test */
     public function it_cant_dispatch_the_request_when_service_cant_be_evaluated()
     {
         Carbon::setTestNow(Carbon::createFromTimestamp(1546300800));
