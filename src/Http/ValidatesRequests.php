@@ -10,7 +10,7 @@ trait ValidatesRequests
      * Run the validation routine against the given validator.
      *
      * @param \Illuminate\Contracts\Validation\Validator|array $validator
-     * @param \Minions\Http\Request|null                                       $arguments
+     * @param \Minions\Http\Request|null                       $arguments
      *
      * @throws \Illuminate\Validation\ValidationException
      */

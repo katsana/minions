@@ -48,8 +48,6 @@ abstract class Finder implements ArrayAccess
 
     /**
      * Check if the finder needs to be booted and if so, do it.
-     *
-     * @return void
      */
     protected function bootIfNotBooted(): void
     {
