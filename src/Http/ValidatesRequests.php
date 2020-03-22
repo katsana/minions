@@ -35,7 +35,7 @@ trait ValidatesRequests
         array $customAttributes = []
     ): array {
         return $this->getValidationFactory()->make(
-            $request->all(), $rules, $messages, $customAttributes
+            $arguments, $rules, $messages, $customAttributes
         )->validate();
     }
 
