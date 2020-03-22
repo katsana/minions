@@ -16,6 +16,8 @@ JSON-RPC Communication for Laravel
     - [Setup for Client](#setup-for-client)
 * [Request Handler](#request-handler)
     - [Registering the route](#registering-the-route)
+    - [Checking authorization](#checking-authorization)
+    - [Validating the request](#validating-the-request)
 * [Making a Request](#making-a-request)
 * [Running the RPC Server](#running-the-rpc-server)
 
@@ -133,7 +135,26 @@ class MathAdd
 
 > You can use `php artisan minions:make MathAdd` to generate the base stub file `App\JsonRpc\Add`.
 
-### Check authorization
+### Registering the route
+
+To register the route, all you need to do is add the request handler to `routes/rpc.php`:
+
+```php
+<?php
+
+use Minions\Router;
+
+
+Router::rpc('math.add', 'App\JsonRpc\MathAdd');
+```
+
+You can run the following command to stub `routes/rpc.php`:
+
+```
+php artisan vendor:publish --provider="Minions\Http\MinionsServiceProvider" --tag="routes"
+```
+
+### Checking authorization
 
 You can check whether the project is authorized to use the request by overriding the `authorize()` method.
 
@@ -181,25 +202,6 @@ class User
         return User::where('email', '=', $request['email'])->firstOrFail();
     }
 }
-```
-
-### Registering the route
-
-To register the route, all you need to do is add the request handler to `routes/rpc.php`:
-
-```php
-<?php
-
-use Minions\Router;
-
-
-Router::rpc('math.add', 'App\JsonRpc\MathAdd');
-```
-
-You can run the following command to stub `routes/rpc.php`:
-
-```
-php artisan vendor:publish --provider="Minions\Http\MinionsServiceProvider" --tag="routes"
 ```
 
 ## Making a Request
