@@ -3,10 +3,10 @@
 namespace Minions\Http;
 
 use Datto\JsonRpc\Evaluator as DattoEvaluator;
-use Datto\JsonRpc\Exceptions\MethodException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
+use Minions\Exceptions\Exception;
 use ReflectionException;
 
 class Evaluator implements DattoEvaluator
@@ -51,7 +51,7 @@ class Evaluator implements DattoEvaluator
     public function evaluate($method, $arguments)
     {
         if (\is_null($resolver = $this->findResolver($method))) {
-            throw new MethodException();
+            throw Exception::methodNotFound();
         }
 
         $request = new Request($arguments, $this->message);
@@ -59,11 +59,11 @@ class Evaluator implements DattoEvaluator
         try {
             $handler = $this->container->make($resolver);
         } catch (BindingResolutionException | ReflectionException $e) {
-            throw new MethodException();
+            throw Exception::methodNotFound();
         }
 
         if (\method_exists($handler, 'authorize') && $handler->authorize($request) !== true) {
-            throw new MethodException();
+            throw Exception::methodNotFound();
         }
 
         $response = $handler($request);
