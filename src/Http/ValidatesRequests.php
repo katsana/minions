@@ -10,14 +10,14 @@ trait ValidatesRequests
      * Run the validation routine against the given validator.
      *
      * @param \Illuminate\Contracts\Validation\Validator|array $validator
-     * @param array|null                                       $arguments
+     * @param \Minions\Http\Request|null                                       $arguments
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function validateWith($validator, $arguments = null): array
+    public function validateWith($validator, ?Request $request = null): array
     {
         if (\is_array($validator)) {
-            $validator = $this->getValidationFactory()->make($arguments, $validator);
+            $validator = $this->getValidationFactory()->make($request->all(), $validator);
         }
 
         return $validator->validate();
@@ -29,7 +29,7 @@ trait ValidatesRequests
      * @throws \Illuminate\Validation\ValidationException
      */
     public function validate(
-        array $arguments,
+        Request $request,
         array $rules,
         array $messages = [],
         array $customAttributes = []
