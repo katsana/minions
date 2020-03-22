@@ -2,19 +2,20 @@
 
 namespace Minions\Tests\Stubs;
 
+use Minions\Http\Request;
 use Minions\Http\ValidatesRequests;
 
 class User
 {
     use ValidatesRequests;
 
-    public function __invoke($arguments)
+    public function __invoke(Request $request)
     {
-        $this->validate($arguments, [
+        $this->validate($request, [
             'id' => ['required'],
             'email' => ['required', 'email'],
         ]);
 
-        return $arguments;
+        return $request->all();
     }
 }
