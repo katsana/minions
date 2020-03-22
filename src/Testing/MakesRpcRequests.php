@@ -44,11 +44,11 @@ trait MakesRpcRequests
 
         $message = Minion::message($method, $parameters);
 
-        return $this->postJson('rpc', $message->toArray(), [
+        return TestResponse::fromBaseResponse($this->postJson('rpc', $message->toArray(), [
             'X-Request-ID' => $clientId,
             'Authorization' => 'Token secret-token',
             'X-Signature' => $message->signature('secret-signature'),
             'Content-Type' => 'application/json',
-        ]);
+        ]));
     }
 }
