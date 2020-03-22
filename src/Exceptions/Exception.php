@@ -13,7 +13,7 @@ class Exception extends JsonRpcException
      *
      * @return static
      */
-    public static function internalError(string $message, $data = null)
+    public static function internalError(string $message = 'Internal error', $data = null)
     {
         return new static($message, -32603, $data);
     }
@@ -25,7 +25,7 @@ class Exception extends JsonRpcException
      *
      * @return static
      */
-    public static function parseError(string $message, $data = null)
+    public static function parseError(string $message = 'Parse error', $data = null)
     {
         return new static($message, -32700, $data);
     }
@@ -37,7 +37,7 @@ class Exception extends JsonRpcException
      *
      * @return static
      */
-    public static function invalidRequest(string $message, $data = null)
+    public static function invalidRequest(string $message = 'Invalid request', $data = null)
     {
         return new static($message, -32600, $data);
     }
@@ -49,7 +49,7 @@ class Exception extends JsonRpcException
      *
      * @return static
      */
-    public static function invalidParameters(string $message, $data = null)
+    public static function invalidParameters(string $message = 'Invalid parameters', $data = null)
     {
         return new static($message, -32602, $data);
     }
@@ -61,7 +61,7 @@ class Exception extends JsonRpcException
      *
      * @return static
      */
-    public static function methodNotFound(string $message, $data = null)
+    public static function methodNotFound(string $message = 'Method not found', $data = null)
     {
         return new static($message, -32601, $data);
     }
