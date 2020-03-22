@@ -139,10 +139,10 @@ class MathAdd
 You can check whether the project is authorized to use the request by overriding the `authorize()` method.
 
 ```php
-    public function authorize(Request $request): bool
-    {
-        return $request->id() === 'platform'; // only allow access from `platform`
-    }
+public function authorize(Request $request): bool
+{
+    return $request->id() === 'platform'; // only allow access from `platform`
+}
 ```
 
 ### Registering the route
