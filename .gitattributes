@@ -12,5 +12,6 @@
 /phpunit.xml.dist export-ignore
 /CODE_OF_CONDUCT.md export-ignore
 /CONTRIBUTING.md export-ignore
+/CHANGELOG-*.md export-ignore
 /LICENSE export-ignore
 /README.md export-ignore
