@@ -328,7 +328,6 @@ class RouterTest extends HttpTestCase
         $this->assertSame('{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"The given data was invalid.","data":{"email":["The email must be a valid email address."]}}}', $reply->body());
     }
 
-
     /** @test */
     public function it_cant_dispatch_the_request_when_service_cant_be_evaluated()
     {

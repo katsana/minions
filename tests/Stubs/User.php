@@ -2,7 +2,6 @@
 
 namespace Minions\Tests\Stubs;
 
-use Minions\Http\Message;
 use Minions\Http\ValidatesRequests;
 
 class User
