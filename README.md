@@ -108,7 +108,6 @@ class MathAdd
     /**
      * Handle the incoming request.
      *
-     * @param  array  $arguments
      * @param  \Minions\Http\Request  $request
      *
      * @return mixed
