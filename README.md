@@ -101,7 +101,7 @@ To receive a request from a client, first we need to create a request handler on
 
 namespace App\JsonRpc;
 
-use Minions\Http\Message;
+use Minions\Http\Request;
 
 class MathAdd
 {
@@ -109,18 +109,41 @@ class MathAdd
      * Handle the incoming request.
      *
      * @param  array  $arguments
-     * @param  \Minions\Http\Message  $message
+     * @param  \Minions\Http\Request  $request
      *
      * @return mixed
      */
-    public function __invoke(array $arguments, Message $message)
+    public function __invoke(Request $request)
     {
-        return \array_sum($arguments);
+        return \array_sum($request->all());
+    }
+
+    /**
+     * Authorize the incoming request.
+     *
+     * @param  \Minions\Http\Request  $request
+     *
+     * @return bool
+     */
+    public function authorize(Request $request): bool
+    {
+        return true;
     }
 }
 ```
 
 > You can use `php artisan minions:make MathAdd` to generate the base stub file `App\JsonRpc\Add`.
+
+### Check authorization
+
+You can check whether the project is authorized to use the request by overriding the `authorize()` method.
+
+```php
+    public function authorize(Request $request): bool
+    {
+        return $request->id() === 'platform'; // only allow access from `platform`
+    }
+```
 
 ### Registering the route
 
