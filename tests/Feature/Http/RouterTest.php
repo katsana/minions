@@ -469,7 +469,7 @@ class RouterTest extends HttpTestCase
         $reply = $this->app['minions.router']->handle($request);
 
         $this->assertInstanceOf('Minions\Http\Reply', $reply);
-        $this->assertSame('{"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Method not found"}}', $reply->body());
+        $this->assertSame('{"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Unauthorized request"}}', $reply->body());
     }
 
     /** @test */
