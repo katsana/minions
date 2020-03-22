@@ -138,9 +138,48 @@ class MathAdd
 You can check whether the project is authorized to use the request by overriding the `authorize()` method.
 
 ```php
+/**
+ * Authorize the incoming request.
+ *
+ * @param  \Minions\Http\Request  $request
+ *
+ * @return bool
+ */
 public function authorize(Request $request): bool
 {
     return $request->id() === 'platform'; // only allow access from `platform`
+}
+```
+
+### Validating the request
+
+You can validate the request using Laravel Validation. **Minions** also introduce `Minions\Http\ValidatesRequests` trait which you can import and expose `validate()` and `validateWith()` method. e.g:
+
+```php
+<?php
+
+namespace App\JsonRpc;
+
+use App\User;
+use Minions\Http\Request;
+
+class User
+{
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Minions\Http\Request  $request
+     *
+     * @return mixed
+     */
+    public function __invoke(Request $request)
+    {
+        $this->validate($request, [
+            'email' => ['required', 'email'],
+        ]);
+
+        return User::where('email', '=', $request['email'])->firstOrFail();
+    }
 }
 ```
 
