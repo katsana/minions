@@ -227,4 +227,16 @@ class TestResponse
 
         return $this;
     }
+
+    /**
+     * Dump the content from the response.
+     *
+     * @return $this
+     */
+    public function dump()
+    {
+        $this->baseResponse->dump();
+
+        return $this;
+    }
 }
