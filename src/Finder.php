@@ -8,6 +8,13 @@ use Illuminate\Support\Arr;
 abstract class Finder implements ArrayAccess
 {
     /**
+     * Indicates if the finder has "booted".
+     *
+     * @var bool
+     */
+    protected $booted = false;
+
+    /**
      * List of projects.
      *
      * @var array
@@ -32,6 +39,28 @@ abstract class Finder implements ArrayAccess
     }
 
     /**
+     * Boot the finder.
+     */
+    public function boot(): void
+    {
+        //
+    }
+
+    /**
+     * Check if the finder needs to be booted and if so, do it.
+     *
+     * @return void
+     */
+    protected function bootIfNotBooted(): void
+    {
+        if (! $this->booted) {
+            $this->boot();
+        }
+
+        $this->booted = true;
+    }
+
+    /**
      * Determine if the given offset exists.
      *
      * @param string $offset
@@ -40,6 +69,8 @@ abstract class Finder implements ArrayAccess
      */
     public function offsetExists($offset)
     {
+        $this->bootIfNotBooted();
+
         return isset($this->projects[$offset]);
     }
 
@@ -52,6 +83,8 @@ abstract class Finder implements ArrayAccess
      */
     public function offsetGet($offset)
     {
+        $this->bootIfNotBooted();
+
         return $this->projects[$offset];
     }
 
@@ -80,6 +113,8 @@ abstract class Finder implements ArrayAccess
      */
     public function offsetUnset($offset)
     {
+        $this->bootIfNotBooted();
+
         unset($this->projects[$offset]);
     }
 }
