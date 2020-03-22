@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Facade;
  * @method \React\Promise\PromiseInterface broadcast(string $project, \Minionts\Client\MessageInterface $message)
  * @method \React\EventLoop\LoopInterface getEventLoop()
  * @method \Minions\Client\Minion setEventLoop(\React\EventLoop\LoopInterface $eventLoop)
+ * @method void run()
+ * @method array|mixed await(array|\React\Promise\PromiseInterface $promises)
  *
  * @see \Minions\Client\Minion
  */
