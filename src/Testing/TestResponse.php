@@ -90,7 +90,7 @@ class TestResponse
         if (\is_null($keys) && \count($jsonErrors) > 0) {
             PHPUnit::fail(
                 'Response has unexpected validation errors: '.PHP_EOL.PHP_EOL.
-                json_encode($jsonErrors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+                \json_encode($jsonErrors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
             );
         }
 
