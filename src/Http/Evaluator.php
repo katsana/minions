@@ -61,7 +61,7 @@ class Evaluator implements DattoEvaluator
         }
 
         if (\method_exists($handler, 'authorize') && $handler->authorize($this->message) !== true) {
-            throw Exception::methodNotFound();
+            throw Exception::methodNotFound('Unauthorized request');
         }
 
         $response = $handler($arguments, $this->message);
