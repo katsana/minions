@@ -4,6 +4,7 @@ namespace Minions\Http;
 
 use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
+use LogicException;
 
 class Request implements Arrayable, ArrayAccess
 {
@@ -90,7 +91,7 @@ class Request implements Arrayable, ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        $this->input[$offset] = $value;
+        throw new LogicException('Unable to set value on Request instance.');
     }
 
     /**
@@ -102,7 +103,7 @@ class Request implements Arrayable, ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        unset($this->input[$offset]);
+        throw new LogicException('Unable to unset value on Request instance.');
     }
 
     /**

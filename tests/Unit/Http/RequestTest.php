@@ -76,6 +76,43 @@ class RequestTest extends TestCase
         $this->assertSame('Mior Muhammad Zaki', $request->name);
     }
 
+    /** @test */
+    public function it_cant_set_value_to_request()
+    {
+        $this->expectException('LogicException');
+        $this->expectExceptionMessage('Unable to set value on Request instance.');
+
+        $message = new Message('platform', [], $this->mockServerRequestInterface());
+
+        $request = new Request([
+            'id' => 5,
+            'email' => 'crynobone@katsana.com',
+            'name' => 'Mior Muhammad Zaki',
+        ], $message);
+
+        $request['staff_id'] = 'KT003';
+    }
+
+    /** @test */
+    public function it_cant_unset_value_to_request()
+    {
+        $this->expectException('LogicException');
+        $this->expectExceptionMessage('Unable to unset value on Request instance.');
+
+        $message = new Message('platform', [], $this->mockServerRequestInterface());
+
+        $request = new Request([
+            'id' => 5,
+            'email' => 'crynobone@katsana.com',
+            'name' => 'Mior Muhammad Zaki',
+        ], $message);
+
+        unset($request['name']);
+    }
+
+    /**
+     * Get `Psr\Http\Message\ServerRequestInterface` mocked instance.
+     */
     protected function mockServerRequestInterface()
     {
         return \tap(m::mock(ServerRequestInterface::class), static function ($server) {
