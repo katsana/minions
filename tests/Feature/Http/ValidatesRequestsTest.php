@@ -4,8 +4,10 @@ namespace Minions\Tests\Feature\Http;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
+use Minions\Http\Request;
 use Minions\Http\ValidatesRequests;
 use Minions\Tests\TestCase;
+use Mockery as m;
 
 class ValidatesRequestsTest extends TestCase
 {
@@ -17,9 +19,11 @@ class ValidatesRequestsTest extends TestCase
         $this->expectException('Illuminate\Validation\ValidationException');
         $this->expectExceptionMessage('The given data was invalid.');
 
-        $this->validate([
+        $message = m::mock('Minions\Http\Message');
+
+        $this->validate(new Request([
             'email' => 'crynobone[at]katsana.com',
-        ], [
+        ], $message), [
             'email' => ['required', 'email'],
             'name' => ['required'],
         ]);
@@ -31,12 +35,14 @@ class ValidatesRequestsTest extends TestCase
         $this->expectException('Illuminate\Validation\ValidationException');
         $this->expectExceptionMessage('The given data was invalid.');
 
+        $message = m::mock('Minions\Http\Message');
+
         $this->validateWith([
             'email' => ['required', 'email'],
             'name' => ['required'],
-        ], [
+        ], new Request([
             'email' => 'crynobone[at]katsana.com',
-        ]);
+        ], $message));
     }
 
 
@@ -45,6 +51,8 @@ class ValidatesRequestsTest extends TestCase
     {
         $this->expectException('Illuminate\Validation\ValidationException');
         $this->expectExceptionMessage('The given data was invalid.');
+
+        $message = m::mock('Minions\Http\Message');
 
         $this->validateWith(
             Validator::make([
