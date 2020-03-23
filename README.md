@@ -104,9 +104,12 @@ To receive a request from a client, first we need to create a request handler on
 namespace App\JsonRpc;
 
 use Minions\Http\Request;
+use Minions\Http\ValidatesRequests;
 
 class MathAdd
 {
+    use ValidatesRequests;
+
     /**
      * Handle the incoming request.
      *
@@ -183,9 +186,12 @@ namespace App\JsonRpc;
 
 use App\User;
 use Minions\Http\Request;
+use Minions\Http\ValidatesRequests;
 
 class User
 {
+    use ValidatesRequests;
+    
     /**
      * Handle the incoming request.
      *
