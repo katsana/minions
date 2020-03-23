@@ -5,8 +5,8 @@ namespace Minions\Testing;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Minions\Client\Response;
-use RingCentral\Psr7\Response as Psr7Response;
 use PHPUnit\Framework\Assert as PHPUnit;
+use RingCentral\Psr7\Response as Psr7Response;
 
 class TestResponse
 {

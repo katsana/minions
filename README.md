@@ -133,7 +133,7 @@ class MathAdd
 }
 ```
 
-> You can use `php artisan minions:make MathAdd` to generate the base stub file `App\JsonRpc\Add`.
+> You can use `php artisan minions:make MathAdd` to generate the base stub file `App\JsonRpc\MathAdd`.
 
 ### Registering the route
 

@@ -6,7 +6,6 @@ use Minions\Client\Minion;
 use Minions\Client\Project;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Promise\PromiseInterface;
 use React\EventLoop\LoopInterface;
 
 class MinionTest extends TestCase
