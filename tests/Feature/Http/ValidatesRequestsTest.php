@@ -2,7 +2,6 @@
 
 namespace Minions\Tests\Feature\Http;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
 use Minions\Http\ValidatesRequests;
 use Minions\Tests\TestCase;
@@ -38,7 +37,6 @@ class ValidatesRequestsTest extends TestCase
             'email' => 'crynobone[at]katsana.com',
         ]);
     }
-
 
     /** @test */
     public function it_can_validate_using_validate_with_given_validator()
