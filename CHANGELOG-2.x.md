@@ -4,7 +4,7 @@ This changelog references the relevant changes (bug and security fixes) done to 
 
 ## 2.0.0
 
-Unreleased
+Released: 2020-03-23
 
 ### Added
 
@@ -14,3 +14,7 @@ Unreleased
 ### Changes
 
 * Use `Minions\Exceptions\Exception` on `Minions\Http\Evaluator`.
+
+### Breaking Changes
+
+* Request handler now accept `__invoke(\Minions\Http\Request $request)` instead of `__invoke(array $arguments, \Minions\Http\Message $message)`. This unify the use of `$argument` and `$message` to `Minion\Http\Request`.
