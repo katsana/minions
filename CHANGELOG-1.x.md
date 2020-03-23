@@ -2,6 +2,18 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `katsana/minions`.
 
+## 1.5.0
+
+Released: 2020-03-23
+
+### Added
+
+* Added `Minions\Testing\TestResponse`.
+
+### Changes
+
+* Use `Minions\Exceptions\Exception` on `Minions\Http\Evaluator`.
+
 ## 1.4.1
 
 Released: 2020-03-22
