@@ -224,6 +224,7 @@ class TestResponse
     public function assertOk()
     {
         $this->baseResponse->assertOk();
+        PHPUnit::assertNull($this->response->getRpcErrorCode(), 'RPC Response does not have error code');
 
         return $this;
     }
