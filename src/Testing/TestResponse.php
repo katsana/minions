@@ -231,7 +231,7 @@ class TestResponse
             $errorMessage = $this->response->getRpcErrorMessage();
 
             PHPUnit::fail(
-                "RPC Response shouldn't have error code".PHP_EOL.PHP_EOL."[{$errorCode}]: {$errorMessage}"
+                "RPC Response shouldn't have any error code".PHP_EOL.PHP_EOL."[{$errorCode}]: {$errorMessage}"
             );
         }
 
