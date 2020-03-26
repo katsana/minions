@@ -224,7 +224,16 @@ class TestResponse
     public function assertOk()
     {
         $this->baseResponse->assertOk();
-        PHPUnit::assertNull($this->response->getRpcErrorCode(), 'RPC Response does not have error code');
+
+        $errorCode = $this->response->getRpcErrorCode();
+
+        if (! \is_null($errorCode)) {
+            $errorMessage = $this->response->getRpcErrorMessage();
+
+            PHPUnit::fail(
+                "RPC Response shouldn't have error code".PHP_EOL.PHP_EOL."[{$errorCode}]: {$errorMessage}"
+            );
+        }
 
         return $this;
     }
