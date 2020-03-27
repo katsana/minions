@@ -27,7 +27,7 @@ class ConfigurationTest extends TestCase
     public function it_can_retrieve_projects_from_class()
     {
         config([
-            'minions' => ['id' => 'minions', 'projects' => 'Minions\Tests\Feature\Concerns\StubFinder'],
+            'minions' => ['id' => 'minions', 'projects' => 'Minions\Tests\Feature\StubFinder'],
         ]);
 
         $config = Configuration::make($this->app);
