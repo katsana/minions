@@ -41,7 +41,7 @@ trait MakesRpcRequests
         string $serverId = 'server-project-id'
     ) {
         \tap($this->app->make('minions.config'), function ($config) use ($clientId, $serverId) {
-            $config->set($this->getMinionConfiguration($clientId, $serverId));
+            $config->set($this->getMinionConfiguration($clientId, $serverId)['minions']);
         });
 
         $message = Minion::message($method, $parameters);
