@@ -112,23 +112,6 @@ class Router
     }
 
     /**
-     * Add or configure project.
-     *
-     * @return $this
-     */
-    public function project(
-        string $name,
-        string $token,
-        string $signature,
-        ?string $endpoint = null,
-        array $options = []
-    ) {
-        $this->config['projects'][$project] = \compact('token', 'signature', 'endpoint', 'options');
-
-        return $this;
-    }
-
-    /**
      * Get configuration for a project.
      */
     protected function projectConfiguration(?string $project): array
