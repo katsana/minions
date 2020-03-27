@@ -1,6 +1,6 @@
 <?php
 
-namespace Minions\Tests\Feature\Concerns;
+namespace Minions\Tests\Feature;
 
 use Minions\Configuration;
 use Minions\Tests\TestCase;
