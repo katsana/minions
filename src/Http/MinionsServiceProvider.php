@@ -6,12 +6,11 @@ use Illuminate\Console\Application as Artisan;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use Minions\Concerns\Configuration;
 use Orchestra\Canvas\Core\CommandsProvider;
 
 class MinionsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    use Configuration, CommandsProvider;
+    use CommandsProvider;
 
     /**
      * Register the application services.
@@ -20,8 +19,8 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     public function register()
     {
-        $this->app->singleton('minions.router', function (Container $app) {
-            return new Router($app, $this->useConfigurationFrom($app));
+        $this->app->singleton('minions.router', static function (Container $app) {
+            return new Router($app, $app->make('minions.config'));
         });
 
         $this->app->bind('minions.controller', static function (Container $app) {

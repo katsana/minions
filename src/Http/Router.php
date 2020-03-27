@@ -6,6 +6,7 @@ use Datto\JsonRpc\Evaluator;
 use ErrorException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Pipeline\Pipeline;
+use Minions\Configuration;
 use Minions\Exceptions\ProjectNotFound;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
@@ -22,9 +23,9 @@ class Router
     /**
      * Configuration.
      *
-     * @var array
+     * @var \Minions\Configuration
      */
-    protected $config = [];
+    protected $config;
 
     /**
      * List of available RPC routes.
@@ -43,7 +44,7 @@ class Router
     /**
      * Construct a new Minion.
      */
-    public function __construct(Container $container, array $config)
+    public function __construct(Container $container, Configuration $config)
     {
         $this->container = $container;
         $this->config = $config;

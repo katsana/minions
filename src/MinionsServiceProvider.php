@@ -9,8 +9,6 @@ use React\EventLoop\LoopInterface;
 
 class MinionsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    use Concerns\Configuration;
-
     /**
      * Register the application services.
      *
@@ -18,10 +16,14 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     public function register()
     {
-        $this->app->singleton('minions.client', function (Container $app) {
+        $this->app->singleton('minions.client', static function (Container $app) {
             return new Client\Minion(
-                $app->make(LoopInterface::class), $this->useConfigurationFrom($app)
+                $app->make(LoopInterface::class), $app->make('minions.config')
             );
+        });
+
+        $this->app->singleton('minions.config', static function (Container $app) {
+            return Configuration::make($app);
         });
     }
 
@@ -44,6 +46,6 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     public function provides()
     {
-        return ['minions.client'];
+        return ['minions.client', 'minions.config'];
     }
 }
