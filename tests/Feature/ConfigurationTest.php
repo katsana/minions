@@ -2,13 +2,11 @@
 
 namespace Minions\Tests\Feature\Concerns;
 
-use Minions\Concerns\Configuration;
+use Minions\Configuration;
 use Minions\Tests\TestCase;
 
 class ConfigurationTest extends TestCase
 {
-    use Configuration;
-
     /** @test */
     public function it_can_retrieve_projects_from_array()
     {
@@ -16,7 +14,7 @@ class ConfigurationTest extends TestCase
             'minions' => ['id' => 'minions', 'projects' => ['platform' => ['endpoint' => 'http://rpc.localhost']]],
         ]);
 
-        $config = $this->useConfigurationFrom($this->app);
+        $config = Configuration::make($this->app);
 
         $this->assertSame('minions', $config['id']);
         $this->assertTrue(isset($config['projects']['platform']));
@@ -32,7 +30,7 @@ class ConfigurationTest extends TestCase
             'minions' => ['id' => 'minions', 'projects' => 'Minions\Tests\Feature\Concerns\StubFinder'],
         ]);
 
-        $config = $this->useConfigurationFrom($this->app);
+        $config = Configuration::make($this->app);
 
         $this->assertSame('minions', $config['id']);
         $this->assertTrue($config['projects'] instanceof \ArrayAccess);

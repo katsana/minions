@@ -1,16 +1,18 @@
 <?php
 
-namespace Minions\Concerns;
+namespace Minions;
 
+use Illuminate\Config\Repository;
 use Illuminate\Contracts\Container\Container;
-use Minions\Finder;
 
-trait Configuration
+class Configuration extends Repository
 {
     /**
-     * Use configuration from.
+     * Make configuration for Minions.
+     *
+     * @return static
      */
-    protected function useConfigurationFrom(Container $app): array
+    public static function make(Container $app)
     {
         $config = $app->make('config')->get('minions');
 
@@ -22,6 +24,6 @@ trait Configuration
             }
         }
 
-        return $config;
+        return new static($config);
     }
 }

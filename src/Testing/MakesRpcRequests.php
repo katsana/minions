@@ -12,16 +12,18 @@ trait MakesRpcRequests
     protected function getMinionConfiguration(string $clientId, string $serverId): array
     {
         return [
-            'minions.id' => $serverId,
-            'minions.projects' => [
-                "{$clientId}" => [
-                    'token' => 'secret-token',
-                    'signature' => 'secret-signature',
-                ],
-                "{$serverId}" => [
-                    'endpoint' => 'http://localhost/rpc',
-                    'token' => 'secret-token',
-                    'signature' => 'secret-signature',
+            'minions' => [
+                'id' => $serverId,
+                'projects' => [
+                    "{$clientId}" => [
+                        'token' => 'secret-token',
+                        'signature' => 'secret-signature',
+                    ],
+                    "{$serverId}" => [
+                        'endpoint' => 'http://localhost/rpc',
+                        'token' => 'secret-token',
+                        'signature' => 'secret-signature',
+                    ],
                 ],
             ],
         ];
@@ -38,8 +40,8 @@ trait MakesRpcRequests
         string $clientId = 'client-project-id',
         string $serverId = 'server-project-id'
     ) {
-        $config = \tap($this->app->make('config'), function ($config) use ($clientId, $serverId) {
-            $config->set($this->getMinionConfiguration($clientId, $serverId));
+        \tap($this->app->make('minions.config'), function ($config) use ($clientId, $serverId) {
+            $config->set($this->getMinionConfiguration($clientId, $serverId)['minions']);
         });
 
         $message = Minion::message($method, $parameters);

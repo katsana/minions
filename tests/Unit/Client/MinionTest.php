@@ -4,6 +4,7 @@ namespace Minions\Test\Unit\Client;
 
 use Minions\Client\Minion;
 use Minions\Client\Project;
+use Minions\Configuration;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use React\EventLoop\LoopInterface;
@@ -21,7 +22,7 @@ class MinionTest extends TestCase
     /** @test */
     public function it_can_configure_existing_project()
     {
-        $minion = new Minion(m::mock(LoopInterface::class), [
+        $minion = new Minion(m::mock(LoopInterface::class), new Configuration([
             'id' => 'foobar',
             'projects' => [
                 'platform' => [
@@ -30,7 +31,7 @@ class MinionTest extends TestCase
                     'signature' => 'secret',
                 ],
             ],
-        ]);
+        ]));
 
         $project = $minion->project('platform');
 
@@ -43,7 +44,7 @@ class MinionTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Unable to find project [katsana].');
 
-        $minion = new Minion(m::mock(LoopInterface::class), [
+        $minion = new Minion(m::mock(LoopInterface::class), new Configuration([
             'id' => 'foobar',
             'projects' => [
                 'platform' => [
@@ -52,7 +53,7 @@ class MinionTest extends TestCase
                     'signature' => 'secret',
                 ],
             ],
-        ]);
+        ]));
 
         $project = $minion->project('katsana');
     }
@@ -63,7 +64,7 @@ class MinionTest extends TestCase
         $eventLoop1 = m::mock(LoopInterface::class);
         $eventLoop2 = m::mock(LoopInterface::class);
 
-        $minion = new Minion($eventLoop1, [
+        $minion = new Minion($eventLoop1, new Configuration([
             'id' => 'foobar',
             'projects' => [
                 'platform' => [
@@ -72,7 +73,7 @@ class MinionTest extends TestCase
                     'signature' => 'secret',
                 ],
             ],
-        ]);
+        ]));
 
         $this->assertSame($eventLoop1, $minion->getEventLoop());
 
@@ -90,7 +91,7 @@ class MinionTest extends TestCase
             $this->addToAssertionCount(1);
         });
 
-        $minion = new Minion($eventLoop, [
+        $minion = new Minion($eventLoop, new Configuration([
             'id' => 'foobar',
             'enabled' => true,
             'projects' => [
@@ -100,7 +101,7 @@ class MinionTest extends TestCase
                     'signature' => 'secret',
                 ],
             ],
-        ]);
+        ]));
 
         $minion->run();
     }

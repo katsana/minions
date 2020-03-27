@@ -6,6 +6,7 @@ use function Clue\React\Block\await;
 use function Clue\React\Block\awaitAll;
 use Clue\React\Buzz\Browser;
 use InvalidArgumentException;
+use Minions\Configuration;
 use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
 
@@ -14,9 +15,9 @@ class Minion
     /**
      * Configuration.
      *
-     * @var array
+     * @var \Minions\Configuration
      */
-    protected $config = [];
+    protected $config;
 
     /**
      * The event-loop implementation.
@@ -35,7 +36,7 @@ class Minion
     /**
      * Construct a new Minion.
      */
-    public function __construct(LoopInterface $eventLoop, array $config)
+    public function __construct(LoopInterface $eventLoop, Configuration $config)
     {
         if (! isset($config['enabled'])) {
             $config['enabled'] = true;
