@@ -3,9 +3,12 @@
 namespace Minions\Http;
 
 use ArrayAccess;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use LogicException;
+use Minions\Exceptions\Exception;
+use ReflectionException;
 
 class Request implements Arrayable, ArrayAccess
 {
@@ -61,6 +64,60 @@ class Request implements Arrayable, ArrayAccess
     public function toArray()
     {
         return $this->all();
+    }
+
+    /**
+     * Handle resolving the request.
+     *
+     * @param string|object $resolver
+     *
+     * @return mixed
+     */
+    public function handle($resolver)
+    {
+        $handler = null;
+
+        if (\is_string($resolver)) {
+            try {
+                $handler = \app($resolver);
+            } catch (BindingResolutionException | ReflectionException $e) {
+                throw Exception::methodNotFound();
+            }
+        } elseif (\is_object($resolver)) {
+            $handler = $resolver;
+        }
+
+        if (\is_null($handler) || ! \is_callable($handler)) {
+            throw Exception::methodNotFound();
+        } elseif (\method_exists($handler, 'authorize') && $handler->authorize($this) !== true) {
+            throw Exception::methodNotFound('Unauthorized request');
+        }
+
+        $response = $handler($this);
+
+        if ($response instanceof Arrayable) {
+            return $response->toArray();
+        }
+
+        return $response;
+    }
+
+    /**
+     * Forward call to another handler.
+     *
+     * @param string|object $resolver
+     *
+     * @return mixed
+     */
+    public function forwardCallTo($resolver, ?array $parameters = null)
+    {
+        if (\is_null($parameters)) {
+            $parameters = $this->all();
+        }
+
+        return (new static(
+            $parameters, $this->httpMessage()
+        ))->handle($resolver);
     }
 
     /**

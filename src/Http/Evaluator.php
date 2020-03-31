@@ -3,11 +3,8 @@
 namespace Minions\Http;
 
 use Datto\JsonRpc\Evaluator as DattoEvaluator;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Support\Arrayable;
 use Minions\Exceptions\Exception;
-use ReflectionException;
 
 class Evaluator implements DattoEvaluator
 {
@@ -56,23 +53,7 @@ class Evaluator implements DattoEvaluator
 
         $request = new Request($arguments, $this->message);
 
-        try {
-            $handler = $this->container->make($resolver);
-        } catch (BindingResolutionException | ReflectionException $e) {
-            throw Exception::methodNotFound();
-        }
-
-        if (\method_exists($handler, 'authorize') && $handler->authorize($request) !== true) {
-            throw Exception::methodNotFound('Unauthorized request');
-        }
-
-        $response = $handler($request);
-
-        if ($response instanceof Arrayable) {
-            return $response->toArray();
-        }
-
-        return $response;
+        return $request->handle($resolver);
     }
 
     /**
