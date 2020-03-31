@@ -29,6 +29,30 @@ class RequestTest extends TestCase
     }
 
     /** @test */
+    public function it_can_handle_a_handler_with_middleware()
+    {
+        unset($_SERVER['Request-ID']);
+
+        $message = new Message('platform', [], $this->mockServerRequestInterface());
+
+        $request = new Request([
+            'id' => 5,
+            'email' => 'crynobone@katsana.com',
+            'name' => 'Mior Muhammad Zaki',
+        ], $message);
+
+        $this->assertSame([
+            'id' => 5,
+            'email' => 'crynobone@katsana.com',
+            'name' => 'Mior Muhammad Zaki',
+        ], $request->handle(RequestHandlerWithMiddleware::class));
+
+        $this->assertSame('platform', $_SERVER['Request-ID']);
+
+        unset($_SERVER['Request-ID']);
+    }
+
+    /** @test */
     public function it_cant_handle_uncallable_handler()
     {
         $this->expectException('Minions\Exceptions\Exception');
@@ -135,7 +159,37 @@ class RequestHandler
     }
 }
 
+class RequestHandlerWithMiddleware
+{
+    /**
+     * Get the middleware the request should pass through.
+     *
+     * @return array
+     */
+    public function middleware(): array
+    {
+        return [
+            new AddMessageIdToSession(),
+        ];
+    }
+
+    public function __invoke(Request $request)
+    {
+        return $request->all();
+    }
+}
+
 class InvalidRequestHandler
 {
     //
+}
+
+class AddMessageIdToSession
+{
+    public function handle(Request $request, \Closure $next)
+    {
+        $_SERVER['Request-ID'] = $request->id();
+
+        return $next($request);
+    }
 }

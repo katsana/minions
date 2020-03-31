@@ -3,6 +3,7 @@
 namespace Minions\Http\Console;
 
 use Orchestra\Canvas\Core\Commands\Generator;
+use Symfony\Component\Console\Input\InputOption;
 
 class MakeRpcRequest extends Generator
 {
@@ -32,7 +33,10 @@ class MakeRpcRequest extends Generator
      */
     public function getStubFile(): string
     {
-        return __DIR__.'/stubs/request.stub';
+        $directory = __DIR__.'/stubs';
+        return $this->option('middleware')
+            ? "{$directory}/request.middleware.stub"
+            : "{$directory}/request.stub";
     }
 
     /**
@@ -50,6 +54,18 @@ class MakeRpcRequest extends Generator
     {
         return [
             'name' => $this->generatorName(),
+        ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['middleware', null, InputOption::VALUE_NONE, 'Request have middleware.'],
         ];
     }
 }

@@ -3,8 +3,10 @@
 namespace Minions\Http;
 
 use ArrayAccess;
+use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
 use LogicException;
 use Minions\Exceptions\Exception;
@@ -77,9 +79,11 @@ class Request implements Arrayable, ArrayAccess
     {
         $handler = null;
 
+        $app = Container::getInstance();
+
         if (\is_string($resolver)) {
             try {
-                $handler = \app($resolver);
+                $handler = $app->make($resolver);
             } catch (BindingResolutionException | ReflectionException $e) {
                 throw Exception::methodNotFound();
             }
@@ -93,7 +97,16 @@ class Request implements Arrayable, ArrayAccess
             throw Exception::methodNotFound('Unauthorized request');
         }
 
-        $response = $handler($this);
+        $middlewares = \method_exists($handler, 'middleware')
+            ? $handler->middleware()
+            : [];
+
+        $response = (new Pipeline($app))
+            ->send($this)
+            ->through($middlewares)
+            ->then(function (Request $request) use ($handler) {
+                return $handler($request);
+            });
 
         if ($response instanceof Arrayable) {
             return $response->toArray();
