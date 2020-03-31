@@ -163,8 +163,6 @@ class RequestHandlerWithMiddleware
 {
     /**
      * Get the middleware the request should pass through.
-     *
-     * @return array
      */
     public function middleware(): array
     {

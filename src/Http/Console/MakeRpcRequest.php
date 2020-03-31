@@ -34,6 +34,7 @@ class MakeRpcRequest extends Generator
     public function getStubFile(): string
     {
         $directory = __DIR__.'/stubs';
+
         return $this->option('middleware')
             ? "{$directory}/request.middleware.stub"
             : "{$directory}/request.stub";
