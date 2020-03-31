@@ -11,6 +11,58 @@ use Psr\Http\Message\ServerRequestInterface;
 class RequestTest extends TestCase
 {
     /** @test */
+    public function it_can_handle_a_handler()
+    {
+        $message = new Message('platform', [], $this->mockServerRequestInterface());
+
+        $request = new Request([
+            'id' => 5,
+            'email' => 'crynobone@katsana.com',
+            'name' => 'Mior Muhammad Zaki',
+        ], $message);
+
+        $this->assertSame([
+            'id' => 5,
+            'email' => 'crynobone@katsana.com',
+            'name' => 'Mior Muhammad Zaki',
+        ], $request->handle(RequestHandler::class));
+    }
+
+    /** @test */
+    public function it_cant_handle_uncallable_handler()
+    {
+        $this->expectException('Minions\Exceptions\Exception');
+        $this->expectExceptionMessage('Method not found');
+
+        $message = new Message('platform', [], $this->mockServerRequestInterface());
+
+        $request = new Request([
+            'id' => 5,
+            'email' => 'crynobone@katsana.com',
+            'name' => 'Mior Muhammad Zaki',
+        ], $message);
+
+        $request->handle(InvalidRequestHandler::class);
+    }
+
+    /** @test */
+    public function it_cant_handle_anything_other_than_a_valid_handler()
+    {
+        $this->expectException('Minions\Exceptions\Exception');
+        $this->expectExceptionMessage('Method not found');
+
+        $message = new Message('platform', [], $this->mockServerRequestInterface());
+
+        $request = new Request([
+            'id' => 5,
+            'email' => 'crynobone@katsana.com',
+            'name' => 'Mior Muhammad Zaki',
+        ], $message);
+
+        $request->handle(null);
+    }
+
+    /** @test */
     public function it_can_forward_to_another_handler()
     {
         $message = new Message('platform', [], $this->mockServerRequestInterface());
@@ -25,7 +77,7 @@ class RequestTest extends TestCase
             'id' => 5,
             'email' => 'crynobone@katsana.com',
             'name' => 'Mior Muhammad Zaki',
-        ], $request->forwardCallTo(InternalRequestHandler::class));
+        ], $request->forwardCallTo(RequestHandler::class));
     }
 
     /** @test */
@@ -41,7 +93,7 @@ class RequestTest extends TestCase
 
         $this->assertSame([
             'email' => 'crynobone@gmail.com',
-        ], $request->forwardCallTo(InternalRequestHandler::class, [
+        ], $request->forwardCallTo(RequestHandler::class, [
             'email' => 'crynobone@gmail.com',
         ]));
     }
@@ -61,7 +113,7 @@ class RequestTest extends TestCase
             'id' => 5,
             'email' => 'crynobone@katsana.com',
             'name' => 'Mior Muhammad Zaki',
-        ], $request->forwardCallTo(new InternalRequestHandler()));
+        ], $request->forwardCallTo(new RequestHandler()));
     }
 
     /**
@@ -75,10 +127,15 @@ class RequestTest extends TestCase
     }
 }
 
-class InternalRequestHandler
+class RequestHandler
 {
     public function __invoke(Request $request)
     {
         return $request->all();
     }
+}
+
+class InvalidRequestHandler
+{
+    //
 }
