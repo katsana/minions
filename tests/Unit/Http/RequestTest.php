@@ -34,6 +34,7 @@ class RequestTest extends TestCase
         ], $request->toArray());
 
         $this->assertSame('platform', $request->id());
+        $this->assertSame($message, $request->httpMessage());
     }
 
     /** @test */
@@ -108,6 +109,25 @@ class RequestTest extends TestCase
         ], $message);
 
         unset($request['name']);
+    }
+
+    /** @test */
+    public function it_can_replicate_a_base_request()
+    {
+        $message = new Message('platform', [], $this->mockServerRequestInterface());
+
+        $request = new Request([
+            'id' => 5,
+            'email' => 'crynobone@katsana.com',
+            'name' => 'Mior Muhammad Zaki',
+        ], $message);
+
+        $replicated = Request::replicateFrom($request, ['id', 'email']);
+
+        $this->assertSame($message, $replicated->httpMessage());
+        $this->assertSame(5, $replicated['id']);
+        $this->assertSame('crynobone@katsana.com', $replicated['email']);
+        $this->assertNull($replicated['name']);
     }
 
     /**

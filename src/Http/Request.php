@@ -4,6 +4,7 @@ namespace Minions\Http;
 
 use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 use LogicException;
 
 class Request implements Arrayable, ArrayAccess
@@ -32,6 +33,19 @@ class Request implements Arrayable, ArrayAccess
     }
 
     /**
+     * Replicate from a base Request.
+     *
+     * @return static
+     */
+    public static function replicateFrom(Request $request, array $keys)
+    {
+        return new static(
+            Arr::only($request->all(), $keys),
+            $request->httpMessage()
+        );
+    }
+
+    /**
      * Get request inputs.
      */
     public function all(): array
@@ -55,6 +69,14 @@ class Request implements Arrayable, ArrayAccess
     public function id(): string
     {
         return $this->message->id();
+    }
+
+    /**
+     * Get HTTP Message.
+     */
+    public function httpMessage(): Message
+    {
+        return $this->message;
     }
 
     /**
