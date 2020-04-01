@@ -2,6 +2,17 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `katsana/minions`.
 
+## 2.2.0
+
+Released: 2020-04-01
+
+### Added
+
+* Added `Minions\Http\Request::handle()` method to resolve and handle RPC request.
+* Added `Minions\Http\Request::forwardCallTo()` method to make an internal RPC request.
+* Added `Minions\Http\Request::replicateFrom()` method to replicate request with custom parameters.
+* Added `Minions\Http\Request::httpMessage()`  method to access `Minions\Http\Message` for the request.
+
 ## 2.1.0
 
 Released: 2020-03-27
