@@ -19,22 +19,46 @@ class RequestTest extends TestCase
             'id' => 5,
             'email' => 'crynobone@katsana.com',
             'name' => 'Mior Muhammad Zaki',
+            'address' => [
+                'city' => 'Kuala Lumpur',
+                'postcode' => 60000,
+            ],
         ], $message);
 
         $this->assertSame([
             'id' => 5,
             'email' => 'crynobone@katsana.com',
             'name' => 'Mior Muhammad Zaki',
+            'address' => [
+                'city' => 'Kuala Lumpur',
+                'postcode' => 60000,
+            ],
         ], $request->all());
 
         $this->assertSame([
             'id' => 5,
             'email' => 'crynobone@katsana.com',
             'name' => 'Mior Muhammad Zaki',
+            'address' => [
+                'city' => 'Kuala Lumpur',
+                'postcode' => 60000,
+            ],
         ], $request->toArray());
 
+        $this->assertSame('Mior Muhammad Zaki', $request['name']);
+        $this->assertSame('Mior Muhammad Zaki', $request->name);
+        $this->assertSame('Mior Muhammad Zaki', $request->input('name'));
+        $this->assertSame('Kuala Lumpur', $request['address']['city']);
+        $this->assertSame('Kuala Lumpur', $request->address['city']);
+        $this->assertSame('Kuala Lumpur', $request->input('address.city'));
         $this->assertSame('platform', $request->id());
         $this->assertSame($message, $request->httpMessage());
+
+        $this->assertNull($request->input('address.country'));
+        $this->assertSame('Malaysia', $request->input('address.country', 'Malaysia'));
+        $this->assertSame('Malaysia', $request->input('address.country', static function () {
+            return 'Malaysia';
+        }));
     }
 
     /** @test */

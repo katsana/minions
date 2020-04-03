@@ -51,6 +51,18 @@ class Request implements Arrayable, ArrayAccess
     }
 
     /**
+     * Get specific key from input.
+     *
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    public function input(string $key, $default = null)
+    {
+        return Arr::get($this->input, $key, $default);
+    }
+
+    /**
      * Get request inputs.
      */
     public function all(): array
