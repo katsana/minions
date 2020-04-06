@@ -82,6 +82,10 @@ class Message
     {
         $projectToken = $this->config['token'] ?? null;
 
+        if (\is_null($projectToken)) {
+            return true;
+        }
+
         if (! $this->request->hasHeader('Authorization') || empty($projectToken)) {
             throw new MissingToken();
         } else {
@@ -104,6 +108,10 @@ class Message
     {
         $secret = $this->config['signature'] ?? null;
         $body = \json_encode(\json_decode($this->body(), true));
+
+        if (\is_null($secret)) {
+            return true;
+        }
 
         if (! $this->request->hasHeader('X-Signature') || empty($secret)) {
             throw new MissingSignature();

@@ -47,6 +47,19 @@ class MessageTest extends TestCase
     }
 
     /** @test */
+    public function it_can_validate_request_token_when_token_is_not_configured()
+    {
+        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
+
+        $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
+            ->shouldReceive('hasHeader')->never()->with('Authorization');
+
+        $message = new Message('foobar', ['token' => null], $request);
+
+        $this->assertTrue($message->validateRequestToken());
+    }
+
+    /** @test */
     public function it_cant_validate_request_token_given_invalid_token()
     {
         $this->expectException('Minions\Exceptions\InvalidToken');
@@ -78,21 +91,6 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function it_cant_validate_request_token_when_token_is_not_configured()
-    {
-        $this->expectException('Minions\Exceptions\MissingToken');
-
-        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
-
-        $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
-            ->shouldReceive('hasHeader')->once()->with('Authorization')->andReturn(['Token secret']);
-
-        $message = new Message('foobar', ['token' => null], $request);
-
-        $message->validateRequestToken();
-    }
-
-    /** @test */
     public function it_cant_validate_request_token_when_project_token_is_missing()
     {
         $this->expectException('Minions\Exceptions\MissingToken');
@@ -100,9 +98,9 @@ class MessageTest extends TestCase
         $request = m::mock('Psr\Http\Message\ServerRequestInterface');
 
         $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
-            ->shouldReceive('hasHeader')->once()->with('Authorization')->andReturn(true);
+            ->shouldReceive('hasHeader')->once()->with('Authorization')->andReturn(false);
 
-        $message = new Message('foobar', [], $request);
+        $message = new Message('foobar', ['token' => 'secret'], $request);
 
         $message->validateRequestToken();
     }
@@ -121,6 +119,19 @@ class MessageTest extends TestCase
             ]);
 
         $message = new Message('foobar', ['signature' => 'secret'], $request);
+
+        $this->assertTrue($message->validateRequestSignature());
+    }
+
+    /** @test */
+    public function it_can_validate_request_signature_when_signature_is_not_configured()
+    {
+        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
+
+        $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
+            ->shouldReceive('hasHeader')->never()->with('X-Signature');
+
+        $message = new Message('foobar', ['signature' => null], $request);
 
         $this->assertTrue($message->validateRequestSignature());
     }
@@ -154,21 +165,6 @@ class MessageTest extends TestCase
             ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(false);
 
         $message = new Message('foobar', ['signature' => 'secret'], $request);
-
-        $message->validateRequestSignature();
-    }
-
-    /** @test */
-    public function it_cant_validate_request_signature_when_signature_is_not_configured()
-    {
-        $this->expectException('Minions\Exceptions\MissingSignature');
-
-        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
-
-        $request->shouldReceive('getBody')->once()->andReturn('{"jsonrpc":"2.0","method":"math/add","params":[1,2]}')
-            ->shouldReceive('hasHeader')->once()->with('X-Signature')->andReturn(true);
-
-        $message = new Message('foobar', ['signature' => null], $request);
 
         $message->validateRequestSignature();
     }

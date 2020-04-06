@@ -48,9 +48,15 @@ class Project
         $headers = [
             'Content-Type' => 'application/json',
             'X-Request-ID' => $this->id,
-            'Authorization' => "Token {$this->config['token']}",
-            'X-Signature' => $message->signature($this->config['signature'] ?? ''),
         ];
+
+        if (! \is_null($this->config['token'] ?? null)) {
+            $headers['Authorization'] = "Token {$this->config['token']}";
+        }
+
+        if (! \is_null($this->config['signature'] ?? null)) {
+            $headers['X-Signature'] = $message->signature($this->config['signature'] ?? '');
+        }
 
         return $this->browser->post('', $headers, $message->toJson())
             ->then(static function (ResponseContract $response) use ($message) {
