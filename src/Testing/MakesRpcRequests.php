@@ -16,6 +16,7 @@ trait MakesRpcRequests
                 'id' => $serverId,
                 'projects' => [
                     "{$clientId}" => [
+                        'endpoint' => 'http://localhost/rpc',
                         'token' => 'secret-token',
                         'signature' => 'secret-signature',
                     ],
