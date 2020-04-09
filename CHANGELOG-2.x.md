@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `katsana/minions`.
 
+## 2.2.1
+
+Released: 2020-04-09
+
+### Fixes
+
+* Make testing client configuration contain `endpoint` to avoid regression issue after moving to new `Minions\Configuration` class.
+
 ## 2.2.0
 
 Released: 2020-04-01
