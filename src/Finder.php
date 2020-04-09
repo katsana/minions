@@ -28,8 +28,8 @@ abstract class Finder implements ArrayAccess
      */
     final public function register(
         string $name,
-        string $token,
-        string $signature,
+        ?string $token,
+        ?string $signature,
         ?string $endpoint = null,
         array $options = []
     ): self {
