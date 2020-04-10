@@ -68,7 +68,8 @@ class RequestException extends RuntimeException
     public function report(): void
     {
         Log::error($this->getMessage(), [
-            'rpc-error' => $this->getRpcErrorData(),
+            'method' => $this->getRequestMethod(),
+            'error' => $this->getRpcErrorData(),
             'exception' => $this,
         ]);
     }
