@@ -2,6 +2,7 @@
 
 namespace Minions\Exceptions;
 
+use Illuminate\Support\Facades\Log;
 use Minions\Client\ResponseInterface;
 use RuntimeException;
 
@@ -59,5 +60,16 @@ class RequestException extends RuntimeException
     public function getRpcErrorData()
     {
         return $this->response->getRpcErrorData();
+    }
+
+    /**
+     * Report error to logger.
+     */
+    public function report(): void
+    {
+        Log::error($this->getMessage(), [
+            'rpc-error' => $this->getRpcErrorData(),
+            'exception' => $this,
+        ]);
     }
 }
