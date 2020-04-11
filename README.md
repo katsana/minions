@@ -12,8 +12,6 @@ JSON-RPC Communication for Laravel
 * [Setup](#setup)
     - [Setting Project ID](#setting-project-id)
     - [Configure Projects](#configure-projects)
-    - [Setup for Server](#setup-for-server)
-    - [Setup for Client](#setup-for-client)
 * [Request Handler](#request-handler)
     - [Registering the route](#registering-the-route)
 * [Making a Request](#making-a-request)
@@ -84,6 +82,11 @@ return [
 * `endpoint` is only required for configurating server project connection from a client project. A server will never send request to a client project.
 * Each project should have a pair of unique `token` and `secret`, this will be shared only by the client and server as a form of message verification.
 
+#### Security 
+
+`token` is used as an `Authorization` bearer token header for the request and `signature` is used to sign the message sent via the request. 
+
+> For projects running on private intranet you may skip setting up `token` and `signature` by setting the value to `null`.
 
 ## Request Handler
  
