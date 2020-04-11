@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `katsana/minions`.
 
+## 1.7.0 DRAFT
+
+### Changes
+
+* Update minimum `laravie/stream` to `v1.3`+.
+* Allow project `token` and `signature` to be set to `null` for app to app communication under private intranet.
+* Add `Minions\Exceptions\RequestException::report()` method to send custom error log to Laravel logger. 
+
 ## 1.6.1
 
 Released: 2020-04-09

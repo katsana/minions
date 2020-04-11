@@ -81,12 +81,13 @@ class Message
     public function validateRequestToken(): bool
     {
         $projectToken = $this->config['token'] ?? null;
+        $hasHeader = $this->request->hasHeader('Authorization');
 
-        if (\is_null($projectToken)) {
+        if (! $hasHeader && \is_null($projectToken)) {
             return true;
         }
 
-        if (! $this->request->hasHeader('Authorization') || empty($projectToken)) {
+        if (! $hasHeader || empty($projectToken)) {
             throw new MissingToken();
         } else {
             $header = $this->request->getHeader('Authorization')[0];
@@ -108,12 +109,13 @@ class Message
     {
         $secret = $this->config['signature'] ?? null;
         $body = \json_encode(\json_decode($this->body(), true));
+        $hasHeader = $this->request->hasHeader('X-Signature');
 
-        if (\is_null($secret)) {
+        if (! $hasHeader && \is_null($secret)) {
             return true;
         }
 
-        if (! $this->request->hasHeader('X-Signature') || empty($secret)) {
+        if (! $hasHeader || empty($secret)) {
             throw new MissingSignature();
         } else {
             $signature = new Verify($secret, 'sha256', $config['signature_expired_in'] ?? 300);
