@@ -2,14 +2,19 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `katsana/minions`.
 
-## 2.3.0 DRAFT
+## 2.3.0
+
+Released: 2020-04-11
 
 ### Added
 
+* Added `Minions\Client\Minion::queue()` method.
+* Added `Minions\Testing\TestResponse::output()` method.
 * Add `Minions\Http\Request::input()` method.
 
 ### Changes
 
+* Explicitly require `clue/buzz-react`, `nyholm/psr7` and `symfony/psr-http-message-bridge` to streamline out of the box feature.
 * Update minimum `laravie/stream` to `v1.3`+.
 * Allow project `token` and `signature` to be set to `null` for app to app communication under private intranet.
 * Add `Minions\Exceptions\RequestException::report()` method to send custom error log to Laravel logger. 
