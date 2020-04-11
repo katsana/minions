@@ -4,6 +4,10 @@ This changelog references the relevant changes (bug and security fixes) done to 
 
 ## 1.7.0 DRAFT
 
+### Added
+
+* Added `Minions\Testing\TestResponse::output()` method.
+
 ### Changes
 
 * Update minimum `laravie/stream` to `v1.3`+.
