@@ -14,7 +14,10 @@ class Configuration extends Repository
      */
     public static function make(Container $app)
     {
-        $config = $app->make('config')->get('minions');
+        $config = $app->make('config')->get('minions', [
+            'id' => 'minion-server',
+            'projects' => [],
+        ]);
 
         if (\is_string($config['projects'])) {
             $projects = $app->make($config['projects']);

@@ -53,6 +53,20 @@ class TestResponse
     }
 
     /**
+     * Return the decoded response.
+     *
+     * @return mixed
+     */
+    public function output()
+    {
+        if (! \is_null($this->response->getRpcErrorCode())) {
+            return $this->response->getRpcErrorData();
+        }
+
+        return $this->response->getRpcResult();
+    }
+
+    /**
      * Validate and return the decoded response JSON.
      *
      * @param string|null $key
@@ -61,11 +75,7 @@ class TestResponse
      */
     public function json($key = null)
     {
-        if (! \is_null($this->response->getRpcErrorCode())) {
-            return Arr::get($this->response->getRpcErrorData(), $key);
-        }
-
-        return Arr::get($this->response->getRpcResult(), $key);
+        return Arr::get($this->output(), $key);
     }
 
     /**
