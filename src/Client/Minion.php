@@ -5,6 +5,7 @@ namespace Minions\Client;
 use function Clue\React\Block\await;
 use function Clue\React\Block\awaitAll;
 use Clue\React\Buzz\Browser;
+use Clue\React\Mq\Queue;
 use InvalidArgumentException;
 use Minions\Configuration;
 use React\EventLoop\Factory;
@@ -64,6 +65,18 @@ class Minion
         $this->eventLoop = $eventLoop;
 
         return $this;
+    }
+
+    /**
+     * Queue for the promises to be resolved.
+     */
+    final public function queue(string $project, int $concurrency, ?int $limit): Queue
+    {
+        $project = $this->project($project);
+
+        return new Queue($concurrency, $limit, static function (MessageInterface $message) use ($project) {
+            return $project->broadcast($message);
+        });
     }
 
     /**

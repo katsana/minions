@@ -2,8 +2,6 @@
 
 namespace Minions\Tests\Feature\Testing;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Minions\Testing\MakesRpcRequests;
 use Minions\Tests\HttpTestCase;
 

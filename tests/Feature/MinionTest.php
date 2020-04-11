@@ -2,6 +2,7 @@
 
 namespace Minions\Tests\Feature;
 
+use Clue\React\Mq\Queue;
 use Minions\Minion;
 use Minions\Tests\TestCase;
 use React\Promise\Promise;
@@ -18,7 +19,16 @@ class MinionTest extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         config([
-            'minions' => ['id' => 'minions', 'projects' => []],
+            'minions' => [
+                'id' => 'minions',
+                'projects' => [
+                    'minions-client' => [
+                        'endpoint' => 'http://localhost/rpc',
+                        'token' => null,
+                        'signature' => null,
+                    ],
+                ],
+            ],
         ]);
     }
 
@@ -89,5 +99,13 @@ class MinionTest extends TestCase
             'completed 1',
             'completed 2',
         ], Minion::await($promises));
+    }
+
+    /** @test */
+    public function it_can_queue_promise()
+    {
+        $queue = Minion::queue('minions-client', 10, 20);
+
+        $this->assertInstanceOf(Queue::class, $queue);
     }
 }

@@ -1,19 +1,17 @@
 JSON-RPC Communication for Laravel
 ===================
 
-[![Build Status](https://travis-ci.org/katsana/minions.svg?branch=master)](https://travis-ci.org/katsana/minions)
+[![Build Status](https://travis-ci.org/katsana/minions.svg?branch=2.x)](https://travis-ci.org/katsana/minions)
 [![Latest Stable Version](https://poser.pugx.org/katsana/minions/v/stable)](https://packagist.org/packages/katsana/minions)
 [![Total Downloads](https://poser.pugx.org/katsana/minions/downloads)](https://packagist.org/packages/katsana/minions)
 [![Latest Unstable Version](https://poser.pugx.org/katsana/minions/v/unstable)](https://packagist.org/packages/katsana/minions)
 [![License](https://poser.pugx.org/katsana/minions/license)](https://packagist.org/packages/katsana/minions)
-[![Coverage Status](https://coveralls.io/repos/github/katsana/minions/badge.svg?branch=master)](https://coveralls.io/github/katsana/minions?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/katsana/minions/badge.svg?branch=2.x)](https://coveralls.io/github/katsana/minions?branch=2.x)
 
 * [Installation](#installation)
 * [Setup](#setup)
     - [Setting Project ID](#setting-project-id)
     - [Configure Projects](#configure-projects)
-    - [Setup for Server](#setup-for-server)
-    - [Setup for Client](#setup-for-client)
 * [Request Handler](#request-handler)
     - [Registering the route](#registering-the-route)
     - [Checking authorization](#checking-authorization)
@@ -86,13 +84,11 @@ return [
 * `endpoint` is only required for configurating server project connection from a client project. A server will never send request to a client project.
 * Each project should have a pair of unique `token` and `secret`, this will be shared only by the client and server as a form of message verification.
 
-### Setup for Client
+#### Security 
 
-To use Minions as a client, you need to install the following via Composer:
+`token` is used as an `Authorization` bearer token header for the request and `signature` is used to sign the message sent via the request. 
 
-```
-composer require "clue/buzz-react=^2.5"
-```
+> For projects running on private intranet you may skip setting up `token` and `signature` by setting the value to `null`.
 
 ## Request Handler
  
