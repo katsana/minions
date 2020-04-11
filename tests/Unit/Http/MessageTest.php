@@ -184,7 +184,6 @@ class MessageTest extends TestCase
         $message->validateRequestSignature();
     }
 
-
     /** @test */
     public function it_cant_validate_request_signature_when_signature_is_missing_from_config()
     {
