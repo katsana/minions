@@ -84,13 +84,6 @@ return [
 * `endpoint` is only required for configurating server project connection from a client project. A server will never send request to a client project.
 * Each project should have a pair of unique `token` and `secret`, this will be shared only by the client and server as a form of message verification.
 
-### Setup for Client
-
-To use Minions as a client, you need to install the following via Composer:
-
-```
-composer require "clue/buzz-react=^2.5"
-```
 
 ## Request Handler
  
