@@ -2,6 +2,12 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `katsana/minions`.
 
+## Unreleased
+
+### Changes
+
+* Allow to `serialize()` and `unserialize()` instance of `Minions\Client\Response`.
+
 ## 1.7.0
 
 Released: 2020-04-11
