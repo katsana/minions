@@ -2,16 +2,18 @@
 
 namespace Minions\Client;
 
+use Serializable;
 use Minions\Exceptions\ClientHasError;
 use Minions\Exceptions\ServerHasError;
 use Psr\Http\Message\ResponseInterface as ResponseContract;
 
-class Response implements ResponseInterface
+class Response implements ResponseInterface, Serializable
 {
     /**
-     * The PSR-7 Response implementation.
+     * The PSR-7 Response implementation. The value can be null
+     * when retrieving the instance from Serializeable.
      *
-     * @var \Psr\Http\Message\ResponseInterface
+     * @var \Psr\Http\Message\ResponseInterface|null
      */
     protected $original;
 
@@ -106,5 +108,27 @@ class Response implements ResponseInterface
     public function getRpcErrorData()
     {
         return $this->content['error']['data'] ?? null;
+    }
+
+    /**
+     * Serialize instance.
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        return \serialize(['content' => $this->content]);
+    }
+
+    /**
+     * Unserialize instance.
+     *
+     * @param string $data
+     *
+     * @return void
+     */
+    public function unserialize($data)
+    {
+        ['content' => $this->content] = \unserialize($data);
     }
 }
