@@ -9,13 +9,6 @@ use Psr\Http\Message\ResponseInterface as ResponseContract;
 class Response implements ResponseInterface
 {
     /**
-     * The PSR-7 Response implementation.
-     *
-     * @var \Psr\Http\Message\ResponseInterface
-     */
-    protected $original;
-
-    /**
      * The response body.
      *
      * @var array|null
@@ -29,8 +22,6 @@ class Response implements ResponseInterface
      */
     public function __construct(ResponseContract $response)
     {
-        $this->original = $response;
-
         if (\in_array($response->getStatusCode(), [200, 201])) {
             $this->content = \json_decode((string) $response->getBody(), true);
         }
