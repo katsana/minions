@@ -2,10 +2,10 @@
 
 namespace Minions\Client;
 
-use Serializable;
 use Minions\Exceptions\ClientHasError;
 use Minions\Exceptions\ServerHasError;
 use Psr\Http\Message\ResponseInterface as ResponseContract;
+use Serializable;
 
 class Response implements ResponseInterface, Serializable
 {
@@ -33,8 +33,19 @@ class Response implements ResponseInterface, Serializable
     {
         $this->original = $response;
 
-        if (\in_array($response->getStatusCode(), [200, 201])) {
+        $statusCode = $response->getStatusCode();
+
+        if (\in_array($statusCode, [200, 201, 202])) {
             $this->content = \json_decode((string) $response->getBody(), true);
+        } elseif (! \in_array($statusCode, [204])) {
+            $this->content['error'] = [
+                'message' => $response->getReasonPhrase(),
+                'code' => -32600,
+                'data' => [
+                    'status' => $statusCode,
+                    'body' => (string) $response->getBody(),
+                ],
+            ];
         }
     }
 
@@ -108,6 +119,16 @@ class Response implements ResponseInterface, Serializable
     public function getRpcErrorData()
     {
         return $this->content['error']['data'] ?? null;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->content;
     }
 
     /**

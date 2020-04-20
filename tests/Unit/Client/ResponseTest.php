@@ -34,6 +34,11 @@ class ResponseTest extends TestCase
         $this->assertNull($response->getRpcErrorCode());
         $this->assertNull($response->getRpcErrorMessage());
         $this->assertNull($response->getRpcErrorData());
+        $this->assertSame([
+            'jsonrpc' => '2.0',
+            'id' => 1,
+            'result' => 3,
+        ], $response->toArray());
     }
 
     /** @test */
@@ -70,6 +75,28 @@ class ResponseTest extends TestCase
         $this->assertNull($response->getRpcErrorCode());
         $this->assertNull($response->getRpcErrorMessage());
         $this->assertNull($response->getRpcErrorData());
+    }
+
+    /** @test */
+    public function it_can_received_failed_response_with_other_status_code()
+    {
+        $psr7Response = m::mock(ResponseContract::class);
+
+        $psr7Response->shouldReceive('getStatusCode')->andReturn(410)
+            ->shouldReceive('getReasonPhrase')->once()->andReturn('Gone')
+            ->shouldReceive('getBody')->once()->andReturn('Response gone!');
+
+        $response = new Response($psr7Response);
+
+        $this->assertNull($response->getRpcId());
+        $this->assertNull($response->getRpcResult());
+        $this->assertSame('2.0', $response->getRpcVersion());
+        $this->assertSame(-32600, $response->getRpcErrorCode());
+        $this->assertSame('Gone', $response->getRpcErrorMessage());
+        $this->assertSame([
+            'status' => 410,
+            'body' => 'Response gone!',
+        ], $response->getRpcErrorData());
     }
 
     /** @test */
