@@ -34,6 +34,11 @@ class ResponseTest extends TestCase
         $this->assertNull($response->getRpcErrorCode());
         $this->assertNull($response->getRpcErrorMessage());
         $this->assertNull($response->getRpcErrorData());
+        $this->assertSame([
+            'jsonrpc' => '2.0',
+            'id' => 1,
+            'result' => 3,
+        ], $response->toArray());
     }
 
     /** @test */
@@ -70,6 +75,28 @@ class ResponseTest extends TestCase
         $this->assertNull($response->getRpcErrorCode());
         $this->assertNull($response->getRpcErrorMessage());
         $this->assertNull($response->getRpcErrorData());
+    }
+
+    /** @test */
+    public function it_can_received_failed_response_with_other_status_code()
+    {
+        $psr7Response = m::mock(ResponseContract::class);
+
+        $psr7Response->shouldReceive('getStatusCode')->andReturn(410)
+            ->shouldReceive('getReasonPhrase')->once()->andReturn('Gone')
+            ->shouldReceive('getBody')->once()->andReturn('Response gone!');
+
+        $response = new Response($psr7Response);
+
+        $this->assertNull($response->getRpcId());
+        $this->assertNull($response->getRpcResult());
+        $this->assertSame('2.0', $response->getRpcVersion());
+        $this->assertSame(-32600, $response->getRpcErrorCode());
+        $this->assertSame('Gone', $response->getRpcErrorMessage());
+        $this->assertSame([
+            'status' => 410,
+            'body' => 'Response gone!',
+        ], $response->getRpcErrorData());
     }
 
     /** @test */
@@ -122,5 +149,34 @@ class ResponseTest extends TestCase
             ->shouldReceive('getBody')->andReturn('{"jsonrpc":"2.0","id":1,"error":{"code":-32651,"message":"Missing Signature."}}');
 
         $response = (new Response($psr7Response))->validate($message);
+    }
+
+    /** @test */
+    public function it_can_serialize_the_response()
+    {
+        $psr7Response = m::mock(ResponseContract::class);
+
+        $psr7Response->shouldReceive('getStatusCode')->andReturn(200)
+            ->shouldReceive('getBody')->andReturn('{"jsonrpc":"2.0","id":1,"error":{"code":-32651,"message":"Missing Signature."}}');
+
+        $response = (new Response($psr7Response));
+
+        $this->assertSame('C:23:"Minions\Client\Response":141:{a:1:{s:7:"content";a:3:{s:7:"jsonrpc";s:3:"2.0";s:2:"id";i:1;s:5:"error";a:2:{s:4:"code";i:-32651;s:7:"message";s:18:"Missing Signature.";}}}}', \serialize($response));
+    }
+
+    /** @test */
+    public function it_can_unserialize_the_response()
+    {
+        $psr7Response = m::mock(ResponseContract::class);
+
+        $psr7Response->shouldReceive('getStatusCode')->andReturn(200)
+            ->shouldReceive('getBody')->andReturn('{"jsonrpc":"2.0","id":1,"error":{"code":-32651,"message":"Missing Signature."}}');
+
+        $response = \unserialize('C:23:"Minions\Client\Response":141:{a:1:{s:7:"content";a:3:{s:7:"jsonrpc";s:3:"2.0";s:2:"id";i:1;s:5:"error";a:2:{s:4:"code";i:-32651;s:7:"message";s:18:"Missing Signature.";}}}}');
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertSame(-32651, $response->getRpcErrorCode());
+        $this->assertSame('Missing Signature.', $response->getRpcErrorMessage());
+        $this->assertNull($response->getRpcErrorData());
     }
 }

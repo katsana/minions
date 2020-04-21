@@ -5,8 +5,9 @@ namespace Minions\Client;
 use Minions\Exceptions\ClientHasError;
 use Minions\Exceptions\ServerHasError;
 use Psr\Http\Message\ResponseInterface as ResponseContract;
+use Serializable;
 
-class Response implements ResponseInterface
+class Response implements ResponseInterface, Serializable
 {
     /**
      * The response body.
@@ -22,8 +23,19 @@ class Response implements ResponseInterface
      */
     public function __construct(ResponseContract $response)
     {
-        if (\in_array($response->getStatusCode(), [200, 201])) {
+        $statusCode = $response->getStatusCode();
+
+        if (\in_array($statusCode, [200, 201, 202])) {
             $this->content = \json_decode((string) $response->getBody(), true);
+        } elseif (! \in_array($statusCode, [204, 205])) {
+            $this->content['error'] = [
+                'message' => $response->getReasonPhrase(),
+                'code' => -32600,
+                'data' => [
+                    'status' => $statusCode,
+                    'body' => (string) $response->getBody(),
+                ],
+            ];
         }
     }
 
@@ -97,5 +109,37 @@ class Response implements ResponseInterface
     public function getRpcErrorData()
     {
         return $this->content['error']['data'] ?? null;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Serialize instance.
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        return \serialize(['content' => $this->content]);
+    }
+
+    /**
+     * Unserialize instance.
+     *
+     * @param string $data
+     *
+     * @return void
+     */
+    public function unserialize($data)
+    {
+        ['content' => $this->content] = \unserialize($data);
     }
 }
