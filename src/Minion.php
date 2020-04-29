@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Facade;
  * @method void run()
  * @method array|mixed await(array|\React\Promise\PromiseInterface $promises)
  * @method \Clue\React\Mq\Queue queue(string $project, int $concurrency, ?int $limit)
+ * @method bool enabled()
  *
  * @see \Minions\Client\Minion
  */

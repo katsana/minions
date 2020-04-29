@@ -88,7 +88,7 @@ class Minion
      */
     final public function await($promises)
     {
-        if ($this->config['enabled'] !== true) {
+        if ($this->enabled() !== true) {
             return null;
         }
 
@@ -104,11 +104,19 @@ class Minion
      */
     final public function run(): void
     {
-        if ($this->config['enabled'] !== true) {
+        if ($this->enabled() !== true) {
             return;
         }
 
         $this->getEventLoop()->run();
+    }
+
+    /**
+     * Check enabled status.
+     */
+    final public function enabled(): bool
+    {
+        return $this->config['enabled'];
     }
 
     /**
