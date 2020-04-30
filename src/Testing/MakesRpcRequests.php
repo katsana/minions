@@ -32,11 +32,11 @@ trait MakesRpcRequests
     }
 
     /**
-     * Post using RPC.
+     * Send using RPC.
      *
      * @return \Illuminate\Foundation\Testing\TestResponse|\Illuminate\Testing\TestResponse
      */
-    protected function postRpc(
+    protected function sendRpc(
         string $method,
         array $parameters = [],
         string $clientId = 'client-project-id',
@@ -62,5 +62,19 @@ trait MakesRpcRequests
             'X-Signature' => $message->signature('secret-signature'),
             'Content-Type' => 'application/json',
         ]));
+    }
+
+    /**
+     * Post using RPC.
+     *
+     * @return \Illuminate\Foundation\Testing\TestResponse|\Illuminate\Testing\TestResponse
+     */
+    protected function postRpc(
+        string $method,
+        array $parameters = [],
+        string $clientId = 'client-project-id',
+        string $serverId = 'server-project-id'
+    ) {
+        return $this->sendRpc($method, $parameters, $clientId, $serverId);
     }
 }
