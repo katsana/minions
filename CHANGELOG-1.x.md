@@ -11,6 +11,7 @@ Released: 2020-05-01
 * Added `Minions\Client\Minion::enabled()` method.
 * Added `Minions\Testing\MakesRpcRequests::sendRpc()` method.
 * Added `Minions\Testing\TestResponse::assertStatus()` method.
+
 ## 1.8.0
 
 Released: 2020-04-20
