@@ -57,6 +57,7 @@ class ExceptionHandler
         $error = [
             'code' => -32602,
             'message' => $exception->getMessage(),
+            'exception' => \get_class($exception),
             'data' => [
                 'model' => $exception->getModel(),
                 'ids' => $exception->getIds(),
@@ -78,6 +79,7 @@ class ExceptionHandler
         $error = [
             'code' => -32602,
             'message' => $exception->getMessage(),
+            'exception' => \get_class($exception),
             'data' => $exception->errors() ?? null,
         ];
 
@@ -103,6 +105,7 @@ class ExceptionHandler
             'error' => [
                 'code' => -32603,
                 'message' => \get_class($exception).' - '.$exception->getMessage(),
+                'exception' => \get_class($exception),
             ],
         ]));
     }

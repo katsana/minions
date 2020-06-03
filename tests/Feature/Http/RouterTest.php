@@ -325,7 +325,7 @@ class RouterTest extends HttpTestCase
         $reply = $this->app['minions.router']->handle($request);
 
         $this->assertInstanceOf('Minions\Http\Reply', $reply);
-        $this->assertSame('{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"The given data was invalid.","data":{"email":["The email must be a valid email address."]}}}', $reply->body());
+        $this->assertSame('{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"The given data was invalid.","exception":"Illuminate\\\Validation\\\ValidationException","data":{"email":["The email must be a valid email address."]}}}', $reply->body());
     }
 
     /** @test */
