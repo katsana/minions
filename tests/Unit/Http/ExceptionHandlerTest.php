@@ -47,7 +47,7 @@ class ExceptionHandlerTest extends TestCase
         $reply = $handler->handle($exception);
 
         $this->assertSame(
-            '{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"No query results for model [User] 2","data":{"model":"User","ids":[2]}}}',
+            '{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"No query results for model [User] 2","exception":"Illuminate\\\Database\\\Eloquent\\\ModelNotFoundException","data":{"model":"User","ids":[2]}}}',
             $reply->body()
         );
     }
@@ -66,7 +66,7 @@ class ExceptionHandlerTest extends TestCase
         $reply = $handler->handle(new ValidationException($validator));
 
         $this->assertSame(
-            '{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"The given data was invalid.","data":["Password is required"]}}',
+            '{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"The given data was invalid.","exception":"Illuminate\\\Validation\\\ValidationException","data":["Password is required"]}}',
             $reply->body()
         );
     }
@@ -89,7 +89,7 @@ class ExceptionHandlerTest extends TestCase
         $reply = $handler->handle($exception);
 
         $this->assertSame(
-            '{"jsonrpc":"2.0","id":null,"error":{"code":-32603,"message":"Illuminate\\\Database\\\QueryException -  (SQL: SELECT * FROM `users` WHERE email=crynobone@katsana.com)"}}',
+            '{"jsonrpc":"2.0","id":null,"error":{"code":-32603,"message":"Illuminate\\\Database\\\QueryException -  (SQL: SELECT * FROM `users` WHERE email=crynobone@katsana.com)","exception":"Illuminate\\\Database\\\QueryException"}}',
             $reply->body()
         );
 
