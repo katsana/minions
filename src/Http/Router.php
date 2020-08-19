@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Pipeline\Pipeline;
 use Minions\Configuration;
 use Minions\Exceptions\ProjectNotFound;
+use Minions\Http\Reply;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
@@ -92,6 +93,22 @@ class Router
      * @return \Minions\Server\Reply
      */
     public function handle(ServerRequestInterface $request)
+    {
+        return \rescue(function () use ($request) {
+            return $this->replyTo($request);
+        }, static function ($exception) {
+            $message = \method_exists($exception, 'getMessage')
+                ? $exception->getMessage()
+                : 'Unable to handle the request, received '.get_class($exception);
+
+            \abort(500, $message);
+        });
+    }
+
+    /**
+     * Pipe request and setup a reply.
+     */
+    protected function replyTo(ServerRequestInterface $request)
     {
         $project = $request->getHeader('X-Request-ID')[0] ?? null;
         $app = $this->container;
