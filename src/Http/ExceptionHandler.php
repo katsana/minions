@@ -25,7 +25,27 @@ class ExceptionHandler
             return $this->handleJsonRpcException($exception);
         }
 
-        return $this->handleGenericException($exception);
+        return $this->handleException($exception);
+    }
+
+    /**
+     * Handle generic Exception.
+     *
+     * @param \Throwable|\Error $exception
+     */
+    public function handleException($exception): Reply
+    {
+        \report($exception);
+
+        return new Reply(\json_encode([
+            'jsonrpc' => Server::VERSION,
+            'id' => null,
+            'error' => [
+                'code' => -32603,
+                'message' => \get_class($exception).' - '.$exception->getMessage(),
+                'exception' => \get_class($exception),
+            ],
+        ]));
     }
 
     /**
@@ -94,19 +114,12 @@ class ExceptionHandler
      * Handle generic Exception.
      *
      * @param \Throwable|\Error $exception
+     *
+     * @deprecated v2.5.0 and will be removed in v3.0.0
+     * @see self::handleException()
      */
     protected function handleGenericException($exception): Reply
     {
-        \report($exception);
-
-        return new Reply(\json_encode([
-            'jsonrpc' => Server::VERSION,
-            'id' => null,
-            'error' => [
-                'code' => -32603,
-                'message' => \get_class($exception).' - '.$exception->getMessage(),
-                'exception' => \get_class($exception),
-            ],
-        ]));
+       return $this->handleException($exception);
     }
 }

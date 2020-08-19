@@ -5,6 +5,7 @@ namespace Minions\Http;
 use Datto\JsonRpc\Evaluator;
 use ErrorException;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Database\QueryException;
 use Illuminate\Pipeline\Pipeline;
 use Minions\Configuration;
 use Minions\Exceptions\ProjectNotFound;
@@ -94,6 +95,7 @@ class Router
     {
         $project = $request->getHeader('X-Request-ID')[0] ?? null;
         $app = $this->container;
+        $exceptionHandler = new ExceptionHandler();
 
         try {
             $config = $this->projectConfiguration($project);
@@ -106,8 +108,10 @@ class Router
                     ])->then(static function (Message $message) use ($app) {
                         return $app->make('minions.controller')->handle($message);
                     });
+        } catch (QueryException $exception) {
+            return $exceptionHandler->handleException($exception);
         } catch (ErrorException | Throwable $exception) {
-            return (new ExceptionHandler())->handle($exception);
+            return $exceptionHandler->handle($exception);
         }
     }
 
