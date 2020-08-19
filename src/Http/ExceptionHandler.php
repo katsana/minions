@@ -115,7 +115,7 @@ class ExceptionHandler
      *
      * @param \Throwable|\Error $exception
      *
-     * @deprecated v2.5.0 and will be removed in v3.0.0
+     * @deprecated v2.7.0 and will be removed in v3.0.0
      * @see self::handleException()
      */
     protected function handleGenericException($exception): Reply
