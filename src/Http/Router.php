@@ -9,7 +9,6 @@ use Illuminate\Database\QueryException;
 use Illuminate\Pipeline\Pipeline;
 use Minions\Configuration;
 use Minions\Exceptions\ProjectNotFound;
-use Minions\Http\Reply;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 

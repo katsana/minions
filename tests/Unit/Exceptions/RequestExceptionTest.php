@@ -25,7 +25,7 @@ class RequestExceptionTest extends TestCase
         $response->shouldReceive('getRpcError')->andReturn('Illuminate\Validation\ValidationException')
             ->shouldReceive('getRpcErrorCode')->andReturn(-32602)
             ->shouldReceive('getRpcErrorMessage')->andReturn('The given data was invalid.')
-            ->shouldReceive('getRpcErrorData')->andReturn(["Password is required"]);
+            ->shouldReceive('getRpcErrorData')->andReturn(['Password is required']);
 
         $exception = new RequestException(
             'Unable to find project', -32600, $response, 'math.add'
@@ -39,6 +39,6 @@ class RequestExceptionTest extends TestCase
         $this->assertSame('Illuminate\Validation\ValidationException', $exception->getRpcError());
         $this->assertSame(-32602, $exception->getRpcErrorCode());
         $this->assertSame('The given data was invalid.', $exception->getRpcErrorMessage());
-        $this->assertSame(["Password is required"], $exception->getRpcErrorData());
+        $this->assertSame(['Password is required'], $exception->getRpcErrorData());
     }
 }

@@ -120,6 +120,6 @@ class ExceptionHandler
      */
     protected function handleGenericException($exception): Reply
     {
-       return $this->handleException($exception);
+        return $this->handleException($exception);
     }
 }
