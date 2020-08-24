@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `katsana/minions`.
 
+## 2.6.1
+
+Released: 2020-08-25
+
+### Fixes
+
+* Wrap handling request with `rescue()` to avoid uncatchable exception including `PDOException`.
+
 ## 2.6.0
 
 Released: 2020-07-22
