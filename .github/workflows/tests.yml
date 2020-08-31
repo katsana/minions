@@ -7,7 +7,7 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  - tests:
+  tests:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -42,7 +42,7 @@ jobs:
       - name: Execute tests
         run: vendor/bin/phpunit
 
-  - tests-on-legacy-php:
+  tests-on-legacy-php:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
