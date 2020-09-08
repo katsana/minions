@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `katsana/minions`.
 
+## 2.6.2
+
+Released: 2020-09-08
+
+### Changes
+
+* Add support for Laravel Framework `8.+`.
+
 ## 2.6.1
 
 Released: 2020-08-25
