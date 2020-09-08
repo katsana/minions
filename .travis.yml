@@ -10,9 +10,6 @@ env:
     - setup=basic
     - coverage=no
   matrix:
-    - laravel=^6.0
-    - laravel=^7.0
-    - laravel=^8.0
     - setup=stable laravel=^6.0
     - setup=stable laravel=^7.0
     - setup=stable laravel=^8.0
@@ -40,10 +37,6 @@ after_script:
 
 matrix:
   include:
-    - php: 7.2
-      env: setup=basic laravel=^6.0
-    - php: 7.2
-      env: setup=basic laravel=^7.0
     - php: 7.2
       env: setup=stable laravel=^6.0
     - php: 7.2
