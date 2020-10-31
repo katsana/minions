@@ -1,7 +1,7 @@
 JSON-RPC Communication for Laravel
 ===================
 
-[![Build Status](https://travis-ci.org/katsana/minions.svg?branch=2.x)](https://travis-ci.org/katsana/minions)
+[![tests](https://github.com/katsana/minions/workflows/tests/badge.svg?branch=2.x)](https://github.com/katsana/minions/actions?query=workflow%3Atests+branch%3A2.x)
 [![Latest Stable Version](https://poser.pugx.org/katsana/minions/v/stable)](https://packagist.org/packages/katsana/minions)
 [![Total Downloads](https://poser.pugx.org/katsana/minions/downloads)](https://packagist.org/packages/katsana/minions)
 [![Latest Unstable Version](https://poser.pugx.org/katsana/minions/v/unstable)](https://packagist.org/packages/katsana/minions)

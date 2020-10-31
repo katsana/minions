@@ -118,6 +118,28 @@ class ResponseTest extends TestCase
     }
 
     /** @test */
+    public function it_can_received_failed_response_for_model_not_found()
+    {
+        $psr7Response = m::mock(ResponseContract::class);
+
+        $psr7Response->shouldReceive('getStatusCode')->andReturn(200)
+            ->shouldReceive('getBody')->andReturn('{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"No query results for model [User] 2","exception":"Illuminate\\\Database\\\Eloquent\\\ModelNotFoundException","data":{"model":"User","ids":[2]}}}');
+
+        $response = new Response($psr7Response);
+
+        $this->assertNull($response->getRpcId());
+        $this->assertNull($response->getRpcResult());
+        $this->assertSame('2.0', $response->getRpcVersion());
+        $this->assertSame('Illuminate\Database\Eloquent\ModelNotFoundException', $response->getRpcError());
+        $this->assertSame(-32602, $response->getRpcErrorCode());
+        $this->assertSame('No query results for model [User] 2', $response->getRpcErrorMessage());
+        $this->assertSame([
+            'model' => 'User',
+            'ids' => [2],
+        ], $response->getRpcErrorData());
+    }
+
+    /** @test */
     public function it_can_throw_client_has_error_exception()
     {
         $this->expectException('Minions\Exceptions\ClientHasError');

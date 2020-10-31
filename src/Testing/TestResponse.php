@@ -203,6 +203,18 @@ class TestResponse
     }
 
     /**
+     * Assert that the response has the given status code.
+     *
+     * @return $this
+     */
+    public function assertStatus(int $statusCode)
+    {
+        $this->baseResponse->assertStatus($statusCode);
+
+        return $this;
+    }
+
+    /**
      * Assert that the response has a not found status code.
      *
      * @return $this

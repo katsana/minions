@@ -86,6 +86,14 @@ class Response implements ResponseInterface, Serializable
     }
 
     /**
+     * Get RPC error exception name.
+     */
+    public function getRpcError(): ?string
+    {
+        return $this->content['error']['exception'] ?? null;
+    }
+
+    /**
      * Get RPC error code.
      */
     public function getRpcErrorCode(): ?int

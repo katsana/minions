@@ -53,6 +53,36 @@ class RequestException extends RuntimeException
     }
 
     /**
+     * Get RPC error exception name.
+     *
+     * @return mixed
+     */
+    public function getRpcError()
+    {
+        return $this->response->getRpcError();
+    }
+
+    /**
+     * Get RPC error code.
+     *
+     * @return mixed
+     */
+    public function getRpcErrorCode()
+    {
+        return $this->response->getRpcErrorCode();
+    }
+
+    /**
+     * Get RPC error message.
+     *
+     * @return mixed
+     */
+    public function getRpcErrorMessage()
+    {
+        return $this->response->getRpcErrorMessage();
+    }
+
+    /**
      * Get RPC error data.
      *
      * @return mixed

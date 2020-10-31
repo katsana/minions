@@ -2,6 +2,43 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `katsana/minions`.
 
+## 2.6.2
+
+Released: 2020-09-08
+
+### Changes
+
+* Add support for Laravel Framework `8.+`.
+
+## 2.6.1
+
+Released: 2020-08-25
+
+### Fixes
+
+* Wrap handling request with `rescue()` to avoid uncatchable exception including `PDOException`.
+
+## 2.6.0
+
+Released: 2020-07-22
+
+### Added
+
+* Added methods to `Minions\Exceptions\RequestException` to access exception from response object:
+    - `getRpcError()`
+    - `getRpcErrorCode()`
+    - `getRpcErrorMessage()`
+
+## 2.5.0
+
+Released: 2020-05-01
+
+### Added
+
+* Added `Minions\Client\Minion::enabled()` method.
+* Added `Minions\Testing\MakesRpcRequests::sendRpc()` method.
+* Added `Minions\Testing\TestResponse::assertStatus()` method.
+
 ## 2.4.0
 
 Released: 2020-04-20
