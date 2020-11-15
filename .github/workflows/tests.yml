@@ -28,7 +28,7 @@ jobs:
         experimental:
           - false
 
-    name: PHP${{ matrix.php }} with Laravel ${{ matrix.laravel }} on ${{ matrix.os }}
+    name: PHP${{ matrix.php }} with Laravel ${{ matrix.laravel }} on ${{ matrix.os }} (${{ matrix.dependencies }})
 
     steps:
       - name: Checkout code
@@ -50,7 +50,11 @@ jobs:
       - name: Install Laravel Framework ${{ matrix.laravel }}
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+
       - name: Install dependencies
         uses: "ramsey/composer-install@v1"
+        with:
+          composer-options: "--prefer-dist --no-cache"
+
       - name: Execute tests
         run: vendor/bin/phpunit
