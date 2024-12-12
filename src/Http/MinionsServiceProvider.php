@@ -6,12 +6,11 @@ use Illuminate\Console\Application as Artisan;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use Orchestra\Canvas\Core\CommandsProvider;
+use Orchestra\Canvas\Core\Presets\Laravel;
+use Illuminate\Filesystem\Filesystem;
 
 class MinionsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    use CommandsProvider;
-
     /**
      * Register the application services.
      *
@@ -42,10 +41,10 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
         ], 'routes');
 
         if ($this->app->runningInConsole()) {
-            $preset = $this->presetForLaravel($this->app);
-
-            Artisan::starting(function ($artisan) use ($preset) {
-                $artisan->add(new Console\MakeRpcRequest($preset));
+            $preset = new Laravel($this->app);
+            $filesystem = $this->app->make(Filesystem::class);
+            Artisan::starting(function ($artisan) use ($filesystem) {
+                $artisan->add(new Console\MakeRpcRequest($filesystem));
             });
         }
     }

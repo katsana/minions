@@ -2,10 +2,10 @@
 
 namespace Minions\Http\Console;
 
-use Orchestra\Canvas\Core\Commands\Generator;
+use Orchestra\Canvas\Core\Commands\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
-class MakeRpcRequest extends Generator
+class MakeRpcRequest extends GeneratorCommand
 {
     /**
      * The console command name.
@@ -30,20 +30,27 @@ class MakeRpcRequest extends Generator
 
     /**
      * Get the stub file for the generator.
+     *
+     * @return string
      */
-    public function getStubFile(): string
+    protected function getStub()
     {
         $directory = __DIR__.'/stubs';
 
         return $this->option('middleware')
             ? "{$directory}/request.middleware.stub"
             : "{$directory}/request.stub";
+
+        // return $this->getStubFile();
     }
 
     /**
      * Get the default namespace for the class.
+     *
+     * @param string $rootNamespace
+     * @return string
      */
-    public function getDefaultNamespace(string $rootNamespace): string
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace.'\JsonRpc';
     }

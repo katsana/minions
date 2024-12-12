@@ -32,7 +32,8 @@ class ExceptionHandlerTest extends TestCase
         $reply = $handler->handle($exception);
 
         $this->assertSame(
-            '{"jsonrpc":"2.0","id":null,"error":{"code":-32651,"message":"Missing Signature."}}', $reply->body()
+            '{"jsonrpc":"2.0","id":null,"error":{"code":-32651,"message":"Missing Signature."}}',
+            $reply->body()
         );
     }
 
@@ -55,18 +56,23 @@ class ExceptionHandlerTest extends TestCase
     /** @test */
     public function it_can_handle_validation_exception()
     {
-        $validator = m::mock('Illuminate\Contracts\Validation\Validator');
-
-        $validator->shouldReceive('errors->messages')->andReturn([
+        $errors = m::mock('Illuminate\Contracts\Support\MessageBag');
+        $errors->shouldReceive('messages')->andReturn([
+            'password' => ['Password is required'],
+        ]);
+        $errors->shouldReceive('all')->andReturn([
             'Password is required',
         ]);
+
+        $validator = m::mock('Illuminate\Contracts\Validation\Validator');
+        $validator->shouldReceive('errors')->andReturn($errors);
 
         $handler = new ExceptionHandler();
 
         $reply = $handler->handle(new ValidationException($validator));
 
         $this->assertSame(
-            '{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"The given data was invalid.","exception":"Illuminate\\\Validation\\\ValidationException","data":["Password is required"]}}',
+            '{"jsonrpc":"2.0","id":null,"error":{"code":-32602,"message":"Password is required","exception":"Illuminate\\\Validation\\\ValidationException","data":{"password":["Password is required"]}}}',
             $reply->body()
         );
     }
@@ -79,7 +85,9 @@ class ExceptionHandlerTest extends TestCase
         $app->instance(IlluminateExceptionHandler::class, $reporter = m::mock(IlluminateExceptionHandler::class));
 
         $exception = new QueryException(
-            'SELECT * FROM `users` WHERE email=?', ['crynobone@katsana.com'], m::mock('PDOException')
+            'SELECT * FROM `users` WHERE email=?',
+            ['crynobone@katsana.com'],
+            m::mock('PDOException')
         );
 
         $reporter->shouldReceive('report')->once()->with($exception);

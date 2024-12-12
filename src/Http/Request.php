@@ -158,7 +158,7 @@ class Request implements Arrayable, ArrayAccess
      */
     public function httpMessage(): Message
     {
-        return $this->message;
+        return $this->message instanceof Message ? $this->message : null;
     }
 
     /**
@@ -168,7 +168,7 @@ class Request implements Arrayable, ArrayAccess
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->input[$offset]);
     }
@@ -180,7 +180,7 @@ class Request implements Arrayable, ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->input[$offset] ?? null;
     }
@@ -193,7 +193,7 @@ class Request implements Arrayable, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): never
     {
         throw new LogicException('Unable to set value on Request instance.');
     }
@@ -205,7 +205,7 @@ class Request implements Arrayable, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): never
     {
         throw new LogicException('Unable to unset value on Request instance.');
     }
@@ -217,7 +217,7 @@ class Request implements Arrayable, ArrayAccess
      *
      * @return bool
      */
-    public function __isset($key)
+    public function __isset($key): bool
     {
         return $this->offsetExists($key);
     }
@@ -229,7 +229,7 @@ class Request implements Arrayable, ArrayAccess
      *
      * @return mixed
      */
-    public function __get($key)
+    public function __get($key): mixed
     {
         return $this->offsetGet($key);
     }

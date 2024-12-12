@@ -17,7 +17,7 @@ class ValidatesRequestsTest extends TestCase
     public function it_can_validate_using_validate()
     {
         $this->expectException('Illuminate\Validation\ValidationException');
-        $this->expectExceptionMessage('The given data was invalid.');
+        $this->expectExceptionMessage('The email must be a valid email address. (and 1 more error)');
 
         $message = m::mock(Message::class);
 
@@ -33,7 +33,7 @@ class ValidatesRequestsTest extends TestCase
     public function it_can_validate_using_validate_with()
     {
         $this->expectException('Illuminate\Validation\ValidationException');
-        $this->expectExceptionMessage('The given data was invalid.');
+        $this->expectExceptionMessage('The email must be a valid email address. (and 1 more error)');
 
         $message = m::mock(Message::class);
 
@@ -49,7 +49,7 @@ class ValidatesRequestsTest extends TestCase
     public function it_can_validate_using_validate_with_given_validator()
     {
         $this->expectException('Illuminate\Validation\ValidationException');
-        $this->expectExceptionMessage('The given data was invalid.');
+        $this->expectExceptionMessage('The email must be a valid email address. (and 1 more error)');
 
         $message = m::mock(Message::class);
 

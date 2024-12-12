@@ -2,9 +2,10 @@
 
 namespace Minions\Tests\Feature\Http\Console;
 
-use Orchestra\Canvas\Core\Testing\TestCase;
+use Minions\TestCase as MinionsTestCase;
+use Minions\Tests\TestCase;
 
-class MakeRpcRequestTest extends TestCase
+class MakeRpcRequestTest extends MinionsTestCase
 {
     protected $files = [
         'app/JsonRpc/Ping.php',
