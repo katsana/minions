@@ -61,11 +61,11 @@ abstract class Finder implements ArrayAccess
     /**
      * Determine if the given offset exists.
      *
-     * @param string $offset
+     * @param mixed $offset
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         $this->bootIfNotBooted();
 
@@ -75,11 +75,11 @@ abstract class Finder implements ArrayAccess
     /**
      * Get the value for a given offset.
      *
-     * @param string $offset
+     * @param mixed $offset
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         $this->bootIfNotBooted();
 
@@ -89,12 +89,12 @@ abstract class Finder implements ArrayAccess
     /**
      * Set the value at the given offset.
      *
-     * @param string $offset
+     * @param mixed $offset
      * @param mixed  $value
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->projects[$offset] = \array_merge([
             'endpoint' => null,
@@ -105,11 +105,11 @@ abstract class Finder implements ArrayAccess
     /**
      * Unset the value at the given offset.
      *
-     * @param string $offset
+     * @param mixed $offset
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $this->bootIfNotBooted();
 
