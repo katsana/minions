@@ -140,6 +140,26 @@ class Response implements ResponseInterface, Serializable
     }
 
     /**
+     * Serialize the object to a value that can be serialized natively by json_encode().
+     *
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return ['content' => $this->content];
+    }
+
+    /**
+     * Unserialize the object from a value that was serialized by json_encode().
+     *
+     * @param array $data
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->content = $data['content'];
+    }
+
+    /**
      * Serialize instance.
      *
      * @return string
