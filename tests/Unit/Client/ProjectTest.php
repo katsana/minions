@@ -2,7 +2,7 @@
 
 namespace Minions\Tests\Unit\Client;
 
-use Clue\React\Buzz\Browser;
+use React\Http\Browser;
 use Minions\Client\MessageInterface;
 use Minions\Client\Project;
 use Minions\Client\Response;

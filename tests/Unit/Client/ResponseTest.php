@@ -182,8 +182,13 @@ class ResponseTest extends TestCase
             ->shouldReceive('getBody')->andReturn('{"jsonrpc":"2.0","id":1,"error":{"code":-32651,"message":"Missing Signature."}}');
 
         $response = (new Response($psr7Response));
+        $serialized = \serialize($response);
 
-        $this->assertSame('C:23:"Minions\Client\Response":141:{a:1:{s:7:"content";a:3:{s:7:"jsonrpc";s:3:"2.0";s:2:"id";i:1;s:5:"error";a:2:{s:4:"code";i:-32651;s:7:"message";s:18:"Missing Signature.";}}}}', \serialize($response));
+        // Support both PHP 7.x and PHP 8.x serialization formats
+        $this->assertTrue(
+            $serialized === 'C:23:"Minions\Client\Response":141:{a:1:{s:7:"content";a:3:{s:7:"jsonrpc";s:3:"2.0";s:2:"id";i:1;s:5:"error";a:2:{s:4:"code";i:-32651;s:7:"message";s:18:"Missing Signature.";}}}}' ||
+            $serialized === 'O:23:"Minions\Client\Response":1:{s:7:"content";a:3:{s:7:"jsonrpc";s:3:"2.0";s:2:"id";i:1;s:5:"error";a:2:{s:4:"code";i:-32651;s:7:"message";s:18:"Missing Signature.";}}}'
+        );
     }
 
     /** @test */

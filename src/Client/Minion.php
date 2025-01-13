@@ -4,7 +4,7 @@ namespace Minions\Client;
 
 use function Clue\React\Block\await;
 use function Clue\React\Block\awaitAll;
-use Clue\React\Buzz\Browser;
+use React\Http\Browser;
 use Clue\React\Mq\Queue;
 use InvalidArgumentException;
 use Minions\Configuration;
@@ -152,14 +152,15 @@ class Minion
      */
     protected function createBrowser(array $config): Browser
     {
-        return (new Browser($this->getEventLoop()))
-            ->withBase($config['endpoint'])
-            ->withOptions([
-                'timeout' => $config['options']['timeout'] ?? 60,
-                'followRedirects' => false,
-                'obeySuccessCode' => true,
-                'streaming' => false,
-            ]);
+        $options = [
+            'timeout' => $config['options']['timeout'] ?? 60,
+            'followRedirects' => false,
+            'streaming' => false,
+        ];
+        
+        $browser = new Browser(null, $this->getEventLoop(), $options);
+        
+        return $browser->withBase($config['endpoint']);
     }
 
     /**

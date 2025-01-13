@@ -61,7 +61,7 @@ abstract class Finder implements ArrayAccess
     /**
      * Determine if the given offset exists.
      *
-     * @param string $offset
+     * @param mixed $offset
      *
      * @return bool
      */
@@ -75,11 +75,11 @@ abstract class Finder implements ArrayAccess
     /**
      * Get the value for a given offset.
      *
-     * @param string $offset
+     * @param mixed $offset
      *
      * @return mixed
      */
-    public function offsetGet($offset): array|null
+    public function offsetGet($offset): mixed
     {
         $this->bootIfNotBooted();
 
@@ -89,7 +89,7 @@ abstract class Finder implements ArrayAccess
     /**
      * Set the value at the given offset.
      *
-     * @param string $offset
+     * @param mixed $offset
      * @param mixed  $value
      *
      * @return void
@@ -105,7 +105,7 @@ abstract class Finder implements ArrayAccess
     /**
      * Unset the value at the given offset.
      *
-     * @param string $offset
+     * @param mixed $offset
      *
      * @return void
      */

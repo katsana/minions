@@ -2,7 +2,7 @@
 
 namespace Minions\Client;
 
-use Clue\React\Buzz\Browser;
+use React\Http\Browser;
 use Psr\Http\Message\ResponseInterface as ResponseContract;
 
 class Project
@@ -24,7 +24,7 @@ class Project
     /**
      * The browser implementation.
      *
-     * @var \Clue\React\Buzz\Browser
+     * @var \React\Http\Browser
      */
     protected $browser;
 
