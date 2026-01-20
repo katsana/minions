@@ -2,10 +2,10 @@
 
 namespace Minions\Http\Console;
 
-use Orchestra\Canvas\Core\Commands\Generator;
+use Orchestra\Canvas\Core\Commands\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 
-class MakeRpcRequest extends Generator
+class MakeRpcRequest extends GeneratorCommand
 {
     /**
      * The console command name.
