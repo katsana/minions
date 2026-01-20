@@ -6,12 +6,9 @@ use Illuminate\Console\Application as Artisan;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use Orchestra\Canvas\Core\CommandsProvider;
 
 class MinionsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    use CommandsProvider;
-
     /**
      * Register the application services.
      *
@@ -48,6 +45,18 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
                 $artisan->add(new Console\MakeRpcRequest($preset));
             });
         }
+    }
+
+    /**
+     * Get the preset for Laravel.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
+     * @return \Orchestra\Canvas\Core\Presets\Laravel
+     */
+    protected function presetForLaravel($app)
+    {
+        return new \Orchestra\Canvas\Core\Presets\Laravel($app);
     }
 
     /**
