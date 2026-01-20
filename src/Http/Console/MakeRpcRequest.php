@@ -31,7 +31,7 @@ class MakeRpcRequest extends GeneratorCommand
     /**
      * Get the stub file for the generator.
      */
-    public function getStubFile(): string
+    protected function getStub()
     {
         $directory = __DIR__.'/stubs';
 
@@ -43,19 +43,9 @@ class MakeRpcRequest extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      */
-    public function getDefaultNamespace(string $rootNamespace): string
+    public function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\JsonRpc';
-    }
-
-    /**
-     * Generator options.
-     */
-    public function generatorOptions(): array
-    {
-        return [
-            'name' => $this->generatorName(),
-        ];
     }
 
     /**
