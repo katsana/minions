@@ -8,6 +8,34 @@ use Symfony\Component\Console\Input\InputOption;
 class MakeRpcRequest extends GeneratorCommand
 {
     /**
+     * The generator preset.
+     *
+     * @var \Orchestra\Canvas\Core\Presets\Preset
+     */
+    protected $preset;
+
+    /**
+     * Create a new command instance.
+     *
+     * @param  \Orchestra\Canvas\Core\Presets\Preset  $preset
+     */
+    public function __construct($preset)
+    {
+        $this->preset = $preset;
+
+        parent::__construct(app('files'));
+    }
+
+    /**
+     * Resolve the generator preset.
+     */
+    protected function generatorPreset(): \Orchestra\Canvas\Core\Presets\Preset
+    {
+        return $this->preset;
+    }
+
+
+    /**
      * The console command name.
      *
      * @var string
