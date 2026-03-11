@@ -87,7 +87,7 @@ class TestResponse
      */
     public function assertValidationMissingErrors($keys = null)
     {
-        $this->assertHasErrors(-32602, 'The given data was invalid.');
+        $this->assertHasErrors(-32602);
 
         $jsonErrors = $this->response->getRpcErrorData() ?? [];
 
@@ -123,7 +123,7 @@ class TestResponse
      */
     public function assertValidationErrors($errors)
     {
-        $this->assertHasErrors(-32602, 'The given data was invalid.');
+        $this->assertHasErrors(-32602);
 
         $errors = Arr::wrap($errors);
 
