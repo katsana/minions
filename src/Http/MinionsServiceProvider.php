@@ -56,7 +56,15 @@ class MinionsServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function presetForLaravel($app)
     {
-        return new \Orchestra\Canvas\Core\Presets\Laravel($app);
+        $config = [
+            'namespace' => $app->getNamespace(),
+        ];
+
+        return new \Orchestra\Canvas\Core\Presets\Laravel(
+            $config,
+            $app->basePath(),
+            $app->make('files')
+        );
     }
 
     /**
