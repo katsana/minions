@@ -8,6 +8,34 @@ use Symfony\Component\Console\Input\InputOption;
 class MakeRpcRequest extends GeneratorCommand
 {
     /**
+     * The generator preset.
+     *
+     * @var \Orchestra\Canvas\Core\Presets\Preset
+     */
+    protected $preset;
+
+    /**
+     * Create a new command instance.
+     *
+     * @param  \Orchestra\Canvas\Core\Presets\Preset  $preset
+     */
+    public function __construct($preset)
+    {
+        $this->preset = $preset;
+
+        parent::__construct(app('files'));
+    }
+
+    /**
+     * Resolve the generator preset.
+     */
+    protected function generatorPreset(): \Orchestra\Canvas\Core\Presets\Preset
+    {
+        return $this->preset;
+    }
+
+
+    /**
      * The console command name.
      *
      * @var string
@@ -30,8 +58,6 @@ class MakeRpcRequest extends GeneratorCommand
 
     /**
      * Get the stub file for the generator.
-     *
-     * @return string
      */
     protected function getStub()
     {
@@ -40,29 +66,14 @@ class MakeRpcRequest extends GeneratorCommand
         return $this->option('middleware')
             ? "{$directory}/request.middleware.stub"
             : "{$directory}/request.stub";
-
-        // return $this->getStubFile();
     }
 
     /**
      * Get the default namespace for the class.
-     *
-     * @param string $rootNamespace
-     * @return string
      */
-    protected function getDefaultNamespace($rootNamespace): string
+    public function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\JsonRpc';
-    }
-
-    /**
-     * Generator options.
-     */
-    public function generatorOptions(): array
-    {
-        return [
-            'name' => $this->generatorName(),
-        ];
     }
 
     /**

@@ -10,14 +10,6 @@ use Serializable;
 class Response implements ResponseInterface, Serializable
 {
     /**
-     * The PSR-7 Response implementation. The value can be null
-     * when retrieving the instance from Serializeable.
-     *
-     * @var \Psr\Http\Message\ResponseInterface|null
-     */
-    protected $original;
-
-    /**
      * The response body.
      *
      * @var array|null
@@ -31,8 +23,6 @@ class Response implements ResponseInterface, Serializable
      */
     public function __construct(ResponseContract $response)
     {
-        $this->original = $response;
-
         $statusCode = $response->getStatusCode();
 
         if (\in_array($statusCode, [200, 201, 202])) {
